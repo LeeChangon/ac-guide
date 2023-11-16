@@ -2,4 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="ac_primary">#72E3C0</color>
+    <color name="ac_primary2">#1AC8B9</color>
+
+    <color name="ac_background_bright">#FFF9E4</color>
+    <color name="ac_textcolor_basic">#7E725C</color>
+
+    <color name="ac_button_color_enabled">#CEC6BA</color>
+    <color name="ac_textcolor_enabled">#928E83</color>
+
+    <color name="ac_background_chosebox">#FEEC9E</color>
+    <color name="ac_textcolor_chosebox">#7E693A</color>
+
+    <color name="ac_background_pink">#FFE6D4</color>
+
+
 </resources>
