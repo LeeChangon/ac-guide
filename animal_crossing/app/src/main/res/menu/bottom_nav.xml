@@ -4,17 +4,17 @@
         android:id="@+id/navigation_page_1"
         android:enabled="true"
         android:title="홈"
-        android:icon="@drawable/critterpedia"/>
+        android:icon="@drawable/home"/>
     <item
         android:id="@+id/navigation_page_2"
         android:enabled="true"
         android:title="도감"
-        android:icon="@drawable/critterpedia"/>
+        android:icon="@drawable/butterfly"/>
     <item
         android:id="@+id/navigation_page_3"
         android:enabled="true"
         android:title="주민"
-        android:icon="@drawable/critterpedia"/>
+        android:icon="@drawable/applev"/>
     <item
         android:id="@+id/navigation_page_4"
         android:enabled="true"

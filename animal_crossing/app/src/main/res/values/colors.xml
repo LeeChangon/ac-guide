@@ -17,5 +17,6 @@
 
     <color name="ac_background_pink">#FFE6D4</color>
 
+    <color name="ac_textcolor_dark">#4C3C33</color>
 
 </resources>
