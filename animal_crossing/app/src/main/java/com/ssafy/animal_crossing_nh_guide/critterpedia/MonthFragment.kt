@@ -9,23 +9,32 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
-import com.ssafy.animal_crossing_nh_guide.databinding.FragmentDetailBinding
+import com.ssafy.animal_crossing_nh_guide.databinding.FragmentMonthBinding
 
+private const val TAG = "MonthFragment_싸피"
+class MonthFragment : BaseFragment<FragmentMonthBinding>(FragmentMonthBinding::bind, R.layout.fragment_month) {
 
-private const val TAG = "DetailFragment_싸피"
-class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::bind, R.layout.fragment_detail) {
+    private var month = -1
+    private lateinit var tab:String
 
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        month = arguments?.getInt("month") ?: -1
+        tab = arguments?.getString("tab", "no parameter").toString()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
-
+        binding.month.text = "${tab} : ${month.toString()}"
 
     }
 
