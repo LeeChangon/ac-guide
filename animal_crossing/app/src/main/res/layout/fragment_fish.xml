@@ -3,12 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".critterpedia.FishFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fish" />
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+
+            android:id="@+id/fishTabLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:tabMode="scrollable"
+            app:tabInlineLabel="true">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fishViewPager"/>
+    </LinearLayout>
+
 
 </FrameLayout>

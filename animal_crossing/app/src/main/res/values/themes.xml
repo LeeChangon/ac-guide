@@ -39,5 +39,6 @@
         <item name="android:textColor">@color/ac_textcolor_dark</item>
     </style>
 
+
     <style name="Theme.Animal_crossing_NH_guide" parent="Base.Theme.Animal_crossing_NH_guide" />
 </resources>

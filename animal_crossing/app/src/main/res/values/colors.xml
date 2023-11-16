@@ -19,4 +19,7 @@
 
     <color name="ac_textcolor_dark">#4C3C33</color>
 
+    <color name="ac_money">#BEA745</color>
+    <color name="ac_button">#8A7B66</color>
+
 </resources>
