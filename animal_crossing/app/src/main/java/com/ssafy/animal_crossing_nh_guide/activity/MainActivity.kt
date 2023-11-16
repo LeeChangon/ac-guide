@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.BaseActivity
 import com.ssafy.animal_crossing_nh_guide.databinding.ActivityMainBinding
+import com.ssafy.animal_crossing_nh_guide.home.CritterpediaFragment
 import com.ssafy.animal_crossing_nh_guide.home.HomeFragment
 import com.ssafy.animal_crossing_nh_guide.mypage.MypageFragment
 
@@ -30,9 +31,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     true
                 }
                 R.id.navigation_page_2 -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.frame_layout_main, MenuFragment())
-//                        .commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout_main, CritterpediaFragment())
+                        .commit()
                     true
                 }
                 R.id.navigation_page_3 -> {
