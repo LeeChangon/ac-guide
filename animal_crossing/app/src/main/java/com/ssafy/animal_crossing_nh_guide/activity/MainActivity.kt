@@ -6,6 +6,7 @@ import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.BaseActivity
 import com.ssafy.animal_crossing_nh_guide.databinding.ActivityMainBinding
 import com.ssafy.animal_crossing_nh_guide.home.HomeFragment
+import com.ssafy.animal_crossing_nh_guide.mypage.MypageFragment
 
 private const val TAG = "MainActivity_싸피"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -41,6 +42,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     true
                 }
                 R.id.navigation_page_4 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout_main, MypageFragment())
+                        .commit()
                     true
                 }
                 else -> false

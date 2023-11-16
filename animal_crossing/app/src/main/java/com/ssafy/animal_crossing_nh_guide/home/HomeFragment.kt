@@ -27,10 +27,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         Log.d(TAG, "onViewCreated: ")
 
 
-        mainActivityViewModel.setTime()
-        binding.text.text = mainActivityViewModel.currentTime.toString()
+        initSetting()
+        initListener()
+    }
+
+    private fun initListener() {
+        //새로고침 버튼 이벤트
+        binding.homeToolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.time_refresh_btn -> {
+                    refreshTime()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        binding.dateTv.setOnClickListener {
+            //다이얼로그 띄우기로 시간 설정
+        }
+    }
+
+
+    fun initSetting(){
+
+        binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
+        refreshTime()
 
     }
 
+    fun refreshTime(){
+        mainActivityViewModel.setTime()
+        mainActivityViewModel.convertLongToTime()
+        binding.dateTv.text = mainActivityViewModel.currentTime.value
+    }
 
 }
