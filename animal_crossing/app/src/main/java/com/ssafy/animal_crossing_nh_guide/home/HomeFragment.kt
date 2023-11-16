@@ -1,5 +1,6 @@
 package com.ssafy.animal_crossing_nh_guide.home
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+
+    var bugExpanded = false;
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
@@ -26,6 +29,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
 
+//        binding.homeBugCardview.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         initSetting()
         initListener()
@@ -45,6 +49,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         binding.dateTv.setOnClickListener {
             //다이얼로그 띄우기로 시간 설정
+        }
+
+        binding.homeBugHeadLayout.setOnClickListener {
+            bugExpanded = !bugExpanded
+            if(bugExpanded){
+                binding.homeBugDrawLayout.visibility = View.VISIBLE
+
+                binding.homeBugDrawBtn.animate().setDuration(500).rotation(180f)
+            }
+            else{
+                binding.homeBugDrawLayout.visibility = View.GONE
+                binding.homeBugDrawBtn.animate().setDuration(500).rotation(0f)
+            }
         }
     }
 
