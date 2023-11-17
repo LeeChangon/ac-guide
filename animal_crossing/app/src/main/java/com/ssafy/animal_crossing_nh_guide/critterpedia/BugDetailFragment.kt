@@ -1,60 +1,74 @@
 package com.ssafy.animal_crossing_nh_guide.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
+import com.ssafy.animal_crossing_nh_guide.critterpedia.BugDetailViewPagerAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailBinding
 
 private const val TAG = "BugDetailFragment_싸피"
-class BugDetailFragment : BaseDialogFragment<FragmentBugDetailBinding>(FragmentBugDetailBinding::bind, R.layout.fragment_bug_detail){
+class BugDetailFragment : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentBugDetailBinding>(FragmentBugDetailBinding::bind, R.layout.fragment_bug_detail){
 
-    private lateinit var viewPagerAdapter: ScreenSlidePagerAdapter
+    private lateinit var viewPagerAdapter: BugDetailViewPagerAdapter
+    private var currentPage = 0
 
     override fun onResume() {
         super.onResume()
-        requireContext().dialogFragmentResize(this, 1f, 0.82f)
+        requireContext().dialogFragmentResize(this, 1f, 0.9f)
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
-        binding.closeBtn.setOnClickListener {
-            dialog?.dismiss()
-        }
 
-        binding.btnBell.setOnClickListener {
-            binding.btnBell.isSelected= !binding.btnBell.isSelected
-        }
-        binding.btnStar.setOnClickListener {
-            binding.btnStar.isSelected= !binding.btnStar.isSelected
-        }
-        binding.btnCheck.setOnClickListener {
-            binding.btnCheck.isSelected= !binding.btnCheck.isSelected
-        }
 
-        viewPagerAdapter = ScreenSlidePagerAdapter(this,)
+
+        viewPagerAdapter = BugDetailViewPagerAdapter()
+        viewPagerAdapter.myCallBack = this
         binding.bugDetailViewPager.adapter = viewPagerAdapter
+        binding.bugDetailViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentPage = position
+                Log.d(TAG, "onPageScrolled: ${position}")
+            }
 
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
 
-//        binding.btnPrev.setOnClickListener {
-//            parentFragmentManager.beginTransaction()
-//        }
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+        }
+
+        )
+
+        binding.btnPrev.setOnClickListener {
+            if (currentPage > 0){
+                binding.bugDetailViewPager.setCurrentItem(currentPage - 1)
+            }
+        }
+        binding.btnNext.setOnClickListener {
+            if (currentPage < 80) {
+                binding.bugDetailViewPager.setCurrentItem(currentPage+1)
+            }
+        }
 
     }
 
-    inner class ScreenSlidePagerAdapter(fragment: DialogFragment):FragmentStateAdapter(fragment){
-        override fun getItemCount(): Int {
-            return 80
-        }
-
-        override fun createFragment(position: Int): DialogFragment {
-//            fragment.dismiss()
-            return BugDetailFragment()
-        }
-
+    override fun close() {
+        this.dismiss()
     }
+
 
 }
