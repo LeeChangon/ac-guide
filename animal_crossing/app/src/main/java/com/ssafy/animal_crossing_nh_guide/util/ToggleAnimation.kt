@@ -1,10 +1,12 @@
 package com.ssafy.animal_crossing_nh_guide.util
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 
+private const val TAG = "ToggleAnimation_싸피"
 class ToggleAnimation {
 
     companion object {
@@ -61,6 +63,7 @@ class ToggleAnimation {
                 }
             }
 
+            Log.d(TAG, "collapse: ${(actualHeight / view.context.resources.displayMetrics.density).toLong()}")
             animation.duration = (actualHeight / view.context.resources.displayMetrics.density).toLong()
             view.startAnimation(animation)
         }

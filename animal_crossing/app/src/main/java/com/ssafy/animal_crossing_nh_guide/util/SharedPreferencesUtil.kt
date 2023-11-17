@@ -22,6 +22,11 @@ class SharedPreferencesUtil (context: Context) {
         editor.putLong("timeDiff", diff)
     }
 
+    fun resetTimeDiff(){
+        val editor = preferences.edit()
+        editor.putLong("timeDiff", 0)
+    }
+
     fun getTime(): Long{
         val timeDiff = preferences.getLong("timeDiff", 0)
 

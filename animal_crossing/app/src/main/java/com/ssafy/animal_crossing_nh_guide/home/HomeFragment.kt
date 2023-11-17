@@ -85,18 +85,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     }
 
-    fun toggleCard(layout: View, arrow: View, expanded: Boolean){
-        if(expanded){
-            layout.visibility = View.VISIBLE
-            ToggleAnimation.expand(layout)
-            arrow.animate().setDuration(200).rotation(180f)
-        }
-        else{
-            layout.visibility = View.GONE
-            ToggleAnimation.collapse(layout)
-            arrow.animate().setDuration(200).rotation(0f)
-        }
-    }
+
 
 
     fun initSetting(){
