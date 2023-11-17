@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -22,10 +23,16 @@ class MainActivityViewModel : ViewModel(){
         _currentTime.value = time
     }
 
+    fun getCurrentDate(): Date{
+
+        return Date(currentTime.value!!)
+    }
+
     fun convertLongToTime(): String{
         val date = Date(_currentTime.value!!)
         val format = SimpleDateFormat("yyyy.MM.dd EEE HH:mm")
 
+        Log.d(TAG, "convertLongToTime: 계산된 시간 : ${format.format(date)}")
         return format.format(date)
     }
 
