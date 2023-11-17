@@ -7,6 +7,9 @@
         <variable
             name="time"
             type="String" />
+        <variable
+            name="img"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -83,16 +86,15 @@
                             android:id="@+id/home_bug_draw_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/ac_background_bright"
                             android:orientation="vertical">
-                            <TextView
-                                android:text="하이"
-                                android:layout_margin="80dp"
-                                android:background="@color/ac_background_bright"
+                            <ImageView
+                                android:id="@+id/test_iv"
+                                app:imageUrl="@{img}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/home_bugs_recyclerview"
-                                android:background="@color/ac_background_bright"
                                 android:padding="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
@@ -133,10 +135,10 @@
                             android:id="@+id/home_fish_draw_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:background="@color/ac_background_bright">
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/home_fishes_recyclerview"
-                                    android:background="@color/ac_background_bright"
                                     android:padding="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"/>
@@ -178,10 +180,10 @@
                             android:id="@+id/home_critter_draw_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/ac_background_bright"
                             android:orientation="vertical">
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/home_critter_recyclerview"
-                                android:background="@color/ac_background_bright"
                                 android:padding="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>

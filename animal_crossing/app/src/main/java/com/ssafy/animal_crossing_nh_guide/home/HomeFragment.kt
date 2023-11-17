@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
@@ -31,6 +32,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         Log.d(TAG, "onViewCreated: ")
 
 //        binding.homeBugCardview.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+
+        val imageUrl = "/icons/bugs/agrias_butterfly.png"
+
+        binding.img = imageUrl
+
 
         initSetting()
         initListener()
