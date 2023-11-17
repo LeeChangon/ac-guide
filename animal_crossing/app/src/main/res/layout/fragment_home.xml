@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".home.HomeFragment"
-        android:animateLayoutChanges="true">
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/home_toolbar"
@@ -26,7 +26,7 @@
                 android:id="@+id/date_tv"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
-                android:text="년 월 일 요일 시간"
+                android:text="@{time}"
                 android:textColor="@color/ac_background_bright"
                 android:textSize="30dp"
                 android:layout_width="wrap_content"
@@ -46,15 +46,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:animateLayoutChanges="true">
-
+                >
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/home_bug_cardview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
-                    android:animateLayoutChanges="true"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -74,8 +72,8 @@
                                 android:layout_weight="1"
                                 android:layout_margin="5dp"
                                 />
-                            <ImageButton
-                                android:id="@+id/home_bug_draw_btn"
+                            <ImageView
+                                android:id="@+id/home_bug_draw_icon"
                                 android:background="@android:color/transparent"
                                 android:src="@drawable/arrow_icon"
                                 android:layout_width="wrap_content"
@@ -100,7 +98,6 @@
                                 android:layout_height="wrap_content"/>
                         </LinearLayout>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -111,21 +108,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:text="지금 잡히는 물고기"
-                            android:background="@color/ac_background_chosebox"
+                        <LinearLayout
+                            android:id="@+id/home_fish_head_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/home_fishes_recyclerview"
-                            android:background="@color/ac_background_bright"
-                            android:padding="5dp"
+                            android:background="@color/ac_background_chosebox"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="지금 잡히는 물고기"
+                                android:background="@color/ac_background_chosebox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                />
+                            <ImageView
+                                android:id="@+id/home_fish_draw_icon"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/arrow_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/home_fish_draw_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/home_fishes_recyclerview"
+                                    android:background="@color/ac_background_bright"
+                                    android:padding="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -138,25 +153,89 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:text="지금 잡히는 해산물"
-                            android:background="@color/ac_background_chosebox"
+                        <LinearLayout
+                            android:id="@+id/home_critter_head_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/home_sea_recyclerview"
-                            android:background="@color/ac_background_bright"
-                            android:padding="5dp"
+                            android:background="@color/ac_background_chosebox"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="지금 잡히는 해산물"
+                                android:background="@color/ac_background_chosebox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                />
+                            <ImageView
+                                android:id="@+id/home_critter_draw_icon"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/arrow_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/home_critter_draw_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/home_critter_recyclerview"
+                                android:background="@color/ac_background_bright"
+                                android:padding="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/home_checklist_head_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/ac_background_chosebox"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="데일리 체크리스트"
+                                android:background="@color/ac_background_chosebox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                />
+                            <ImageView
+                                android:id="@+id/home_checklist_draw_icon"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/arrow_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/home_checklist_draw_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/ac_background_bright"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal">
+
+                            </LinearLayout>
+
+                        </LinearLayout>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
 
             </LinearLayout>
 

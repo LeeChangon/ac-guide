@@ -12,8 +12,8 @@ private const val TAG = "MainActivityViewModel_싸피"
 class MainActivityViewModel : ViewModel(){
     private val _currentTime = MutableLiveData<Long>()
 
-    val currentTime = MutableLiveData<String>()
-//        get() = _currentTime
+    val currentTime : LiveData<Long>
+        get() = _currentTime
 
     fun setTime(){
         val time = ApplicationClass.sharedPreferencesUtil.getTime()
@@ -22,10 +22,38 @@ class MainActivityViewModel : ViewModel(){
         _currentTime.value = time
     }
 
-    fun convertLongToTime(){
+    fun convertLongToTime(): String{
         val date = Date(_currentTime.value!!)
         val format = SimpleDateFormat("yyyy.MM.dd EEE HH:mm")
 
-        currentTime.value = format.format(date)
+        return format.format(date)
+    }
+
+    //토글 라이브 데이터
+    private val _bugExpanded = MutableLiveData(false)
+
+    val bugExpanded : LiveData<Boolean>
+        get() = _bugExpanded
+
+    fun toggleBug(){
+        _bugExpanded.value = !_bugExpanded.value!!
+    }
+
+    private val _fishExpanded = MutableLiveData(false)
+
+    val fishExpanded : LiveData<Boolean>
+        get() = _fishExpanded
+
+    fun toggleFish(){
+        _fishExpanded.value = !_fishExpanded.value!!
+    }
+
+    private val _critterExpanded = MutableLiveData(false)
+
+    val critterExpanded : LiveData<Boolean>
+        get() = _critterExpanded
+
+    fun toggleCritter(){
+        _critterExpanded.value = !_critterExpanded.value!!
     }
 }

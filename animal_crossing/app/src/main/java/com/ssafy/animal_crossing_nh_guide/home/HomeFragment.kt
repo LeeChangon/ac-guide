@@ -11,6 +11,7 @@ import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
+import com.ssafy.animal_crossing_nh_guide.util.ToggleAnimation
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -19,7 +20,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
 
-    var bugExpanded = false;
+//    var bugExpanded = false;
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
@@ -33,6 +34,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         initSetting()
         initListener()
+        initObserve()
+    }
+
+    private fun initObserve() {
+        mainActivityViewModel.currentTime.observe(viewLifecycleOwner){
+            binding.time = mainActivityViewModel.convertLongToTime()
+        }
+
+        mainActivityViewModel.bugExpanded.observe(viewLifecycleOwner){
+            toggleCard(binding.homeBugDrawLayout, binding.homeBugDrawIcon, mainActivityViewModel.bugExpanded.value!!)
+        }
+
+        mainActivityViewModel.fishExpanded.observe(viewLifecycleOwner){
+            toggleCard(binding.homeFishDrawLayout, binding.homeFishDrawIcon, mainActivityViewModel.fishExpanded.value!!)
+        }
+
+        mainActivityViewModel.critterExpanded.observe(viewLifecycleOwner){
+            toggleCard(binding.homeCritterDrawLayout, binding.homeCritterDrawIcon, mainActivityViewModel.critterExpanded.value!!)
+        }
     }
 
     private fun initListener() {
@@ -52,31 +72,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         }
 
         binding.homeBugHeadLayout.setOnClickListener {
-            bugExpanded = !bugExpanded
-            if(bugExpanded){
-                binding.homeBugDrawLayout.visibility = View.VISIBLE
+            mainActivityViewModel.toggleBug()
+        }
 
-                binding.homeBugDrawBtn.animate().setDuration(500).rotation(180f)
-            }
-            else{
-                binding.homeBugDrawLayout.visibility = View.GONE
-                binding.homeBugDrawBtn.animate().setDuration(500).rotation(0f)
-            }
+        binding.homeFishHeadLayout.setOnClickListener {
+            mainActivityViewModel.toggleFish()
+        }
+
+        binding.homeCritterHeadLayout.setOnClickListener {
+            mainActivityViewModel.toggleCritter()
+        }
+
+    }
+
+    fun toggleCard(layout: View, arrow: View, expanded: Boolean){
+        if(expanded){
+            layout.visibility = View.VISIBLE
+            ToggleAnimation.expand(layout)
+            arrow.animate().setDuration(200).rotation(180f)
+        }
+        else{
+            layout.visibility = View.GONE
+            ToggleAnimation.collapse(layout)
+            arrow.animate().setDuration(200).rotation(0f)
         }
     }
 
 
     fun initSetting(){
-
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
         refreshTime()
-
     }
 
     fun refreshTime(){
         mainActivityViewModel.setTime()
         mainActivityViewModel.convertLongToTime()
-        binding.dateTv.text = mainActivityViewModel.currentTime.value
     }
 
 }
