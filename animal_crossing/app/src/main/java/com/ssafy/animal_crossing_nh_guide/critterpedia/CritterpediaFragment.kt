@@ -4,18 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.activityViewModels
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentCritterpediaBinding
-import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 
 
 private const val TAG = "CritterpediaFragment_싸피"

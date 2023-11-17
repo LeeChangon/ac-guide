@@ -10,10 +10,11 @@ import com.ssafy.animal_crossing_nh_guide.critterpedia.BugDetailViewPagerAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailBinding
 
 private const val TAG = "BugDetailFragment_싸피"
-class BugDetailFragment : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentBugDetailBinding>(FragmentBugDetailBinding::bind, R.layout.fragment_bug_detail){
+class BugDetailFragment(position: Int) : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentBugDetailBinding>(FragmentBugDetailBinding::bind, R.layout.fragment_bug_detail){
 
     private lateinit var viewPagerAdapter: BugDetailViewPagerAdapter
     private var currentPage = 0
+    private val position = position
 
     override fun onResume() {
         super.onResume()
@@ -28,14 +29,14 @@ class BugDetailFragment : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragme
 
 
 
-        viewPagerAdapter = BugDetailViewPagerAdapter()
+        viewPagerAdapter = BugDetailViewPagerAdapter(position)
         viewPagerAdapter.myCallBack = this
         binding.bugDetailViewPager.adapter = viewPagerAdapter
         binding.bugDetailViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
-                Log.d(TAG, "onPageScrolled: ${position}")
+                Log.d(TAG, "onPageSelected: ${position}")
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -50,8 +51,9 @@ class BugDetailFragment : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragme
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
         }
-
         )
+
+        binding.bugDetailViewPager.setCurrentItem(position)
 
         binding.btnPrev.setOnClickListener {
             if (currentPage > 0){
