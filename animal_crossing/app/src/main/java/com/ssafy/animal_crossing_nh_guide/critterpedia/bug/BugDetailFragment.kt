@@ -1,10 +1,12 @@
 package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailBinding
 
@@ -17,6 +19,8 @@ class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBa
 
     private lateinit var viewPagerAdapter: BugDetailViewPagerAdapter
     private var currentPage = startPosition
+
+    private val bugFragmentViewModel: BugFragmentViewModel by viewModels({ requireParentFragment() })
 
     override fun onResume() {
         super.onResume()
@@ -31,7 +35,7 @@ class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBa
 
 
 
-        viewPagerAdapter = BugDetailViewPagerAdapter(currentPage)
+        viewPagerAdapter = BugDetailViewPagerAdapter(bugFragmentViewModel)
         viewPagerAdapter.myCallBack = this
         binding.bugDetailViewPager.adapter = viewPagerAdapter
         binding.bugDetailViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
