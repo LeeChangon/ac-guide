@@ -63,4 +63,7 @@ class MainActivityViewModel : ViewModel(){
     fun toggleCritter(){
         _critterExpanded.value = !_critterExpanded.value!!
     }
+
+    // 토글 체크리스트
+
 }
