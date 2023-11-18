@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature
+package com.ssafy.animal_crossing_nh_guide.critterpedia.seaCreature
 
 import android.content.Context
 import android.os.Bundle
@@ -31,12 +31,13 @@ class SeaCreatureFragment : BaseFragment<FragmentSeaCreatureBinding>(
             tabTextList.add("${i}월")
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPagerAdapter = ViewPagerAdapter(this, "Sea")
-        binding.seaViewPager.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.seaTabLayout, binding.seaViewPager) { tab, position ->
+        viewPagerAdapter = ViewPagerAdapter(this, "SeaCreature")
+        binding.seaCreatureViewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.seaCreatureTabLayout, binding.seaCreatureViewPager) { tab, position ->
             tab.text = tabTextList[position]
         }.attach()
     }

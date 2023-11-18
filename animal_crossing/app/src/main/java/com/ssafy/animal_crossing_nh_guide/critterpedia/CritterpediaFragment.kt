@@ -12,7 +12,7 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.bug.BugFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.fish.FishFragment
-import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.SeaCreatureFragment
+import com.ssafy.animal_crossing_nh_guide.critterpedia.seaCreature.SeaCreatureFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentCritterpediaBinding
 
 
