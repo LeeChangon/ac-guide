@@ -1,52 +1,83 @@
 package com.ssafy.animal_crossing_nh_guide.critterpedia.fish
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
+import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
+import com.ssafy.animal_crossing_nh_guide.databinding.FragmentFishDetailBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FishDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FishDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+private const val TAG = "FishDetailFragment_싸피"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
+class FishDetailFragment(startPosition: Int) : FishDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentFishDetailBinding>(
+    FragmentFishDetailBinding::bind,
+    R.layout.fragment_fish_detail
+){
 
-        }
+    private lateinit var viewPagerAdapter: FishDetailViewPagerAdapter
+    private var currentPage = startPosition
+
+    private val fishFragmentViewModel: FishFragmentViewModel by viewModels({ requireParentFragment() })
+
+    override fun onResume() {
+        super.onResume()
+        requireContext().dialogFragmentResize(this, 1f, 0.9f)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fish_detail, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FishDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FishDetailFragment().apply {
-                arguments = Bundle().apply {
-                }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+        viewPagerAdapter = FishDetailViewPagerAdapter(fishFragmentViewModel)
+        viewPagerAdapter.myCallBack = this
+        binding.fishDetailViewPager.adapter = viewPagerAdapter
+        binding.fishDetailViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentPage = position
+
             }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+        }
+        )
+
+
+        binding.fishDetailViewPager.setCurrentItem(currentPage, false)
+
+        binding.btnPrev.setOnClickListener {
+            if (currentPage > 0){
+                binding.fishDetailViewPager.setCurrentItem(currentPage - 1)
+            }
+        }
+        binding.btnNext.setOnClickListener {
+            if (currentPage < 80) {
+                binding.fishDetailViewPager.setCurrentItem(currentPage + 1)
+            }
+        }
+
     }
+
+    override fun close() {
+        this.dismiss()
+    }
+
+
 }

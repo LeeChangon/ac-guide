@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    <variable
+        name="sea_creature"
+        type="com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature" />
+    </data>
+
+    <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnBell"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="7dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/selector_bell"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            app:layout_constraintEnd_toStartOf="@+id/btnStar"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnStar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/selector_star"
+            app:layout_constraintBottom_toBottomOf="@+id/btnCheck"
+            app:layout_constraintEnd_toStartOf="@+id/btnCheck"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnBell" />
+
+        <ImageView
+            android:id="@+id/btnCheck"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/selector_check"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnStar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="50dp"
+            app:cardBackgroundColor="@color/ac_background_bright"
+            app:cardCornerRadius="50dp"
+            app:strokeWidth="0dp"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="50dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ac_background_chosebox"
+                    android:gravity="center"
+                    android:text="@{sea_creature.name.name_KRko}"
+                    android:textSize="23sp"
+                    app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="40dp"
+                    app:layout_constraintBottom_toTopOf="@+id/info"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name"
+                    app:strokeWidth="0dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@color/cardview_light_background"
+                        app:imageUrl="@{`icons/sea/`+ sea_creature.file_name + `.png`}"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/money"
+                    app:layout_constraintBottom_toTopOf="@+id/tvweather"
+                    app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                    app:layout_constraintTop_toTopOf="@+id/materialCardView" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{Integer.toString(sea_creature.price)}"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvweather"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/ac_background_chosebox"
+                    android:gravity="center"
+                    android:text="날씨"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/weather"
+                    app:layout_constraintStart_toStartOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                <ImageView
+                    android:id="@+id/weather"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/sunny"
+                    app:layout_constraintStart_toStartOf="@+id/tvweather"
+                    app:layout_constraintTop_toBottomOf="@+id/tvweather" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvlocation"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/ac_background_chosebox"
+                    android:gravity="center"
+                    android:text="위치"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/location"
+                    app:layout_constraintStart_toStartOf="@+id/weather"
+                    app:layout_constraintTop_toBottomOf="@+id/weather" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="꽃밭 주변"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toTopOf="@+id/info"
+                    app:layout_constraintStart_toStartOf="@+id/tvlocation"
+                    app:layout_constraintTop_toBottomOf="@+id/tvlocation" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/info"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/ac_background_chosebox"
+                    android:gravity="center"
+                    android:text="출현시기"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info">
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="85dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/ac_button"
+                        android:fontFamily="@font/cindi"
+                        android:text="월"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toTopOf="@+id/button3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/m1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="1 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="2 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m1"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="3 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m2"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="4 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m3"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="5 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m4"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="6 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m5"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/m7"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="7 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m6"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m8"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="8 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m7"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m9"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="9 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m8"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m10"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="10 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m9"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m11"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="11 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m10"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+                            <TextView
+                                android:id="@+id/m12"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="12 "
+                                android:textSize="17sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintStart_toEndOf="@+id/m11"
+                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/closeBtn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="85dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/ac_button"
+                        android:fontFamily="@font/cindi"
+                        android:text="시간"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toTopOf="@+id/closeBtn"
+                        app:layout_constraintStart_toStartOf="@+id/button2"
+                        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="9PM ~ 11PM"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/button3"
+                        app:layout_constraintStart_toStartOf="@+id/m1"
+                        app:layout_constraintTop_toTopOf="@+id/button3" />
+
+                </LinearLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/closeBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/ac_primary"
+                    android:fontFamily="@font/cindi"
+                    android:text="CLOSE"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                    app:strokeWidth="0dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+</layout>

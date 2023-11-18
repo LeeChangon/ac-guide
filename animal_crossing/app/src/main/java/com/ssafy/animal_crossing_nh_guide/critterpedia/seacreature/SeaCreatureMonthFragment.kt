@@ -1,14 +1,18 @@
-package com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature
+package com.ssafy.animal_crossing_nh_guide.critterpedia.seaCreature
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
+import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.SeaCreatureFragmentViewModel
+import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.SeaCreatureGalleryAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureMonthBinding
 
 class SeaCreatureMonthFragment : BaseFragment<FragmentSeaCreatureMonthBinding>(
@@ -18,11 +22,15 @@ class SeaCreatureMonthFragment : BaseFragment<FragmentSeaCreatureMonthBinding>(
 
     private var month = -1
 
+    private val viewModel: SeaCreatureFragmentViewModel by viewModels()
+    private var galleryAdapter: SeaCreatureGalleryAdapter = SeaCreatureGalleryAdapter()
+
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+        galleryAdapter.childFragmentManager = childFragmentManager
 
     }
 
@@ -33,10 +41,24 @@ class SeaCreatureMonthFragment : BaseFragment<FragmentSeaCreatureMonthBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        Log.d(TAG, "onViewCreated: ")
-        binding.month.text = "Sea : ${month.toString()}"
+
+        initAdapter()
+
+        viewModel.seaCreatureList.observe(viewLifecycleOwner){
+            galleryAdapter.list = it
+            galleryAdapter.notifyDataSetChanged()
+        }
+
 
     }
-
+    private fun initAdapter(){
+        galleryAdapter.list = listOf()
+        val manager = GridLayoutManager(context, 4)
+        binding.seaCreatureRecyclerView.apply {
+            layoutManager = manager
+            adapter = galleryAdapter
+        }
+        viewModel.getSeaCreatureList(month)
+    }
 
 }
