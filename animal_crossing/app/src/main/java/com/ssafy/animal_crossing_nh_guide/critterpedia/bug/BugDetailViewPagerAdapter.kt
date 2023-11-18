@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
@@ -12,15 +13,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDetailViewPagerAdapter.ViewHolder>() {
+class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) : RecyclerView.Adapter<BugDetailViewPagerAdapter.ViewHolder>() {
 
     interface MyCallBack {
         fun close()
     }
 
     lateinit var myCallBack:MyCallBack
-//
-//    var startPosition = startPosition
+
     var bug: Bug? = null
 
     override fun onCreateViewHolder(
@@ -48,7 +48,7 @@ class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDe
         Log.d("싸피", "onBindViewHolder: ${position}")
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.Main) {
-                bug = RetrofitUtil.bugService.getBug(position)
+                bug = RetrofitUtil.bugService.getBug(bugFragmentViewModel.bugList.value!![position].id-1)
             }
             holder.bind()
         }
