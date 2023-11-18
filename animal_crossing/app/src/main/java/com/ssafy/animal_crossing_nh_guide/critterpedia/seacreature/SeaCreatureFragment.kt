@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.home
+package com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature
 
 import android.content.Context
 import android.os.Bundle
@@ -6,15 +6,17 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.ViewPagerAdapter
-import com.ssafy.animal_crossing_nh_guide.databinding.FragmentFishBinding
+import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureBinding
 
-private const val TAG = "FishFragment_싸피"
-class FishFragment : BaseFragment<FragmentFishBinding>(FragmentFishBinding::bind, R.layout.fragment_fish) {
+class SeaCreatureFragment : BaseFragment<FragmentSeaCreatureBinding>(
+    FragmentSeaCreatureBinding::bind,
+    R.layout.fragment_sea_creature
+) {
 
     private var tabTextList = mutableListOf<String>()
     private lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -29,14 +31,12 @@ class FishFragment : BaseFragment<FragmentFishBinding>(FragmentFishBinding::bind
             tabTextList.add("${i}월")
         }
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
 
-        viewPagerAdapter = ViewPagerAdapter(this, "Fish")
-        binding.fishViewPager.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.fishTabLayout, binding.fishViewPager) { tab, position ->
+        viewPagerAdapter = ViewPagerAdapter(this, "Sea")
+        binding.seaViewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.seaTabLayout, binding.seaViewPager) { tab, position ->
             tab.text = tabTextList[position]
         }.attach()
     }

@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.home
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.os.Bundle
 import android.util.Log
@@ -6,15 +6,17 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
-import com.ssafy.animal_crossing_nh_guide.critterpedia.BugDetailViewPagerAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailBinding
 
 private const val TAG = "BugDetailFragment_싸피"
-class BugDetailFragment(position: Int) : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentBugDetailBinding>(FragmentBugDetailBinding::bind, R.layout.fragment_bug_detail){
+
+class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBack, BaseDialogFragment<FragmentBugDetailBinding>(
+    FragmentBugDetailBinding::bind,
+    R.layout.fragment_bug_detail
+){
 
     private lateinit var viewPagerAdapter: BugDetailViewPagerAdapter
-    private var currentPage = 0
-    private val position = position
+    private var currentPage = startPosition
 
     override fun onResume() {
         super.onResume()
@@ -29,14 +31,14 @@ class BugDetailFragment(position: Int) : BugDetailViewPagerAdapter.MyCallBack, B
 
 
 
-        viewPagerAdapter = BugDetailViewPagerAdapter(position)
+        viewPagerAdapter = BugDetailViewPagerAdapter(currentPage)
         viewPagerAdapter.myCallBack = this
         binding.bugDetailViewPager.adapter = viewPagerAdapter
         binding.bugDetailViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
-                Log.d(TAG, "onPageSelected: ${position}")
+
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -53,7 +55,8 @@ class BugDetailFragment(position: Int) : BugDetailViewPagerAdapter.MyCallBack, B
         }
         )
 
-        binding.bugDetailViewPager.setCurrentItem(position)
+
+        binding.bugDetailViewPager.setCurrentItem(currentPage, false)
 
         binding.btnPrev.setOnClickListener {
             if (currentPage > 0){
@@ -62,7 +65,7 @@ class BugDetailFragment(position: Int) : BugDetailViewPagerAdapter.MyCallBack, B
         }
         binding.btnNext.setOnClickListener {
             if (currentPage < 80) {
-                binding.bugDetailViewPager.setCurrentItem(currentPage+1)
+                binding.bugDetailViewPager.setCurrentItem(currentPage + 1)
             }
         }
 

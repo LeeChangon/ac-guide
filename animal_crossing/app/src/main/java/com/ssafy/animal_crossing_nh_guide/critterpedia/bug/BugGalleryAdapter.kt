@@ -1,4 +1,4 @@
-package com.ssafy.gallery
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,12 +8,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemGalleryBinding
-import com.ssafy.animal_crossing_nh_guide.home.BugDetailFragment
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 
+private const val TAG = "BugGalleryAdapter_싸피"
 class BugGalleryAdapter() : RecyclerView.Adapter<BugGalleryAdapter.ViewHolder>() {
 
-    lateinit var childFragmentManager:FragmentManager
+    lateinit var childFragmentManager: FragmentManager
 
     var list = listOf<Bug>()
     inner class ViewHolder(private val binding: ListItemGalleryBinding): RecyclerView.ViewHolder(binding.root){
@@ -24,6 +24,7 @@ class BugGalleryAdapter() : RecyclerView.Adapter<BugGalleryAdapter.ViewHolder>()
                 Log.d("싸피", "bind: ${position}")
                 binding.itemImage.setOnClickListener {
                     Log.d("싸피", "bind: ${item.file_name}")
+                    Log.d(TAG, "bind: ${position}")
                     BugDetailFragment(position).show(
                         childFragmentManager, "BugDetail"
                     )
@@ -35,7 +36,12 @@ class BugGalleryAdapter() : RecyclerView.Adapter<BugGalleryAdapter.ViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            DataBindingUtil.inflate( LayoutInflater.from(parent.context), R.layout.list_item_gallery, parent, false )
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.list_item_gallery,
+                parent,
+                false
+            )
         )
     }
 

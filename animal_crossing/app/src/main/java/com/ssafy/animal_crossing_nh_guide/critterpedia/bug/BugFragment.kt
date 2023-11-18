@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.home
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.content.Context
 import android.os.Bundle
@@ -6,16 +6,17 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.ViewPagerAdapter
-import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureBinding
+import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugBinding
 
-
-private const val TAG = "SeaCreatureFragment_싸피"
-class SeaCreatureFragment : BaseFragment<FragmentSeaCreatureBinding>(FragmentSeaCreatureBinding::bind, R.layout.fragment_sea_creature) {
+class BugFragment : BaseFragment<FragmentBugBinding>(
+    FragmentBugBinding::bind,
+    R.layout.fragment_bug
+) {
 
     private var tabTextList = mutableListOf<String>()
     private lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -30,16 +31,17 @@ class SeaCreatureFragment : BaseFragment<FragmentSeaCreatureBinding>(FragmentSea
             tabTextList.add("${i}월")
         }
     }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
 
-        viewPagerAdapter = ViewPagerAdapter(this, "Sea")
-        binding.seaViewPager.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.seaTabLayout, binding.seaViewPager) { tab, position ->
+        viewPagerAdapter = ViewPagerAdapter(this, "Bug")
+        binding.bugViewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.bugTabLayout, binding.bugViewPager) { tab, position ->
             tab.text = tabTextList[position]
         }.attach()
-    }
 
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.critterpedia
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

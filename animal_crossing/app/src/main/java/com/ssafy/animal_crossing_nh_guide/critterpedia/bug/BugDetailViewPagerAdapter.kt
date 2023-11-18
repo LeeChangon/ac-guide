@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.critterpedia
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDetailViewPagerAdapter.ViewHolder>() {
 
@@ -20,23 +19,27 @@ class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDe
     }
 
     lateinit var myCallBack:MyCallBack
-
-    var startPosition = startPosition
+//
+//    var startPosition = startPosition
     var bug: Bug? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): BugDetailViewPagerAdapter.ViewHolder {
-        val binding = FragmentBugDetailDialogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = FragmentBugDetailDialogBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
 
 
 
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Main){
-                bug = RetrofitUtil.bugService.getBug(startPosition)
-            }
-        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            withContext(Dispatchers.Main) {
+//                bug = RetrofitUtil.bugService.getBug(startPosition)
+//            }
+//        }
 
         return ViewHolder(binding)
     }
@@ -44,12 +47,11 @@ class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDe
     override fun onBindViewHolder(holder: BugDetailViewPagerAdapter.ViewHolder, position: Int) {
         Log.d("싸피", "onBindViewHolder: ${position}")
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 bug = RetrofitUtil.bugService.getBug(position)
             }
+            holder.bind()
         }
-
-        holder.bind()
     }
 
     override fun getItemCount(): Int {
@@ -58,6 +60,7 @@ class BugDetailViewPagerAdapter(startPosition: Int) : RecyclerView.Adapter<BugDe
 
     inner class ViewHolder(private val binding: FragmentBugDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(){
+
             binding.bug = bug
 
             binding.btnBell.setOnClickListener {

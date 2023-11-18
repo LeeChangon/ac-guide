@@ -1,4 +1,4 @@
-package com.ssafy.animal_crossing_nh_guide.home
+package com.ssafy.animal_crossing_nh_guide.critterpedia.bug
 
 import android.content.Context
 import android.os.Bundle
@@ -7,16 +7,16 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
-import com.ssafy.animal_crossing_nh_guide.critterpedia.BugFragmentViewModel
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugMonthBinding
-import com.ssafy.gallery.BugGalleryAdapter
 
-private const val TAG = "BugMonthFragment_싸피"
-class BugMonthFragment : BaseFragment<FragmentBugMonthBinding>(FragmentBugMonthBinding::bind, R.layout.fragment_bug_month) {
+class BugMonthFragment : BaseFragment<FragmentBugMonthBinding>(
+    FragmentBugMonthBinding::bind,
+    R.layout.fragment_bug_month
+) {
 
     private var month = -1
 
@@ -39,7 +39,6 @@ class BugMonthFragment : BaseFragment<FragmentBugMonthBinding>(FragmentBugMonthB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
 
         initAdapter()
 
