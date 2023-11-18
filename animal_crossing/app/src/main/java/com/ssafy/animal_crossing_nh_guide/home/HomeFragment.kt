@@ -37,10 +37,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 //        binding.homeBugCardview.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         val imageUrl = "/icons/bugs/agrias_butterfly.png"
-
+//        val imageUrl2 = "/icons/bugs/scolpion.png"
+//
         binding.img = imageUrl
-
-
+//
+//        Glide.with(this).load("${ApplicationClass.IMGS_URL}${imageUrl2}").preload()
 
         initSetting()
         initListener()
@@ -62,6 +63,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         mainActivityViewModel.critterExpanded.observe(viewLifecycleOwner){
             toggleCard(binding.homeCritterDrawLayout, binding.homeCritterDrawIcon, mainActivityViewModel.critterExpanded.value!!)
+        }
+
+        mainActivityViewModel.checkListExpanded.observe(viewLifecycleOwner){
+            toggleCard(binding.homeChecklistDrawLayout, binding.homeChecklistDrawIcon, mainActivityViewModel.checkListExpanded.value!!)
         }
     }
 
@@ -93,6 +98,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             mainActivityViewModel.toggleCritter()
         }
 
+        binding.homeChecklistHeadLayout.setOnClickListener {
+            mainActivityViewModel.toggleCheckList()
+        }
+
         // 체크리스트 리스너
         checkList.forEachIndexed { index, it ->
             it.setOnClickListener {
@@ -104,7 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     fun initChecklist(){
-        for(i:Int in 0..7){
+        for(i:Int in 0..11){
             val check = ApplicationClass.sharedPreferencesUtil.getCheckList(i)
             toggleCheckList(checkList[i], check)
         }

@@ -1,11 +1,9 @@
-package com.ssafy.smartstore_jetpack.util
+package com.ssafy.animal_crossing_nh_guide
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 
 private const val TAG = "BindingAdapter_싸피"

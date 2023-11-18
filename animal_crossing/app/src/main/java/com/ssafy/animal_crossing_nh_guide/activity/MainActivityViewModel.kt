@@ -64,6 +64,15 @@ class MainActivityViewModel : ViewModel(){
         _critterExpanded.value = !_critterExpanded.value!!
     }
 
+    private val _checkListExpanded = MutableLiveData(false)
+
+    val checkListExpanded : LiveData<Boolean>
+        get() = _checkListExpanded
+
+    fun toggleCheckList(){
+        _checkListExpanded.value = !_checkListExpanded.value!!
+    }
+
     // 토글 체크리스트
 
 }
