@@ -16,5 +16,7 @@ interface BugService {
     @GET("api/bug/{no}")
     suspend fun getBug(@Path("no") no: Int): Bug
 
+    @GET("api/bug/{month}")
+    suspend fun getMonthBug(@Path("month") month: Int): List<Bug>
 
 }

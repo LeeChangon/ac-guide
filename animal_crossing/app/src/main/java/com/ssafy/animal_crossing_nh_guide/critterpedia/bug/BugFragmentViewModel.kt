@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
 import java.lang.Exception
 
 class BugFragmentViewModel: ViewModel() {
@@ -16,11 +17,15 @@ class BugFragmentViewModel: ViewModel() {
     val bugList : LiveData<List<Bug>>
         get() = _bugList
 
-    fun getBugList() {
+    fun getBugList(month:Int) {
         viewModelScope.launch {
             var list:List<Bug>
             try {
-                list = RetrofitUtil.bugService.getBugList()
+                if (month == 0){
+                    list = RetrofitUtil.bugService.getBugList()
+                }else{
+                    list = RetrofitUtil.bugService.getMonthBug(month)
+                }
             }catch (e: Exception){
                 list = listOf()
             }
