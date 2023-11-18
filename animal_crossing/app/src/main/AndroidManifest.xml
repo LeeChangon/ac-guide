@@ -17,6 +17,7 @@
         android:theme="@style/Theme.Animal_crossing_NH_guide"
         >
         <activity
+            android:screenOrientation="portrait"
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>

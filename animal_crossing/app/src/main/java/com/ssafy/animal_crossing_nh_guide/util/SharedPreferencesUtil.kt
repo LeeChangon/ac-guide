@@ -43,6 +43,26 @@ class SharedPreferencesUtil (context: Context) {
         return System.currentTimeMillis() + timeDiff
     }
 
+    fun resetCheckList(){
+        val editor = preferences.edit()
+        for(i: Int in 0..7){
+            editor.putBoolean("check$i", false)
+        }
 
+        editor.apply()
+    }
+
+    fun getCheckList(idx : Int) : Boolean{
+        return preferences.getBoolean("check$idx", false)
+    }
+
+    fun setCheckList(idx : Int) : Boolean{
+        val editor = preferences.edit()
+        val flg = !preferences.getBoolean("check$idx", true)
+        editor.putBoolean("check$idx", flg)
+        editor.apply()
+
+        return flg
+    }
 
 }
