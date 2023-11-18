@@ -10,5 +10,6 @@ data class Bug(
     val museum_phrase: String,
     val name: Name,
     val price: Int,
-    val price_flick: Int
+    val price_flick: Int,
+    val weather: List<Boolean>
 )

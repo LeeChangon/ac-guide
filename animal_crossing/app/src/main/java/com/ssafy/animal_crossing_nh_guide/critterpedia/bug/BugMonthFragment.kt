@@ -56,7 +56,7 @@ class BugMonthFragment : BaseFragment<FragmentBugMonthBinding>(
             layoutManager = manager
             adapter = galleryAdapter
         }
-        viewModel.getBugList()
+        viewModel.getBugList(month)
     }
 
 }
