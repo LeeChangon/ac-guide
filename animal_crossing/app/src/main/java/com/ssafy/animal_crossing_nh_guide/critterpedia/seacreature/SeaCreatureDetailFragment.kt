@@ -21,6 +21,7 @@ class SeaCreatureDetailFragment(startPosition: Int) : SeaCreatureDetailViewPager
 
     private lateinit var viewPagerAdapter: SeaCreatureDetailViewPagerAdapter
     private var currentPage = startPosition
+    private var maxPage = 40
 
     private val seaCreatureFragmentViewModel: SeaCreatureFragmentViewModel by viewModels({ requireParentFragment() })
 
@@ -35,7 +36,7 @@ class SeaCreatureDetailFragment(startPosition: Int) : SeaCreatureDetailViewPager
 
         super.onViewCreated(view, savedInstanceState)
 
-
+        maxPage = seaCreatureFragmentViewModel.seaCreatureList.value!!.size
 
         viewPagerAdapter = SeaCreatureDetailViewPagerAdapter(seaCreatureFragmentViewModel)
         viewPagerAdapter.myCallBack = this
@@ -70,7 +71,7 @@ class SeaCreatureDetailFragment(startPosition: Int) : SeaCreatureDetailViewPager
             }
         }
         binding.btnNext.setOnClickListener {
-            if (currentPage < 40) {
+            if (currentPage < maxPage) {
                 binding.seaCreatureDetailViewPager.setCurrentItem(currentPage + 1)
             }
         }

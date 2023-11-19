@@ -22,6 +22,7 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
     lateinit var myCallBack:MyCallBack
 
     var bug: Bug? = null
+    var monthList: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false, false, false)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -50,18 +51,33 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
             withContext(Dispatchers.Main) {
                 bug = RetrofitUtil.bugService.getBug(bugFragmentViewModel.bugList.value!![position].id-1)
             }
+            withContext(Dispatchers.Main) {
+                Log.d("싸피", "onBindViewHolder: ${bug!!.availability.month_array_northern}")
+                for (i in 1..12){
+                    if(bug!!.availability.month_array_northern.contains(i)){
+                        monthList[i-1] = true
+                    }else{
+                        monthList[i-1] = false
+                    }
+                }
+
+            }
             holder.bind()
         }
     }
 
+
+
     override fun getItemCount(): Int {
-        return 80
+        return bugFragmentViewModel.bugList.value!!.size
     }
 
     inner class ViewHolder(private val binding: FragmentBugDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(){
 
             binding.bug = bug
+            binding.monthList = monthList
+            Log.d("싸피", "bind: ${monthList}")
 
             binding.btnBell.setOnClickListener {
                 binding.btnBell.isSelected = !binding.btnBell.isSelected

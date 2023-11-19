@@ -19,6 +19,7 @@ class FishDetailFragment(startPosition: Int) : FishDetailViewPagerAdapter.MyCall
 
     private lateinit var viewPagerAdapter: FishDetailViewPagerAdapter
     private var currentPage = startPosition
+    private var maxPage = 80
 
     private val fishFragmentViewModel: FishFragmentViewModel by viewModels({ requireParentFragment() })
 
@@ -33,7 +34,7 @@ class FishDetailFragment(startPosition: Int) : FishDetailViewPagerAdapter.MyCall
 
         super.onViewCreated(view, savedInstanceState)
 
-
+        maxPage = fishFragmentViewModel.fishList.value!!.size
 
         viewPagerAdapter = FishDetailViewPagerAdapter(fishFragmentViewModel)
         viewPagerAdapter.myCallBack = this
@@ -68,7 +69,7 @@ class FishDetailFragment(startPosition: Int) : FishDetailViewPagerAdapter.MyCall
             }
         }
         binding.btnNext.setOnClickListener {
-            if (currentPage < 80) {
+            if (currentPage < maxPage) {
                 binding.fishDetailViewPager.setCurrentItem(currentPage + 1)
             }
         }

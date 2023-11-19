@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class FishFragmentViewModel: ViewModel() {
-    private val _fishList = MutableLiveData<List<Fish>>()
+    private val _fishList = MutableLiveData<List<Fish>>(listOf())
 
     val fishList : LiveData<List<Fish>>
         get() = _fishList

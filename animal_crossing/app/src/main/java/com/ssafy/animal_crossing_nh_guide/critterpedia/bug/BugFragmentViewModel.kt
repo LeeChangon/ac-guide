@@ -12,7 +12,7 @@ import java.lang.Exception
 
 class BugFragmentViewModel: ViewModel() {
 
-    private val _bugList = MutableLiveData<List<Bug>>()
+    private val _bugList = MutableLiveData<List<Bug>>(listOf())
 
     val bugList : LiveData<List<Bug>>
         get() = _bugList
