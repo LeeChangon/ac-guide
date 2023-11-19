@@ -22,6 +22,7 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
     lateinit var myCallBack:MyCallBack
 
     var fish: Fish? = null
+    var monthList: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false, false, false)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -50,18 +51,30 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
             withContext(Dispatchers.Main) {
                 fish = RetrofitUtil.fishService.getFish(fishFragmentViewModel.fishList.value!![position].id-1)
             }
+            withContext(Dispatchers.Main) {
+                Log.d("싸피", "onBindViewHolder: ${fish!!.availability.month_array_northern}")
+                for (i in 1..12){
+                    if(fish!!.availability.month_array_northern.contains(i)){
+                        monthList[i-1] = true
+                    }else{
+                        monthList[i-1] = false
+                    }
+                }
+
+            }
             holder.bind()
         }
     }
 
     override fun getItemCount(): Int {
-        return 80
+        return fishFragmentViewModel.fishList.value!!.size
     }
 
     inner class ViewHolder(private val binding: FragmentFishDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(){
 
             binding.fish = fish
+            binding.monthList = monthList
 
             binding.btnBell.setOnClickListener {
                 binding.btnBell.isSelected = !binding.btnBell.isSelected

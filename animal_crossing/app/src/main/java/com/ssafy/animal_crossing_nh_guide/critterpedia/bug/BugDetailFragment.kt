@@ -19,6 +19,7 @@ class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBa
 
     private lateinit var viewPagerAdapter: BugDetailViewPagerAdapter
     private var currentPage = startPosition
+    private var maxPage = 80
 
     private val bugFragmentViewModel: BugFragmentViewModel by viewModels({ requireParentFragment() })
 
@@ -27,13 +28,11 @@ class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBa
         requireContext().dialogFragmentResize(this, 1f, 0.9f)
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
 
-
+        maxPage = bugFragmentViewModel.bugList.value!!.size
 
         viewPagerAdapter = BugDetailViewPagerAdapter(bugFragmentViewModel)
         viewPagerAdapter.myCallBack = this
@@ -68,7 +67,7 @@ class BugDetailFragment(startPosition: Int) : BugDetailViewPagerAdapter.MyCallBa
             }
         }
         binding.btnNext.setOnClickListener {
-            if (currentPage < 80) {
+            if (currentPage < maxPage) {
                 binding.bugDetailViewPager.setCurrentItem(currentPage + 1)
             }
         }

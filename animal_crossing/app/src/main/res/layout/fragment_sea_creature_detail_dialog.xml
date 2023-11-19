@@ -4,9 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-    <variable
-        name="sea_creature"
-        type="com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature" />
+        <import type="android.view.View"/>
+        <variable
+            name="sea_creature"
+            type="com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature" />
+        <variable
+            name="monthList"
+            type="java.util.ArrayList&lt;Boolean>" />
     </data>
 
     <FrameLayout
@@ -106,7 +110,7 @@
                         android:layout_width="140dp"
                         android:layout_height="140dp"
                         android:background="@color/cardview_light_background"
-                        app:imageUrl="@{`icons/sea/`+ sea_creature.file_name + `.png`}"/>
+                        app:imageUrl="@{`images/sea/`+ sea_creature.file_name + `.png`}"/>
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -132,25 +136,28 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvweather"
+                    android:id="@+id/tvshadow"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@color/ac_background_chosebox"
                     android:gravity="center"
-                    android:text="날씨"
+                    android:text="그림자"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@+id/weather"
+                    app:layout_constraintBottom_toTopOf="@+id/shadow"
                     app:layout_constraintStart_toStartOf="@+id/imageView2"
                     app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-                <ImageView
-                    android:id="@+id/weather"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/sunny"
-                    app:layout_constraintStart_toStartOf="@+id/tvweather"
-                    app:layout_constraintTop_toBottomOf="@+id/tvweather" />
+                <TextView
+                    android:id="@+id/shadow"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{sea_creature.shadow}"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="@+id/tvshadow"
+                    app:layout_constraintTop_toBottomOf="@+id/tvshadow" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -160,20 +167,20 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/ac_background_chosebox"
                     android:gravity="center"
-                    android:text="위치"
+                    android:text="속도"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/location"
-                    app:layout_constraintStart_toStartOf="@+id/weather"
-                    app:layout_constraintTop_toBottomOf="@+id/weather" />
+                    app:layout_constraintStart_toStartOf="@+id/shadow"
+                    app:layout_constraintTop_toBottomOf="@+id/shadow" />
 
                 <TextView
                     android:id="@+id/location"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="꽃밭 주변"
+                    android:text="@{sea_creature.speed}"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toTopOf="@+id/info"
                     app:layout_constraintStart_toStartOf="@+id/tvlocation"
@@ -204,6 +211,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info">
 
                     <Button
+                        android:layout_gravity="center"
                         android:id="@+id/button2"
                         android:layout_width="85dp"
                         android:layout_height="40dp"
@@ -222,160 +230,212 @@
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linearLayout5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
 
                             <TextView
                                 android:id="@+id/m1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="1 "
+                                android:background="@{monthList[0] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="1"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
-                                app:layout_constraintStart_toEndOf="@+id/button2"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintBottom_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toStartOf="@+id/m2"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp"/>
 
                             <TextView
                                 android:id="@+id/m2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="2 "
+                                android:background="@{monthList[1] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="2"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintBottom_toBottomOf="@+id/m1"
+                                app:layout_constraintEnd_toStartOf="@+id/m3"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m1"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintTop_toTopOf="@+id/m1"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m3"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="3 "
+                                android:background="@{monthList[2] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="3"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintBottom_toBottomOf="@+id/m1"
+                                app:layout_constraintEnd_toStartOf="@+id/m4"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m2"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintTop_toTopOf="@+id/m1"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m4"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="4 "
+                                android:background="@{monthList[3] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="4"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintBottom_toBottomOf="@+id/m1"
+                                app:layout_constraintEnd_toStartOf="@+id/m5"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m3"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintTop_toTopOf="@+id/m1"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
 
                             <TextView
                                 android:id="@+id/m5"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="5 "
+                                android:background="@{monthList[4] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="5"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintBottom_toBottomOf="@+id/m1"
+                                app:layout_constraintEnd_toStartOf="@+id/m6"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m4"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintTop_toTopOf="@+id/m1"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
 
                             <TextView
                                 android:id="@+id/m6"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:gravity="center"
-                                android:text="6 "
+                                android:background="@{monthList[5] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:text="6"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintBottom_toBottomOf="@+id/m1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m5"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                                app:layout_constraintTop_toTopOf="@+id/m1"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
 
                             <TextView
                                 android:id="@+id/m7"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginTop="2dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[6] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="7 "
+                                android:text="7"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
-                                app:layout_constraintStart_toEndOf="@+id/m6"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                app:layout_constraintTop_toBottomOf="@id/m1"
+                                app:layout_constraintEnd_toStartOf="@+id/m8"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m8"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[7] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="8 "
+                                android:text="8"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toStartOf="@+id/m9"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m7"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m9"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[8] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="9 "
+                                android:text="9"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toStartOf="@+id/m10"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m8"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m10"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[9] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="10 "
+                                android:text="10"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toStartOf="@+id/m11"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m9"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
 
                             <TextView
                                 android:id="@+id/m11"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[10] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="11 "
+                                android:text="11"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toStartOf="@+id/m12"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m10"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
 
                             <TextView
                                 android:id="@+id/m12"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@{monthList[11] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
-                                android:text="12 "
+                                android:text="12"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                                app:layout_constraintTop_toTopOf="@id/m7"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m11"
-                                app:layout_constraintTop_toTopOf="@+id/button2" />
-                        </LinearLayout>
+                                tools:layout_conversion_absoluteHeight="19dp"
+                                tools:layout_conversion_absoluteWidth="45dp" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -406,7 +466,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:text="9PM ~ 11PM"
+                        android:text="@{sea_creature.availability.time}"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="@+id/button3"
                         app:layout_constraintStart_toStartOf="@+id/m1"

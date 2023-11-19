@@ -22,6 +22,7 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
     lateinit var myCallBack:MyCallBack
 
     var seaCreature: SeaCreature? = null
+    var monthList: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false, false, false)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -50,18 +51,30 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
             withContext(Dispatchers.Main) {
                 seaCreature = RetrofitUtil.seaCreatureService.getSeaCreature(seaCreatureFragmentViewModel.seaCreatureList.value!![position].id-1)
             }
+            withContext(Dispatchers.Main) {
+                Log.d("싸피", "onBindViewHolder: ${seaCreature!!.availability.month_array_northern}")
+                for (i in 1..12){
+                    if(seaCreature!!.availability.month_array_northern.contains(i)){
+                        monthList[i-1] = true
+                    }else{
+                        monthList[i-1] = false
+                    }
+                }
+
+            }
             holder.bind()
         }
     }
 
     override fun getItemCount(): Int {
-        return 80
+        return seaCreatureFragmentViewModel.seaCreatureList.value!!.size
     }
 
     inner class ViewHolder(private val binding: FragmentSeaCreatureDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(){
 
             binding.seaCreature = seaCreature
+            binding.monthList = monthList
 
             binding.btnBell.setOnClickListener {
                 binding.btnBell.isSelected = !binding.btnBell.isSelected
