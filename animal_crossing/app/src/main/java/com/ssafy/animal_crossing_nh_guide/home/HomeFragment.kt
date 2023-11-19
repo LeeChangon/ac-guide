@@ -13,7 +13,9 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
+import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import com.ssafy.animal_crossing_nh_guide.util.ToggleAnimation
+import kotlinx.coroutines.coroutineScope
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -34,14 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
 
-//        binding.homeBugCardview.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        val imageUrl = "/icons/bugs/agrias_butterfly.png"
-//        val imageUrl2 = "/icons/bugs/scolpion.png"
-//
-        binding.img = imageUrl
-//
-//        Glide.with(this).load("${ApplicationClass.IMGS_URL}${imageUrl2}").preload()
 
         initSetting()
         initListener()
@@ -67,6 +62,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         mainActivityViewModel.checkListExpanded.observe(viewLifecycleOwner){
             toggleCard(binding.homeChecklistDrawLayout, binding.homeChecklistDrawIcon, mainActivityViewModel.checkListExpanded.value!!)
+        }
+
+        mainActivityViewModel.nowBugList.observe(viewLifecycleOwner){
+            Log.d(TAG, "initObserve: ${it}")
+            val homeBugAdapter = HomeBugAdapter(mainActivity, it)
+            binding.homeBugGridview.adapter = homeBugAdapter
         }
     }
 
@@ -110,6 +111,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         }
 
+        // 지금 잡히는 버그 리스트 클릭 리스너
+        binding.homeBugGridview.setOnItemClickListener { adapterView, view, i, l ->
+            showToast("$i")
+        }
+
     }
 
     fun initChecklist(){
@@ -131,12 +137,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
 
-    fun initSetting(){
+    private fun initSetting(){
         checkList.addAll(arrayOf(binding.fossil1, binding.fossil2, binding.fossil3, binding.fossil4, binding.bottle, binding.moneyTree,
              binding.rock1, binding.rock2, binding.rock3, binding.rock4, binding.rock5, binding.rock6))
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
         refreshTime()
         initChecklist()
+
+        mainActivityViewModel.getNowBugList()
     }
 
     fun refreshTime(){

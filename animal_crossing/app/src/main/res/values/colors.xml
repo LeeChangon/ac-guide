@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFF7</color>
 
+    <color name="ac_launch_background">#FF82D5BB</color>
     <color name="ac_primary">#72E3C0</color>
     <color name="ac_primary2">#1AC8B9</color>
 

@@ -4,9 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
+import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
+import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 
 private const val TAG = "MainActivityViewModel_싸피"
@@ -73,6 +79,34 @@ class MainActivityViewModel : ViewModel(){
         _checkListExpanded.value = !_checkListExpanded.value!!
     }
 
-    // 토글 체크리스트
+    // 지금 잡히는 리스트
+    private val _nowBugList= MutableLiveData<List<Bug>>()
+
+    val nowBugList : LiveData<List<Bug>>
+        get() = _nowBugList
+
+    fun getNowBugList(){
+        val calendar = Calendar.getInstance()
+        calendar.time = getCurrentDate()
+
+        val month = calendar.get(Calendar.MONTH) + 1
+        val hour = calendar.get(Calendar.HOUR)
+
+        Log.d(TAG, "getNowBugList: 달 : $month+, 시간 : $hour")
+
+        viewModelScope.launch {
+            var list:List<Bug>
+
+            try {
+                list = RetrofitUtil.bugService.getMonthTimeBug(month, hour)
+
+            }catch (e: Exception){
+                list = listOf()
+            }
+
+            Log.d(TAG, "getNowBugList: ${list.size}")
+            _nowBugList.value = list
+        }
+    }
 
 }
