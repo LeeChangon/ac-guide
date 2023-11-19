@@ -1,21 +1,17 @@
 package com.ssafy.animal_crossing_nh_guide.home
 
-import android.animation.LayoutTransition
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
-import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
-import com.ssafy.animal_crossing_nh_guide.util.ToggleAnimation
-import kotlinx.coroutines.coroutineScope
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -26,6 +22,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private val checkList = mutableListOf<View>()
 
+    private var homeBugAdapter: HomeBugAdapter = HomeBugAdapter()
+    private var homeFishAdapter: HomeFishAdapter = HomeFishAdapter()
+    private var homeSeaAdapter: HomeSeaAdapter = HomeSeaAdapter()
+
 //    var bugExpanded = false;
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -35,6 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
+
 
 
 
@@ -64,10 +65,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             toggleCard(binding.homeChecklistDrawLayout, binding.homeChecklistDrawIcon, mainActivityViewModel.checkListExpanded.value!!)
         }
 
+        //지금 잡히는 리스트
+        //곤충
         mainActivityViewModel.nowBugList.observe(viewLifecycleOwner){
             Log.d(TAG, "initObserve: ${it}")
-            val homeBugAdapter = HomeBugAdapter(mainActivity, it)
-            binding.homeBugGridview.adapter = homeBugAdapter
+            homeBugAdapter.list = it
+            homeBugAdapter.notifyDataSetChanged()
+        }
+
+        //물고기
+        mainActivityViewModel.nowFishList.observe(viewLifecycleOwner){
+            Log.d(TAG, "initObserve: ${it}")
+            homeFishAdapter.list = it
+            homeFishAdapter.notifyDataSetChanged()
+        }
+
+        //해산물
+        mainActivityViewModel.nowSeaList.observe(viewLifecycleOwner){
+            homeSeaAdapter.list = it
+            homeSeaAdapter.notifyDataSetChanged()
         }
     }
 
@@ -77,6 +93,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             when(it.itemId){
                 R.id.time_refresh_btn -> {
                     refreshTime()
+                    refreshList()
                     true
                 }
                 else -> false
@@ -111,10 +128,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         }
 
-        // 지금 잡히는 버그 리스트 클릭 리스너
-        binding.homeBugGridview.setOnItemClickListener { adapterView, view, i, l ->
-            showToast("$i")
-        }
 
     }
 
@@ -142,9 +155,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
              binding.rock1, binding.rock2, binding.rock3, binding.rock4, binding.rock5, binding.rock6))
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
         refreshTime()
+        refreshList()
         initChecklist()
 
-        mainActivityViewModel.getNowBugList()
+        initBugAdapter()
+        initFishAdapter()
+        initSeaAdapter()
+
+//        mainActivityViewModel.getNowBugList()
+//        mainActivityViewModel.getNowFishList()
     }
 
     fun refreshTime(){
@@ -152,4 +171,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         mainActivityViewModel.convertLongToTime()
     }
 
+    fun refreshList(){
+        mainActivityViewModel.getNowBugList()
+        mainActivityViewModel.getNowFishList()
+        mainActivityViewModel.getNowSeaList()
+    }
+
+    //지금 잡히는 리스트 어댑터 초기화
+    private fun initBugAdapter(){
+        homeBugAdapter.list = listOf()
+
+        val manager = GridLayoutManager(context, 5)
+
+        binding.homeBugRecyclerview.apply {
+            layoutManager = manager
+            adapter = homeBugAdapter
+        }
+    }
+
+    private fun initFishAdapter(){
+        homeFishAdapter.list = listOf()
+
+        val manager = GridLayoutManager(context, 5)
+
+        binding.homeFishesRecyclerview.apply {
+            layoutManager = manager
+            adapter = homeFishAdapter
+        }
+    }
+
+    private fun initSeaAdapter(){
+        homeSeaAdapter.list = listOf()
+
+        val manager = GridLayoutManager(context, 5)
+
+        binding.homeSeaRecyclerview.apply {
+            layoutManager = manager
+            adapter = homeSeaAdapter
+        }
+    }
 }

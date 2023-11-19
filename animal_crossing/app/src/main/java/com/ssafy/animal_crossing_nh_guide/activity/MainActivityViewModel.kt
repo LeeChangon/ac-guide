@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
+import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -80,10 +82,12 @@ class MainActivityViewModel : ViewModel(){
     }
 
     // 지금 잡히는 리스트
+    //벌레
     private val _nowBugList= MutableLiveData<List<Bug>>()
 
     val nowBugList : LiveData<List<Bug>>
         get() = _nowBugList
+
 
     fun getNowBugList(){
         val calendar = Calendar.getInstance()
@@ -91,8 +95,6 @@ class MainActivityViewModel : ViewModel(){
 
         val month = calendar.get(Calendar.MONTH) + 1
         val hour = calendar.get(Calendar.HOUR)
-
-        Log.d(TAG, "getNowBugList: 달 : $month+, 시간 : $hour")
 
         viewModelScope.launch {
             var list:List<Bug>
@@ -109,4 +111,60 @@ class MainActivityViewModel : ViewModel(){
         }
     }
 
+    //물고기
+    private val _nowFishList= MutableLiveData<List<Fish>>()
+
+    val nowFishList : LiveData<List<Fish>>
+        get() = _nowFishList
+
+    fun getNowFishList(){
+        val calendar = Calendar.getInstance()
+        calendar.time = getCurrentDate()
+
+        val month = calendar.get(Calendar.MONTH) + 1
+        val hour = calendar.get(Calendar.HOUR)
+
+        viewModelScope.launch {
+            var list:List<Fish>
+
+            try {
+                list = RetrofitUtil.fishService.getMonthTimeFish(month, hour)
+
+            }catch (e: Exception){
+                list = listOf()
+            }
+
+            Log.d(TAG, "getNowFishList: ${list.size}")
+            _nowFishList.value = list
+        }
+    }
+
+    //해산물
+    private val _nowSeaList= MutableLiveData<List<SeaCreature>>()
+
+    val nowSeaList : LiveData<List<SeaCreature>>
+        get() = _nowSeaList
+
+    fun getNowSeaList(){
+        val calendar = Calendar.getInstance()
+        calendar.time = getCurrentDate()
+
+        val month = calendar.get(Calendar.MONTH) + 1
+        val hour = calendar.get(Calendar.HOUR)
+
+        viewModelScope.launch {
+            var list:List<SeaCreature>
+
+            try {
+                list = RetrofitUtil.seaCreatureService.getMonthTimeSeaCreature(month, hour)
+
+            }catch (e: Exception){
+                Log.d(TAG, "getNowSeaList: 오류")
+                list = listOf()
+            }
+
+            Log.d(TAG, "getNowSeaList: ${list.size}")
+            _nowSeaList.value = list
+        }
+    }
 }

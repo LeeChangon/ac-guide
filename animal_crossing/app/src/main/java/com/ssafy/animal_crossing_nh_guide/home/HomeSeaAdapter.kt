@@ -4,31 +4,29 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
-import com.ssafy.animal_crossing_nh_guide.databinding.ListItemGalleryBinding
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemHomeBinding
-import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 
-private const val TAG = "HomeBugAdapter_싸피"
-class HomeBugAdapter() : RecyclerView.Adapter<HomeBugAdapter.ViewHolder>() {
+private const val TAG = "HomeSeaAdapter_싸피"
+class HomeSeaAdapter() : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
 
 //    lateinit var childFragmentManager: FragmentManager
 
-    var list = listOf<Bug>()
+    var list = listOf<SeaCreature>()
     inner class ViewHolder(private val binding: ListItemHomeBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Bug, position: Int){
+        fun bind(item: SeaCreature, position: Int){
             binding.apply{
-                var path = "icons/bugs/${item.file_name}.png"
+                var path = "icons/sea/${item.file_name}.png"
                 filepath = path
                 Log.d("싸피", "bind: ${position}")
                 binding.itemImage.setOnClickListener {
                     Log.d("싸피", "bind: ${item.file_name}")
                     Log.d(TAG, "bind: ${position}")
 
-//                    BugDetailFragment(position).show(
-//                        childFragmentManager, "BugDetail"
+//                    SeaDetailFragment(position).show(
+//                        childFragmentManager, "SeaDetail"
 //                    )
                 }
             }
