@@ -2,6 +2,7 @@ package com.ssafy.animal_crossing_nh_guide.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.config.BaseActivity
 import com.ssafy.animal_crossing_nh_guide.databinding.ActivityMainBinding
@@ -14,6 +15,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private val activityViewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //스플래쉬
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         binding.bottomNavigation.itemIconTintList = null

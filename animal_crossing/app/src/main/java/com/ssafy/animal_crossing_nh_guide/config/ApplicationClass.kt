@@ -13,7 +13,8 @@ class ApplicationClass : Application() {
     companion object{
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
-        const val SERVER_URL = "http://172.20.10.9:9999/vue/"
+        //52.79.210.7:9999
+        const val SERVER_URL = "http://52.79.210.7:9999/vue/"
 
         lateinit var retrofit: Retrofit
 
