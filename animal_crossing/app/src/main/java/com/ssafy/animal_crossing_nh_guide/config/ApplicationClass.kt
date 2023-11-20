@@ -15,9 +15,10 @@ class ApplicationClass : Application() {
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
         //52.79.210.7:9999
-        const val SERVER_URL = "http://192.168.33.125:9999/vue/"
+        const val SERVER_URL = "http://52.79.210.7:9999/vue/"
 
         lateinit var retrofit: Retrofit
+        lateinit var retrofitacnh: Retrofit
 
         const val IMGS_URL = "https://raw.githubusercontent.com/alexislours/ACNHAPI/master/"
 
@@ -45,6 +46,12 @@ class ApplicationClass : Application() {
         // 앱이 처음 생성되는 순간, retrofit 인스턴스를 생성
         retrofit = Retrofit.Builder()
             .baseUrl(SERVER_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+
+        retrofitacnh = Retrofit.Builder()
+            .baseUrl("https://api.nookipedia.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
