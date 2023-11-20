@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.animal_crossing_nh_guide.models.villager.AcnhVillager
 import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
@@ -38,6 +39,26 @@ class VillagerFragmentViewModel: ViewModel() {
                 list = listOf()
             }
             _villagerList.value = list
+        }
+    }
+
+    private val _filePath = MutableLiveData<String>("")
+
+    val filePath : LiveData<String>
+        get() = _filePath
+
+    fun getFilePath(name: String) {
+        _filePath.value = ""
+        viewModelScope.launch {
+            var result:List<AcnhVillager>
+            try {
+                result = RetrofitUtil.acnhService.getAcnhVillager(name)
+            }catch (e: Exception){
+                result = listOf()
+            }
+            if(result.size != 0){
+                _filePath.value = result[0].image_url
+            }
         }
     }
 }

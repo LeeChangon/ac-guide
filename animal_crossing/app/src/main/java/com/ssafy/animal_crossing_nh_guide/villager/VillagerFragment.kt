@@ -27,13 +27,14 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
 ), AdapterView.OnItemSelectedListener {
 
     private val viewModel: VillagerFragmentViewModel by viewModels()
-    private var galleryAdapter: VillagerGalleryAdapter = VillagerGalleryAdapter()
+    private lateinit var galleryAdapter: VillagerGalleryAdapter
 
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+        galleryAdapter = VillagerGalleryAdapter(requireContext(), viewModel)
         galleryAdapter.childFragmentManager = childFragmentManager
     }
 
