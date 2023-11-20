@@ -82,9 +82,11 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    tools:text="알렉산드리아제비나방"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_title_tv_background"
+                    android:padding="5dp"
                     android:gravity="center"
                     android:text="@{bug.name.name_KRko}"
                     android:textSize="20sp"
@@ -110,7 +112,7 @@
                         android:layout_width="140dp"
                         android:layout_height="140dp"
                         android:background="@color/cardview_light_background"
-                        app:imageUrl="@{`images/bugs/`+ bug.file_name + `.png`}"/>
+                        app:imageUrl="@{`images/bugs/`+ bug.file_name + `.png`}" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -140,7 +142,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="날씨"
                     android:textSize="20sp"
@@ -172,18 +174,17 @@
                 </LinearLayout>
 
 
-
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvlocation"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="위치"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/location"
-                    app:layout_constraintStart_toStartOf="@+id/weather"
+                    app:layout_constraintStart_toStartOf="@+id/tvweather"
                     app:layout_constraintTop_toBottomOf="@+id/weather" />
 
                 <TextView
@@ -192,10 +193,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
+                    android:breakStrategy="high_quality"
                     android:gravity="center"
                     android:text="@{bug.availability.location}"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toTopOf="@+id/info"
+                    app:layout_constraintEnd_toEndOf="@+id/tvlocation"
                     app:layout_constraintStart_toStartOf="@+id/tvlocation"
                     app:layout_constraintTop_toBottomOf="@+id/tvlocation" />
 
@@ -204,7 +207,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="출현시기"
                     android:textSize="20sp"
@@ -224,13 +227,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/info">
 
                     <Button
-                        android:layout_gravity="center"
                         android:id="@+id/button2"
                         android:layout_width="85dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="center"
                         android:backgroundTint="@color/ac_button"
                         android:fontFamily="@font/cindi"
                         android:text="월"
+                        android:clickable="false"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toTopOf="@+id/button3"
                         app:layout_constraintStart_toStartOf="parent"
@@ -251,12 +255,12 @@
 
                             <TextView
                                 android:id="@+id/m1"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[0] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="1"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toStartOf="@+id/m2"
@@ -265,16 +269,16 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:layout_conversion_absoluteHeight="19dp"
-                                tools:layout_conversion_absoluteWidth="44dp"/>
+                                tools:layout_conversion_absoluteWidth="44dp" />
 
                             <TextView
                                 android:id="@+id/m2"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[1] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="2"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/m1"
                                 app:layout_constraintEnd_toStartOf="@+id/m3"
@@ -286,12 +290,12 @@
 
                             <TextView
                                 android:id="@+id/m3"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[2] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="3"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/m1"
                                 app:layout_constraintEnd_toStartOf="@+id/m4"
@@ -303,12 +307,12 @@
 
                             <TextView
                                 android:id="@+id/m4"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[3] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="4"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/m1"
                                 app:layout_constraintEnd_toStartOf="@+id/m5"
@@ -320,12 +324,12 @@
 
                             <TextView
                                 android:id="@+id/m5"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[4] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="5"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/m1"
                                 app:layout_constraintEnd_toStartOf="@+id/m6"
@@ -337,12 +341,12 @@
 
                             <TextView
                                 android:id="@+id/m6"
-                                android:textAlignment="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:gravity="center"
                                 android:background="@{monthList[5] ? @drawable/month_checked : @drawable/month_unchecked}"
+                                android:gravity="center"
                                 android:text="6"
+                                android:textAlignment="center"
                                 android:textSize="17sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/m1"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -354,18 +358,18 @@
 
                             <TextView
                                 android:id="@+id/m7"
-                                android:layout_marginTop="2dp"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
+                                android:layout_marginTop="2dp"
                                 android:background="@{monthList[6] ? @drawable/month_checked : @drawable/month_unchecked}"
                                 android:gravity="center"
                                 android:text="7"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toBottomOf="@id/m1"
                                 app:layout_constraintEnd_toStartOf="@+id/m8"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/m1"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="44dp" />
 
@@ -378,10 +382,10 @@
                                 android:text="8"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toStartOf="@+id/m9"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m7"
+                                app:layout_constraintTop_toTopOf="@id/m7"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="44dp" />
 
@@ -394,10 +398,10 @@
                                 android:text="9"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toStartOf="@+id/m10"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m8"
+                                app:layout_constraintTop_toTopOf="@id/m7"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="44dp" />
 
@@ -410,10 +414,10 @@
                                 android:text="10"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toStartOf="@+id/m11"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m9"
+                                app:layout_constraintTop_toTopOf="@id/m7"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="45dp" />
 
@@ -426,10 +430,10 @@
                                 android:text="11"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toStartOf="@+id/m12"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m10"
+                                app:layout_constraintTop_toTopOf="@id/m7"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="45dp" />
 
@@ -442,10 +446,10 @@
                                 android:text="12"
                                 android:textAlignment="center"
                                 android:textSize="17sp"
-                                app:layout_constraintTop_toTopOf="@id/m7"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/m11"
+                                app:layout_constraintTop_toTopOf="@id/m7"
                                 tools:layout_conversion_absoluteHeight="19dp"
                                 tools:layout_conversion_absoluteWidth="45dp" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -469,6 +473,7 @@
                         android:backgroundTint="@color/ac_button"
                         android:fontFamily="@font/cindi"
                         android:text="시간"
+                        android:clickable="false"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toTopOf="@+id/closeBtn"
                         app:layout_constraintStart_toStartOf="@+id/button2"
@@ -481,6 +486,7 @@
                         android:layout_marginStart="15dp"
                         android:text="@{bug.availability.time}"
                         android:textSize="17sp"
+                        android:layout_gravity="center"
                         app:layout_constraintBottom_toBottomOf="@+id/button3"
                         app:layout_constraintStart_toStartOf="@+id/m1"
                         app:layout_constraintTop_toTopOf="@+id/button3" />

@@ -82,9 +82,11 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/ac_background_chosebox"
+                    tools:text="알렉산드리아제비나방"
+                    android:background="@drawable/detail_title_tv_background"
+                    android:padding="5dp"
                     android:gravity="center"
                     android:text="@{sea_creature.name.name_KRko}"
                     android:textSize="23sp"
@@ -140,7 +142,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="그림자"
                     android:textSize="20sp"
@@ -150,12 +152,13 @@
 
                 <TextView
                     android:id="@+id/shadow"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{sea_creature.shadow}"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:text="@{sea_creature.shadow}"
                     android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="@+id/tvshadow"
                     app:layout_constraintStart_toStartOf="@+id/tvshadow"
                     app:layout_constraintTop_toBottomOf="@+id/tvshadow" />
 
@@ -165,12 +168,12 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="속도"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/location"
-                    app:layout_constraintStart_toStartOf="@+id/shadow"
+                    app:layout_constraintStart_toStartOf="@+id/tvshadow"
                     app:layout_constraintTop_toBottomOf="@+id/shadow" />
 
                 <TextView
@@ -183,6 +186,7 @@
                     android:text="@{sea_creature.speed}"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toTopOf="@+id/info"
+                    app:layout_constraintEnd_toEndOf="@+id/tvlocation"
                     app:layout_constraintStart_toStartOf="@+id/tvlocation"
                     app:layout_constraintTop_toBottomOf="@+id/tvlocation" />
 
@@ -191,7 +195,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@color/ac_background_chosebox"
+                    android:background="@drawable/detail_tv_background"
                     android:gravity="center"
                     android:text="출현시기"
                     android:textSize="20sp"
@@ -218,6 +222,7 @@
                         android:backgroundTint="@color/ac_button"
                         android:fontFamily="@font/cindi"
                         android:text="월"
+                        android:clickable="false"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toTopOf="@+id/button3"
                         app:layout_constraintStart_toStartOf="parent"
@@ -456,6 +461,7 @@
                         android:backgroundTint="@color/ac_button"
                         android:fontFamily="@font/cindi"
                         android:text="시간"
+                        android:clickable="false"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toTopOf="@+id/closeBtn"
                         app:layout_constraintStart_toStartOf="@+id/button2"
@@ -466,6 +472,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
+                        android:layout_gravity="center"
                         android:text="@{sea_creature.availability.time}"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="@+id/button3"
