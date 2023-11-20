@@ -16,16 +16,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <FrameLayout
+            android:id="@+id/flipframe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="60dp"
+            android:layout_weight="1">
+        </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_marginTop="3dp"
+                android:gravity="top|center">
                 <ImageView
                     android:id="@+id/btnStar"
                     android:layout_width="40dp"
@@ -40,27 +46,19 @@
                     android:src="@drawable/selector_check" />
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/flipframe"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </FrameLayout>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/closeBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="1dp"
+                android:layout_marginHorizontal="100dp"
                 android:backgroundTint="@color/ac_primary"
                 android:fontFamily="@font/cindi"
                 android:text="CLOSE"
                 app:cornerRadius="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintStart_toStartOf="@+id/cardView"
                 app:strokeWidth="0dp" />
-        </LinearLayout>
+
     </FrameLayout>
 </layout>

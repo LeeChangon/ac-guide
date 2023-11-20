@@ -44,7 +44,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
     override fun onResume() {
         super.onResume()
-        requireContext().dialogFragmentResize(this, 0.7f, 0.7f)
+        requireContext().dialogFragmentResize(this, 1.0f, 1.0f)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         }
 
 
-
+//        binding.flipframe.cameraDistance = 8000*requireContext().resources.displayMetrics.density
         binding.flipframe.setOnClickListener {
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(

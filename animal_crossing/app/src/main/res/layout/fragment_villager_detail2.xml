@@ -18,8 +18,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/ac_background_bright"
             app:cardCornerRadius="50dp"
