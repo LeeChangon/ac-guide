@@ -26,6 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private lateinit var homeFishAdapter: HomeFishAdapter
     private lateinit var homeSeaAdapter: HomeSeaAdapter
 
+
 //    var bugExpanded = false;
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,14 +69,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         //지금 잡히는 리스트
         //곤충
         mainActivityViewModel.nowBugList.observe(viewLifecycleOwner){
-            Log.d(TAG, "initObserve: ${it}")
+//            Log.d(TAG, "initObserve: ${it}")
             homeBugAdapter.list = it
+//            homeBugAdapter.setNewList(it)
             homeBugAdapter.notifyDataSetChanged()
         }
 
         //물고기
         mainActivityViewModel.nowFishList.observe(viewLifecycleOwner){
-            Log.d(TAG, "initObserve: ${it}")
+//            Log.d(TAG, "initObserve: ${it}")
             homeFishAdapter.list = it
             homeFishAdapter.notifyDataSetChanged()
         }

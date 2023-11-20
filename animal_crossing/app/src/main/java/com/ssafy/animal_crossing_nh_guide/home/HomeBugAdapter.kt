@@ -6,29 +6,45 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemHomeBinding
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.util.LinkedList
 
 private const val TAG = "HomeBugAdapter_싸피"
 class HomeBugAdapter(val context: Context) : RecyclerView.Adapter<HomeBugAdapter.ViewHolder>() {
 
 //    lateinit var childFragmentManager: FragmentManager
 
+    val myRepository = MyRepository.get()
+
     var list = listOf<Bug>()
+    var starCnt = 0
     inner class ViewHolder(private val binding: ListItemHomeBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Bug, position: Int){
             binding.apply{
                 var path = "icons/bugs/${item.file_name}.png"
                 filepath = path
-                Log.d("싸피", "bind: ${position}")
+                Log.d("싸피", "bind: 별 개수 : ${starCnt}")
+//                if(item.name.star == "true") {
+//                    binding.starIv.visibility = View.VISIBLE
+//                }
+
                 binding.itemImage.setOnClickListener {
-                    Log.d("싸피", "bind: ${item.file_name}")
-                    Log.d(TAG, "bind: ${position}")
+//                    Log.d("싸피", "bind: ${item.file_name}")
+//                    Log.d(TAG, "bind: ${position}")
 
                     //달 구하기
                     val monthList = arrayListOf<Boolean>()
@@ -82,6 +98,5 @@ class HomeBugAdapter(val context: Context) : RecyclerView.Adapter<HomeBugAdapter
     }
 
     override fun getItemCount() = list.size
-
 
 }
