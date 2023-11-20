@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 
+
 private const val TAG = "BindingAdapter_싸피"
 
 @BindingAdapter("imageUrl")
@@ -16,5 +17,18 @@ fun bindImage(view: ImageView, src: String) {
             RequestOptions()
                 .placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image))
+        .into(view)
+}
+
+@BindingAdapter("villagerUrl")
+fun bindVillagerImage(view: ImageView, src: String){
+
+    Glide.with(view)
+        .load(src)
+        .apply(
+            RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image)
+        )
         .into(view)
 }
