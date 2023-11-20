@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
@@ -13,6 +14,8 @@ import java.lang.Exception
 class BugFragmentViewModel: ViewModel() {
 
     private val _bugList = MutableLiveData<List<Bug>>(listOf())
+
+    val myRepository = MyRepository.get()
 
     val bugList : LiveData<List<Bug>>
         get() = _bugList

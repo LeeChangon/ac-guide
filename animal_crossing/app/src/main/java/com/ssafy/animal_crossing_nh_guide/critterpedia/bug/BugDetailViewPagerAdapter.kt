@@ -5,14 +5,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
+import com.ssafy.animal_crossing_nh_guide.database.Alert
+import com.ssafy.animal_crossing_nh_guide.database.Caught
+import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private const val TAG = "BugDetailViewPagerAdapt_싸피"
 class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) : RecyclerView.Adapter<BugDetailViewPagerAdapter.ViewHolder>() {
 
     interface MyCallBack {
@@ -23,6 +28,10 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
 
     var bug: Bug? = null
     var monthList: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false, false, false)
+
+    var catchFlg = false;
+    var starFlg = false;
+    var alertFlg = false;
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -60,9 +69,19 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
                         monthList[i-1] = false
                     }
                 }
-
             }
-            holder.bind()
+            //데이터베이스에서 플래그 받아오기
+            withContext(Dispatchers.Main) {
+                if(bugFragmentViewModel.myRepository.getCaught("곤충", position) != null) catchFlg = true
+                else catchFlg = false
+
+                if(bugFragmentViewModel.myRepository.getStar("곤충", position) != null) starFlg = true
+                else starFlg = false
+
+                if(bugFragmentViewModel.myRepository.getAlert("곤충", position) != null) alertFlg = true
+                else alertFlg = false
+            }
+            holder.bind(position)
         }
     }
 
@@ -73,20 +92,57 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
     }
 
     inner class ViewHolder(private val binding: FragmentBugDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(){
+        fun bind(position : Int){
+            binding.btnCheck.isSelected = catchFlg
+            binding.btnStar.isSelected = starFlg
+            binding.btnBell.isSelected = alertFlg
 
             binding.bug = bug
             binding.monthList = monthList
             Log.d("싸피", "bind: ${monthList}")
 
             binding.btnBell.setOnClickListener {
-                binding.btnBell.isSelected = !binding.btnBell.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (alertFlg) {
+                            bugFragmentViewModel.myRepository.deleteAlert(Alert(position, "곤충"))
+                        } else {
+                            bugFragmentViewModel.myRepository.insertAlert(Alert(position, "곤충"))
+                        }
+                    }
+                    alertFlg = !alertFlg
+                    binding.btnBell.isSelected = alertFlg
+                    Log.d(TAG, "bind 온클릭: $alertFlg")
+                }
             }
             binding.btnStar.setOnClickListener {
-                binding.btnStar.isSelected = !binding.btnStar.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (starFlg) {
+                            bugFragmentViewModel.myRepository.deleteStar(Star(position, "곤충"))
+                        } else {
+                            bugFragmentViewModel.myRepository.insertStar(Star(position, "곤충"))
+                        }
+                    }
+                    starFlg = !starFlg
+                    binding.btnStar.isSelected = starFlg
+                    Log.d(TAG, "bind 온클릭: $starFlg")
+                }
             }
             binding.btnCheck.setOnClickListener {
-                binding.btnCheck.isSelected = !binding.btnCheck.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (catchFlg) {
+                            bugFragmentViewModel.myRepository.deleteCaught(Caught(position, "곤충"))
+                        } else {
+                            bugFragmentViewModel.myRepository.insertCaught(Caught(position, "곤충"))
+                        }
+                    }
+                    catchFlg = !catchFlg
+                    binding.btnCheck.isSelected = catchFlg
+                    Log.d(TAG, "bind 온클릭: $catchFlg")
+                }
+
             }
 
             binding.closeBtn.setOnClickListener {
