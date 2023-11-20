@@ -22,9 +22,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private val checkList = mutableListOf<View>()
 
-    private var homeBugAdapter: HomeBugAdapter = HomeBugAdapter()
-    private var homeFishAdapter: HomeFishAdapter = HomeFishAdapter()
-    private var homeSeaAdapter: HomeSeaAdapter = HomeSeaAdapter()
+    private lateinit var homeBugAdapter: HomeBugAdapter
+    private lateinit var homeFishAdapter: HomeFishAdapter
+    private lateinit var homeSeaAdapter: HomeSeaAdapter
 
 //    var bugExpanded = false;
     override fun onAttach(context: Context) {
@@ -128,7 +128,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         }
 
-
     }
 
     fun initChecklist(){
@@ -179,6 +178,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     //지금 잡히는 리스트 어댑터 초기화
     private fun initBugAdapter(){
+        homeBugAdapter = HomeBugAdapter(mainActivity)
         homeBugAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
@@ -190,6 +190,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     private fun initFishAdapter(){
+        homeFishAdapter = HomeFishAdapter(mainActivity)
         homeFishAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
@@ -201,6 +202,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     private fun initSeaAdapter(){
+        homeSeaAdapter = HomeSeaAdapter(mainActivity)
         homeSeaAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)

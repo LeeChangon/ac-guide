@@ -1,16 +1,21 @@
 package com.ssafy.animal_crossing_nh_guide.home
 
+import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemHomeBinding
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 
 private const val TAG = "HomeSeaAdapter_싸피"
-class HomeSeaAdapter() : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
+class HomeSeaAdapter(val context : Context) : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
 
 //    lateinit var childFragmentManager: FragmentManager
 
@@ -25,9 +30,32 @@ class HomeSeaAdapter() : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
                     Log.d("싸피", "bind: ${item.file_name}")
                     Log.d(TAG, "bind: ${position}")
 
-//                    SeaDetailFragment(position).show(
-//                        childFragmentManager, "SeaDetail"
-//                    )
+                    //달 구하기
+                    val monthList = arrayListOf<Boolean>()
+                    for (i in 1..12){
+                        if(item.availability.month_array_northern.contains(i)){
+                            monthList.add(true)
+                        }else{
+                            monthList.add(false)
+                        }
+                    }
+
+                    val builder = AlertDialog.Builder(context)
+
+                    val view = FragmentSeaCreatureDetailDialogBinding.inflate(LayoutInflater.from(context))
+
+                    view.seaCreature = item
+                    view.monthList = monthList
+
+                    builder.setView(view.root)
+                    val dialog = builder.create()
+                    dialog.show()
+
+                    view.closeBtn.setOnClickListener {
+                        dialog.dismiss()
+                    }
+
+                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
                 }
             }
 
