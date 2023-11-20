@@ -9,6 +9,7 @@ import com.ssafy.animal_crossing_nh_guide.databinding.ActivityMainBinding
 import com.ssafy.animal_crossing_nh_guide.home.CritterpediaFragment
 import com.ssafy.animal_crossing_nh_guide.home.HomeFragment
 import com.ssafy.animal_crossing_nh_guide.mypage.MypageFragment
+import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
 
 private const val TAG = "MainActivity_싸피"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -41,9 +42,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     true
                 }
                 R.id.navigation_page_3 -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.frame_layout_main, MyPageFragment())
-//                        .commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout_main, VillagerFragment())
+                        .commit()
                     true
                 }
                 R.id.navigation_page_4 -> {

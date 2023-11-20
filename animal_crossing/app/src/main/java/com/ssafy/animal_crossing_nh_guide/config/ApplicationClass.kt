@@ -14,7 +14,7 @@ class ApplicationClass : Application() {
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
         //52.79.210.7:9999
-        const val SERVER_URL = "http://52.79.210.7:9999/vue/"
+        const val SERVER_URL = "http://192.168.33.125:9999/vue/"
 
         lateinit var retrofit: Retrofit
 

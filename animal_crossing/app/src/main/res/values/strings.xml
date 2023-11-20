@@ -2,4 +2,43 @@
     <string name="app_name">싸피의 숲</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="species_array">
+        <item>전체</item>
+        <item>개</item>
+        <item>개구리</item>
+        <item>개미핥기</item>
+        <item>고릴라</item>
+        <item>고양이</item>
+        <item>곰</item>
+        <item>늑대</item>
+        <item>다람쥐</item>
+        <item>닭</item>
+        <item>독수리</item>
+        <item>돼지</item>
+        <item>말</item>
+        <item>문어</item>
+        <item>사슴</item>
+        <item>사자</item>
+        <item>새</item>
+        <item>생쥐</item>
+        <item>아기곰</item>
+        <item>악어</item>
+        <item>암소</item>
+        <item>양</item>
+        <item>염소</item>
+        <item>오리</item>
+        <item>원숭이</item>
+        <item>캥거루</item>
+        <item>코끼리</item>
+        <item>코뿔소</item>
+        <item>코알라</item>
+        <item>타조</item>
+        <item>토끼</item>
+        <item>펭귄</item>
+        <item>하마</item>
+        <item>햄스터</item>
+        <item>호랑이</item>
+        <item>황소</item>
+    </string-array>
 </resources>
