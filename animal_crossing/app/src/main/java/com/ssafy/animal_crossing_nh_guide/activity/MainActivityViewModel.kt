@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
+import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
@@ -16,9 +17,12 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.LinkedList
 
 private const val TAG = "MainActivityViewModel_싸피"
 class MainActivityViewModel : ViewModel(){
+    val myRepository = MyRepository.get()
+
     private val _currentTime = MutableLiveData<Long>()
 
     val currentTime : LiveData<Long>
@@ -98,13 +102,25 @@ class MainActivityViewModel : ViewModel(){
 
         viewModelScope.launch {
             var list:List<Bug>
+            var linkedList = LinkedList<Bug>()
 
             try {
                 list = RetrofitUtil.bugService.getMonthTimeBug(month, hour)
 
+                list.forEachIndexed { i, bug ->
+                    if(myRepository.getStar("곤충",bug.id-1) != null){
+//                        bug.name.star = "true"
+                        linkedList.addFirst(bug)
+                    } else {
+                        linkedList.add(bug)
+                    }
+                }
+
             }catch (e: Exception){
+                Log.d(TAG, "getNowBugList:에러")
                 list = listOf()
             }
+
 
             Log.d(TAG, "getNowBugList: ${list.size}")
             _nowBugList.value = list

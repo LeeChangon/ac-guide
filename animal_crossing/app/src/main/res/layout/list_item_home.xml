@@ -12,16 +12,30 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/item_image"
-            tools:src="@drawable/blowfish"
-            android:elevation="5dp"
-            app:imageUrl="@{filepath}"
-            android:background="@drawable/now_background_uncaught"
-            android:layout_margin="5dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/item_image"
+                tools:src="@drawable/blowfish"
+                android:elevation="5dp"
+                app:imageUrl="@{filepath}"
+                android:background="@drawable/now_background_uncaught"
+                android:layout_margin="5dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <ImageView
+                android:id="@+id/star_iv"
+                android:layout_margin="3dp"
+                android:elevation="6dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/star_filled" />
+        </FrameLayout>
 
     </LinearLayout>
 </layout>

@@ -3,13 +3,19 @@ package com.ssafy.animal_crossing_nh_guide.activity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.bumptech.glide.Glide
 import com.ssafy.animal_crossing_nh_guide.R
+import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseActivity
 import com.ssafy.animal_crossing_nh_guide.databinding.ActivityMainBinding
 import com.ssafy.animal_crossing_nh_guide.home.CritterpediaFragment
 import com.ssafy.animal_crossing_nh_guide.home.HomeFragment
 import com.ssafy.animal_crossing_nh_guide.mypage.MypageFragment
+import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "MainActivity_싸피"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -17,9 +23,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //스플래쉬
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val list = RetrofitUtil.villagerService.getVillagerList()
+//            list.forEach{
+//                Glide.with(this@MainActivity)
+//                    .load("${ ApplicationClass.IMGS_URL}icons/villagers/${it.file_name}.png")
+//                    .preload();
+//            }
+//        }
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+
 
         binding.bottomNavigation.itemIconTintList = null
 
