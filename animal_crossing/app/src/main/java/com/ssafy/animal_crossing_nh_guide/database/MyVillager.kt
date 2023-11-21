@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "myvillager")
 data class MyVillager(
     @PrimaryKey var index : Int = -1,
+    @ColumnInfo var url : String = "",
+    @ColumnInfo var name : String = ""
 )
 //{
 //    @PrimaryKey(autoGenerate = true)

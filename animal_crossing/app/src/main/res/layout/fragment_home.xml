@@ -46,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-
                 >
 
                 <com.google.android.material.card.MaterialCardView
@@ -232,27 +231,51 @@
                             android:layout_height="wrap_content"
                             android:background="@color/ac_background_bright"
                             android:orientation="vertical">
-
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
                                 <com.google.android.material.card.MaterialCardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="15dp">
+                                    android:layout_margin="15dp"
+                                    >
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="120dp"
-                                        android:background="@color/ac_pedia_background">
+                                        android:layout_height="150dp"
+                                        android:background="@color/ac_pedia_background"
+                                        android:orientation="vertical">
+                                        <ImageView
+                                            android:id="@+id/test_iv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
                                         <com.google.android.material.button.MaterialButton
-                                            android:id="@+id/add_myvillager_btn"
-                                            android:elevation="10dp"
+                                            android:id="@+id/home_add_villager_btn"
+                                            style="@style/Widget.Material3.Button.IconButton"
                                             app:icon="@drawable/add_icon"
-                                            android:text="내 마을 주민 등록하기"
-                                            style="@style/ThemeOverlay.Material3.Button.ElevatedButton"
+                                            app:iconTint="@color/ac_textcolor_dark"
+                                            app:iconGravity="textStart"
+                                            android:text=" 내 마을 주민 추가하기"
+                                            app:rippleColor="@color/ac_background_bright"
+                                            android:fontFamily="@font/a_cindi_b"
+                                            android:textColor="@color/ac_textcolor_dark"
                                             android:layout_width="match_parent"
+                                            app:cornerRadius="5dp"
                                             android:layout_height="match_parent"
-                                            android:layout_margin="10dp"/>
-
+                                            />
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/home_villager_recyclerview"
+                                            android:visibility="gone"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"/>
                                     </LinearLayout>
+
+
+
                                 </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"

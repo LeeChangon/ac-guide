@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
+import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -69,7 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         //지금 잡히는 리스트
         //곤충
         mainActivityViewModel.nowBugList.observe(viewLifecycleOwner){
-//            Log.d(TAG, "initObserve: ${it}")
+            Log.d(TAG, "initObserve: ${it}")
             homeBugAdapter.list = it
 //            homeBugAdapter.setNewList(it)
             homeBugAdapter.notifyDataSetChanged()
@@ -86,6 +88,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         mainActivityViewModel.nowSeaList.observe(viewLifecycleOwner){
             homeSeaAdapter.list = it
             homeSeaAdapter.notifyDataSetChanged()
+        }
+
+        //주민 리스트
+        mainActivityViewModel.myVillagerList.observe(viewLifecycleOwner){
+            if(it.size == 0){
+                binding.homeAddVillagerBtn.visibility = View.VISIBLE
+                binding.homeVillagerRecyclerview.visibility = View.GONE
+            } else {
+                binding.homeAddVillagerBtn.visibility = View.GONE
+                binding.homeVillagerRecyclerview.visibility = View.VISIBLE
+
+            }
         }
     }
 
@@ -130,6 +144,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         }
 
+        //주민 추가 버튼
+        binding.homeAddVillagerBtn.setOnClickListener {
+            mainActivity.moveNavItem(R.id.navigation_page_3)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout_main, VillagerFragment())
+                .commit()
+
+
+            mainActivityViewModel.addVillager(190)
+        }
     }
 
     fun initChecklist(){
@@ -172,10 +196,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         mainActivityViewModel.convertLongToTime()
     }
 
-    fun refreshList(){
+    private fun refreshList(){
         mainActivityViewModel.getNowBugList()
         mainActivityViewModel.getNowFishList()
         mainActivityViewModel.getNowSeaList()
+        mainActivityViewModel.getMyVilagerList()
     }
 
     //지금 잡히는 리스트 어댑터 초기화

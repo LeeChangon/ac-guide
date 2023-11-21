@@ -80,4 +80,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         }
     }
+
+    fun moveNavItem(item: Int){
+        binding.bottomNavigation.selectedItemId = item
+    }
 }

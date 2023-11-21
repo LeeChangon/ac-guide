@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.database.MyRepository
+import com.ssafy.animal_crossing_nh_guide.database.MyVillager
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
+import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -157,6 +159,7 @@ class MainActivityViewModel : ViewModel(){
                 }
 
             }catch (e: Exception){
+                Log.d(TAG, "getNowFishList: ${e.stackTraceToString()}")
                 list = listOf()
             }
 
@@ -184,7 +187,8 @@ class MainActivityViewModel : ViewModel(){
 
             try {
                 list = RetrofitUtil.seaCreatureService.getMonthTimeSeaCreature(month, hour)
-
+                Log.d(TAG, "getNowSeaList: 개수 ${list.size}")
+                
                 list.forEachIndexed { i, it ->
                     if(myRepository.getStar("해산물",it.id-1) != null){
                         it.name.star = "true"
@@ -202,5 +206,36 @@ class MainActivityViewModel : ViewModel(){
             Log.d(TAG, "getNowSeaList: ${list.size}")
             _nowSeaList.value = linkedList
         }
+    }
+
+    //마을 주민 리스트
+    private var _myVillagerList= MutableLiveData<List<MyVillager>>()
+
+    val myVillagerList : LiveData<List<MyVillager>>
+        get() = _myVillagerList
+
+    //애플 191번
+    fun getMyVilagerList() {
+        var list : List<MyVillager>
+
+        viewModelScope.launch {
+            try {
+                list = myRepository.getAllMyVillager()
+            } catch (e : Exception){
+                list = listOf()
+            }
+
+            Log.d(TAG, "getMyVilagerList: 주민리스트 : ${list}")
+            _myVillagerList.value = list
+        }
+    }
+
+    fun addVillager(index: Int){
+        viewModelScope.launch {
+            val villager = RetrofitUtil.villagerService.getVillager(index)
+            
+            myRepository.insertMyVillager(MyVillager(index, villager.file_name, villager.name.name_KRko))
+        }
+
     }
 }
