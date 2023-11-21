@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".villager.VillagerFragment">
 
     <LinearLayout
@@ -11,13 +12,45 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <Spinner
-            android:layout_gravity="left"
-            android:layout_margin="5dp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/species_spinner"/>
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/species_spinner"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gender_spinner"/>
 
+            <EditText
+                android:id="@+id/search"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"/>
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                style="@style/Widget.Material3.TextInputLayout.FilledBox"-->
+<!--                app:endIconMode="custom"-->
+<!--                app:endIconDrawable="@drawable/fi_rr_search__2_"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:boxStrokeColor="@android:color/transparent"-->
+<!--                app:boxBackgroundColor="@android:color/transparent"-->
+<!--                android:maxLines="1">-->
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:textColor="@color/ac_textcolor_dark"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="30dp"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/villagerRecyclerView"
             android:layout_width="wrap_content"

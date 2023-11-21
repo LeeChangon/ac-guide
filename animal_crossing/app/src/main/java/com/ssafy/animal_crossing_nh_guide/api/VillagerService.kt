@@ -16,7 +16,12 @@ interface VillagerService {
     @GET("api/villager/{no}")
     suspend fun getVillager(@Path("no") no: Int): Villager
 
-    @GET("api/villager/species/{species}")
-    suspend fun getSpeciesVillagerList(@Path("species") species: Int): List<Villager>
+//    @GET("api/villager/species/{species}")
+//    suspend fun getSpeciesVillagerList(@Path("species") species: Int): List<Villager>
 
+    @GET("api/villager/spinner/{species}/{gender}")
+    suspend fun getSpinnerVillagerList(@Path("species") species: Int, @Path("gender") gender: Int): List<Villager>
+
+    @GET("api/villager/search/{name}")
+    suspend fun getNameVillagerList(@Path("name") name: String): List<Villager>
 }

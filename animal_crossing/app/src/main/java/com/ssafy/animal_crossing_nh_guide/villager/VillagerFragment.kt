@@ -2,11 +2,14 @@ package com.ssafy.animal_crossing_nh_guide.villager
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
@@ -24,7 +27,7 @@ private const val TAG = "VillagerFragment_싸피"
 class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
     FragmentVillagerBinding::bind,
     R.layout.fragment_villager
-), AdapterView.OnItemSelectedListener {
+) {
 
     private val viewModel: VillagerFragmentViewModel by viewModels()
     private lateinit var galleryAdapter: VillagerGalleryAdapter
@@ -51,13 +54,37 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
         }
 
         ArrayAdapter.createFromResource(mainActivity, R.array.species_array, android.R.layout.simple_spinner_item).also {
-            adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter -> adapter.setDropDownViewResource(R.layout.dropdown_item)
             binding.speciesSpinner.adapter = adapter
         }
-        binding.speciesSpinner.onItemSelectedListener = this
+        binding.speciesSpinner.onItemSelectedListener = AdapterSpecies(viewModel)
 
+        ArrayAdapter.createFromResource(mainActivity, R.array.gender_array, android.R.layout.simple_spinner_item).also{
+            adapter -> adapter.setDropDownViewResource(R.layout.dropdown_item)
+            binding.genderSpinner.adapter = adapter
+        }
+        binding.genderSpinner.onItemSelectedListener = AdapterGender(viewModel)
 
+        binding.search.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.getNameVillagerList(s.toString())
+                if(s.toString() == ""){
+                    viewModel.getVillagerList()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
     }
+
+
     private fun initAdapter(){
         galleryAdapter.list = listOf()
         val manager = GridLayoutManager(context, 4)
@@ -65,21 +92,6 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             layoutManager = manager
             adapter = galleryAdapter
         }
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d(TAG, "onItemSelected: ${id}")
-        if (position == 0){
-            viewModel.getVillagerList()
-        }
-        else{
-            viewModel.getSpeciesVillagerList(position-1)
-        }
-
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
     }
 
 
