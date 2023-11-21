@@ -57,6 +57,11 @@ class SharedPreferencesUtil (context: Context) {
         return preferences.getBoolean("check$idx", false)
     }
 
+    fun setCheckListWithValue(idx: Int, flg: Boolean){
+        val editor = preferences.edit()
+        editor.putBoolean("check$idx", flg)
+        editor.apply()
+    }
     fun setCheckList(idx : Int) : Boolean{
         val editor = preferences.edit()
         val flg = !preferences.getBoolean("check$idx", false)

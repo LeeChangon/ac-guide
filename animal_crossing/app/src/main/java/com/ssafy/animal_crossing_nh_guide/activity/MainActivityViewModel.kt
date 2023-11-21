@@ -24,14 +24,6 @@ import java.util.LinkedList
 private const val TAG = "MainActivityViewModel_싸피"
 class MainActivityViewModel : ViewModel(){
     val myRepository = MyRepository.get()
-    fun addVillager(index: Int){
-        viewModelScope.launch {
-            val villager = RetrofitUtil.villagerService.getVillager(index)
-
-            myRepository.insertMyVillager(MyVillager(index, villager.file_name, villager.name.name_KRko))
-        }
-
-    }
 
     private val _currentTime = MutableLiveData<Long>()
 
