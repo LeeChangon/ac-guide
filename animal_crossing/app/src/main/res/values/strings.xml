@@ -41,4 +41,10 @@
         <item>호랑이</item>
         <item>황소</item>
     </string-array>
+
+    <string-array name="gender_array">
+        <item>전체</item>
+        <item>여</item>
+        <item>남</item>
+    </string-array>
 </resources>
