@@ -16,43 +16,39 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
             android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_height="425dp"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/ac_background_bright"
             app:cardCornerRadius="50dp"
-            app:strokeWidth="0dp">
+            app:cardElevation="10dp"
+            app:strokeColor="@color/ac_pedia_background"
+            app:strokeWidth="5dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:background="@drawable/frame_75__1_">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/ac_background_chosebox"
-                    android:gravity="center"
-                    android:text="@{villager.name.name_KRko}"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="300dp"
-                    android:layout_height="400dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name"
-                    app:villagerUrl="@{filepath}" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{villager.name.name_KRko}"
+                android:textSize="30sp" />
+            </LinearLayout>
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="300dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                app:villagerUrl="@{filepath}" />-->
 
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
