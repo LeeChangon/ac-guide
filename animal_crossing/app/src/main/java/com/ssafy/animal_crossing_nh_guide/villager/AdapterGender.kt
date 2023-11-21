@@ -9,7 +9,7 @@ class AdapterGender(val viewModel: VillagerFragmentViewModel):  AdapterView.OnIt
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected: Gender${position}")
         viewModel.gender = position
-        viewModel.getSpinnerVillagerList(viewModel.species, viewModel.gender)
+        viewModel.getSpinnerNameVillagerList(viewModel.species, viewModel.gender, viewModel.name)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -59,6 +59,19 @@ class VillagerFragmentViewModel: ViewModel() {
         }
     }
 
+    fun getSpinnerNameVillagerList(species: Int, gender:Int, name: String){
+        viewModelScope.launch {
+            var list:List<Villager>
+            try {
+                list = RetrofitUtil.villagerService.getSpinnerNameVillagerList(species, gender, name)
+            }catch (e: Exception){
+                list = listOf()
+            }
+            _villagerList.value = list
+            Log.d(TAG, "getSpinnerVillagerList: ${list}")
+        }
+    }
+
     private val _filePath = MutableLiveData<String>("")
     val filePath : LiveData<String>
         get() = _filePath
@@ -116,4 +129,10 @@ class VillagerFragmentViewModel: ViewModel() {
 
     var species:Int = 0
     var gender:Int = 0
+    var name:String = ""
+    var init: Boolean = false
+//
+//    private val _init = MutableLiveData<Boolean>(false)
+//    val init: LiveData<Boolean>
+//        get() = _init
 }
