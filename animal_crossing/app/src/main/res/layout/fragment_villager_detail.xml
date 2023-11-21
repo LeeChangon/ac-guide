@@ -21,8 +21,9 @@
             android:id="@+id/flipframe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginBottom="100dp"
             android:layout_weight="1">
         </FrameLayout>
 
@@ -30,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="50dp"
                 android:gravity="top|center">
                 <ImageView
                     android:id="@+id/btnStar"
@@ -46,13 +47,32 @@
                     android:src="@drawable/selector_check" />
             </LinearLayout>
 
+        <ImageView
+            android:id="@+id/btnPrev"
+            android:layout_width="30dp"
+            android:layout_marginVertical="330dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13dp"
+            android:src="@drawable/prev"
+            android:layout_gravity="left"
+            app:tint="@color/ac_background_chosebox" />
+
+        <ImageView
+            android:id="@+id/btnNext"
+            android:layout_width="30dp"
+            android:layout_marginVertical="330dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="13dp"
+            android:src="@drawable/next"
+            android:layout_gravity="right"
+            app:tint="@color/ac_background_chosebox" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/closeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginBottom="50dp"
                 android:layout_marginHorizontal="100dp"
                 android:backgroundTint="@color/ac_primary"
                 android:fontFamily="@font/cindi"

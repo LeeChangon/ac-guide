@@ -28,7 +28,6 @@ fun bindVillagerImage(view: ImageView, src: String){
         .apply(
             RequestOptions()
                 .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)
         )
         .into(view)
 }
