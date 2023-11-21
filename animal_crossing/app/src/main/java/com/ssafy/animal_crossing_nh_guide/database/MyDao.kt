@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
+
 @Dao
 interface MyDao {
 
@@ -38,5 +39,16 @@ interface MyDao {
     @Delete
     suspend fun deleteAlert(Alert: Alert)
 
+    //주민
+    @Query("select * from MyVillager")
+    suspend fun getAllMyVillager(): List<MyVillager>
 
+    @Query("select * from MyVillager where `index` =(:index)")
+    suspend fun getMyVillager(index: Int) : MyVillager
+
+    @Insert
+    suspend fun insertMyVillager(myVillager: MyVillager)
+
+    @Delete
+    suspend fun deleteMyVillager(myVillager: MyVillager)
 }
