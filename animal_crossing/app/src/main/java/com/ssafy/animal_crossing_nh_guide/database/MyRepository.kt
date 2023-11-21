@@ -59,8 +59,21 @@ class MyRepository private constructor(context: Context){
         myDao.deleteAlert(myDao.getAlert(alert.type, alert.index))
     }
     
-    
-    
+    suspend fun getAllMyVillager(): List<MyVillager>{
+        return myDao.getAllMyVillager()
+    }
+
+    suspend fun getMyVillager(index: Int): MyVillager{
+        return myDao.getMyVillager(index)
+    }
+
+    suspend fun insertMyVillager(myVillager: MyVillager){
+        myDao.insertMyVillager(myVillager)
+    }
+
+    suspend fun deleteMyVillager(index:Int){
+        myDao.deleteMyVillager(myDao.getMyVillager(index))
+    }
     
 
     companion object{
