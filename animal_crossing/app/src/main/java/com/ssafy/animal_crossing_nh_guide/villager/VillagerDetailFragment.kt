@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -14,6 +15,8 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.VillagerDetailFragment1
 import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.VillagerDetailFragment2
+import com.ssafy.animal_crossing_nh_guide.database.MyRepository
+import com.ssafy.animal_crossing_nh_guide.database.MyVillager
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentVillagerDetailBinding
 import com.ssafy.animal_crossing_nh_guide.models.villager.AcnhVillager
 import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
@@ -30,6 +33,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
     FragmentVillagerDetailBinding::bind,
     R.layout.fragment_villager_detail
 ){
+    val myRepository = MyRepository.get()
 
     private var currentPage = startPosition
     private var maxPage = 80
@@ -39,6 +43,9 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
     private var front = true
 
+    lateinit var myVillager: MyVillager
+    var myVillagerFlg = false
+
 
     private val villagerFragmentViewModel: VillagerFragmentViewModel by viewModels({ requireParentFragment() })
 
@@ -46,6 +53,8 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         super.onAttach(context)
         villagerFragmentViewModel.getFilePath(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
         villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+
+
     }
 
     override fun onResume() {
@@ -56,6 +65,42 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Main){
+                val tmpVillager = myRepository.getMyVillager(villager.id-1)
+
+                if(tmpVillager!=null){
+                    myVillager = tmpVillager
+                    myVillagerFlg = true
+                } else {
+                    myVillagerFlg = false
+                }
+            }
+            binding.addMyVillagerBtn.isSelected = myVillagerFlg
+        }
+
+
+        binding.addMyVillagerBtn.setOnClickListener {
+            Log.d(TAG, "onViewCreated: 플래그 $myVillagerFlg")
+            CoroutineScope(Dispatchers.Main).launch {
+                if(!myVillagerFlg) {
+                    if(myRepository.getAllMyVillager().size == 10){
+                        Toast.makeText(context, "주민은 최대 10명까지 등록 가능합니다.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        myVillager = MyVillager(villager.id - 1, villager.file_name, villager.name.name_KRko)
+                        Log.d(TAG, "onViewCreated: 빌리저 등록: $myVillager")
+                        myRepository.insertMyVillager(myVillager)
+                        myVillagerFlg = !myVillagerFlg
+                    }
+
+                } else {
+                    myRepository.deleteMyVillager(myVillager.index)
+                    myVillagerFlg = !myVillagerFlg
+                }
+                binding.addMyVillagerBtn.isSelected = myVillagerFlg
+            }
+        }
 
         villagerFragmentViewModel.filePath.observe(viewLifecycleOwner){
             filepath = it

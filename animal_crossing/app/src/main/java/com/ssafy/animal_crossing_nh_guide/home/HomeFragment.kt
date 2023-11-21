@@ -13,6 +13,7 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
+import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
 
 
@@ -29,6 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private lateinit var homeFishAdapter: HomeFishAdapter
     private lateinit var homeSeaAdapter: HomeSeaAdapter
 
+    var clickedFlg = false
 
 //    var bugExpanded = false;
     override fun onAttach(context: Context) {
@@ -38,10 +40,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
 
-
-
+        binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
 
         initSetting()
         initListener()
@@ -54,41 +54,75 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         }
 
         mainActivityViewModel.bugExpanded.observe(viewLifecycleOwner){
-            toggleCard(binding.homeBugDrawLayout, binding.homeBugDrawIcon, mainActivityViewModel.bugExpanded.value!!)
+            if(clickedFlg)
+                toggleCard(binding.homeBugDrawLayout, binding.homeBugDrawIcon, mainActivityViewModel.bugExpanded.value!!)
+            else{
+                if(it)
+                    binding.homeBugDrawLayout.visibility = View.VISIBLE
+                else
+                    binding.homeBugDrawLayout.visibility = View.GONE
+            }
+
         }
 
         mainActivityViewModel.fishExpanded.observe(viewLifecycleOwner){
-            toggleCard(binding.homeFishDrawLayout, binding.homeFishDrawIcon, mainActivityViewModel.fishExpanded.value!!)
+            if(clickedFlg)
+                toggleCard(binding.homeFishDrawLayout, binding.homeFishDrawIcon, mainActivityViewModel.fishExpanded.value!!)
+            else{
+                if(it)
+                    binding.homeFishDrawLayout.visibility = View.VISIBLE
+                else
+                    binding.homeFishDrawLayout.visibility = View.GONE
+            }
         }
 
         mainActivityViewModel.critterExpanded.observe(viewLifecycleOwner){
-            toggleCard(binding.homeCritterDrawLayout, binding.homeCritterDrawIcon, mainActivityViewModel.critterExpanded.value!!)
+            if(clickedFlg)
+                toggleCard(binding.homeCritterDrawLayout, binding.homeCritterDrawIcon, mainActivityViewModel.critterExpanded.value!!)
+            else{
+                if(it)
+                    binding.homeCritterDrawLayout.visibility = View.VISIBLE
+                else
+                    binding.homeCritterDrawLayout.visibility = View.GONE
+            }
         }
 
         mainActivityViewModel.checkListExpanded.observe(viewLifecycleOwner){
-            toggleCard(binding.homeChecklistDrawLayout, binding.homeChecklistDrawIcon, mainActivityViewModel.checkListExpanded.value!!)
+            if(clickedFlg)
+                toggleCard(binding.homeChecklistDrawLayout, binding.homeChecklistDrawIcon, mainActivityViewModel.checkListExpanded.value!!)
+            else{
+                if(it)
+                    binding.homeChecklistDrawLayout.visibility = View.VISIBLE
+                else
+                    binding.homeChecklistDrawLayout.visibility = View.GONE
+            }
         }
 
         //지금 잡히는 리스트
         //곤충
         mainActivityViewModel.nowBugList.observe(viewLifecycleOwner){
             Log.d(TAG, "initObserve: ${it}")
-            homeBugAdapter.list = it
-//            homeBugAdapter.setNewList(it)
-            homeBugAdapter.notifyDataSetChanged()
+            if(it != homeBugAdapter.list) {
+                homeBugAdapter.list = it
+                homeBugAdapter.notifyDataSetChanged()
+            }
         }
 
         //물고기
         mainActivityViewModel.nowFishList.observe(viewLifecycleOwner){
 //            Log.d(TAG, "initObserve: ${it}")
-            homeFishAdapter.list = it
-            homeFishAdapter.notifyDataSetChanged()
+            if(it != homeFishAdapter.list) {
+                homeFishAdapter.list = it
+                homeFishAdapter.notifyDataSetChanged()
+            }
         }
 
         //해산물
         mainActivityViewModel.nowSeaList.observe(viewLifecycleOwner){
-            homeSeaAdapter.list = it
-            homeSeaAdapter.notifyDataSetChanged()
+            if(it != homeSeaAdapter.list) {
+                homeSeaAdapter.list = it
+                homeSeaAdapter.notifyDataSetChanged()
+            }
         }
 
         //주민 리스트
@@ -99,11 +133,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             } else {
                 binding.homeAddVillagerBtn.visibility = View.GONE
                 binding.villagerChecklistLayout.visibility = View.VISIBLE
+
+                var newList = arrayListOf<String>()
+                for(i:Int in 0 .. 9){
+                    if(i < it.size){
+                        villagerCheckList[i].isEnabled = true
+                        villagerCheckList[i].visibility = View.VISIBLE
+                        Log.d(TAG, "initObserve: ${it[i].url}")
+                        newList.add("icons/villagers/${it[i].url}.png")
+                    } else {
+                        villagerCheckList[i].isEnabled = false
+                        villagerCheckList[i].visibility = View.INVISIBLE
+                        ApplicationClass.sharedPreferencesUtil.setCheckListWithValue(i+12, false)
+                        newList.add("icons/villagers/ham01.png")
+                    }
+                }
+                binding.myVillagers = newList
+                Log.d(TAG, "initObserve: 주민리스트:${binding.myVillagers}")
             }
             initVillagerCheckList()
             villagerCheckList
-//            homeMyVillagerAdapter.list = it
-//            homeMyVillagerAdapter.notifyDataSetChanged()
         }
     }
 
@@ -125,18 +174,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         }
 
         binding.homeBugHeadLayout.setOnClickListener {
+            clickedFlg = true
             mainActivityViewModel.toggleBug()
         }
 
         binding.homeFishHeadLayout.setOnClickListener {
+            clickedFlg = true
             mainActivityViewModel.toggleFish()
         }
 
         binding.homeCritterHeadLayout.setOnClickListener {
+            clickedFlg = true
             mainActivityViewModel.toggleCritter()
         }
 
         binding.homeChecklistHeadLayout.setOnClickListener {
+            clickedFlg = true
             mainActivityViewModel.toggleCheckList()
         }
 
@@ -193,8 +246,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         villagerCheckList.addAll(arrayOf(binding.villager1, binding.villager2, binding.villager3, binding.villager4, binding.villager5,
             binding.villager6, binding.villager7, binding.villager8, binding.villager9, binding.villager10))
+        binding.myVillagers = arrayListOf("icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png")
 
-        binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
 
 
         refreshTime()
@@ -211,7 +264,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 //        mainActivityViewModel.getNowFishList()
     }
 
-    fun refreshTime(){
+    private fun refreshTime(){
         mainActivityViewModel.setTime()
         mainActivityViewModel.convertLongToTime()
     }
