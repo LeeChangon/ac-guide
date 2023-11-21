@@ -152,9 +152,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         //주민 추가 버튼
         binding.homeAddVillagerBtn.setOnClickListener {
             mainActivity.moveNavItem(R.id.navigation_page_3)
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout_main, VillagerFragment())
-                .commit()
+//            parentFragmentManager.beginTransaction()
+//                .add(R.id.frame_layout_main, VillagerFragment()).addToBackStack("")
+//                .commit()
 
 
 //            mainActivityViewModel.addVillager(190)
