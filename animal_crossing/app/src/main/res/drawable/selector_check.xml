@@ -3,6 +3,9 @@
     <item
         android:state_selected="true"
         android:drawable="@drawable/fi_rr_checkboxfilled"/>
-    <item
-        android:drawable="@drawable/fi_rr_checkbox"/>
+    <item>
+        <bitmap android:src="@drawable/fi_rr_checkbox"
+            android:tint="@color/ac_background_bright"/>
+    </item>
+<!--        android:drawable="@drawable/fi_rr_checkbox"/>-->
 </selector>

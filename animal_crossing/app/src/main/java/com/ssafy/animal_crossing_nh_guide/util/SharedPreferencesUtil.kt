@@ -45,13 +45,14 @@ class SharedPreferencesUtil (context: Context) {
 
     fun resetCheckList(){
         val editor = preferences.edit()
-        for(i: Int in 0..11){
+        for(i: Int in 0..21){
             editor.putBoolean("check$i", false)
         }
 
         editor.apply()
     }
 
+    //0~11 기타 체크리스트 12~21 주민 체크리스트
     fun getCheckList(idx : Int) : Boolean{
         return preferences.getBoolean("check$idx", false)
     }

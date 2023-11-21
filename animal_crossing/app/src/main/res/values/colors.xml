@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFF7</color>
 
+    <color name="ac_black_transparent">#4F000000</color>
+
     <color name="ac_launch_background">#FF82D5BB</color>
     <color name="ac_primary">#72E3C0</color>
     <color name="ac_primary2">#1AC8B9</color>

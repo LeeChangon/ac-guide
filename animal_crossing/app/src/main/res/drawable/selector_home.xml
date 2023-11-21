@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/bell_filled"/>
+        android:drawable="@drawable/add_home_fillled_icon"/>
     <item>
-        <bitmap android:src="@drawable/bell"
+        <bitmap android:src="@drawable/add_icon"
             android:tint="@color/ac_background_bright"/>
     </item>
 </selector>

@@ -42,6 +42,7 @@ abstract class BaseDialogFragment<B : ViewBinding>(
         super.onDestroyView()
     }
 
+
     protected open fun Context.dialogFragmentResize(dialogFragment: DialogFragment, width: Float, height: Float){
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 

@@ -23,6 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
 
     private val checkList = mutableListOf<View>()
+    private val villagerCheckList = mutableListOf<View>()
 
     private lateinit var homeBugAdapter: HomeBugAdapter
     private lateinit var homeFishAdapter: HomeFishAdapter
@@ -94,12 +95,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         mainActivityViewModel.myVillagerList.observe(viewLifecycleOwner){
             if(it.size == 0){
                 binding.homeAddVillagerBtn.visibility = View.VISIBLE
-                binding.homeVillagerRecyclerview.visibility = View.GONE
+                binding.villagerChecklistLayout.visibility = View.GONE
             } else {
                 binding.homeAddVillagerBtn.visibility = View.GONE
-                binding.homeVillagerRecyclerview.visibility = View.VISIBLE
-
+                binding.villagerChecklistLayout.visibility = View.VISIBLE
             }
+            initVillagerCheckList()
+            villagerCheckList
+//            homeMyVillagerAdapter.list = it
+//            homeMyVillagerAdapter.notifyDataSetChanged()
         }
     }
 
@@ -137,6 +141,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         }
 
         // 체크리스트 리스너
+        checkList.addAll(villagerCheckList)
         checkList.forEachIndexed { index, it ->
             it.setOnClickListener {
                 val flg = ApplicationClass.sharedPreferencesUtil.setCheckList(index)
@@ -152,18 +157,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
                 .commit()
 
 
-            mainActivityViewModel.addVillager(190)
+//            mainActivityViewModel.addVillager(190)
         }
     }
 
-    fun initChecklist(){
+    private fun initChecklist(){
         for(i:Int in 0..11){
             val check = ApplicationClass.sharedPreferencesUtil.getCheckList(i)
             toggleCheckList(checkList[i], check)
         }
     }
 
-    fun toggleCheckList(image : View, check: Boolean){
+    private fun initVillagerCheckList(){
+        for(i:Int in 0..9){
+            val check = ApplicationClass.sharedPreferencesUtil.getCheckList(i+12)
+            toggleCheckList(villagerCheckList[i], check)
+        }
+    }
+
+    private fun toggleCheckList(image : View, check: Boolean){
         if(check){
             image.setBackgroundResource(R.drawable.checklist_checked)
         }
@@ -178,11 +190,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private fun initSetting(){
         checkList.addAll(arrayOf(binding.fossil1, binding.fossil2, binding.fossil3, binding.fossil4, binding.bottle, binding.moneyTree,
              binding.rock1, binding.rock2, binding.rock3, binding.rock4, binding.rock5, binding.rock6))
+
+        villagerCheckList.addAll(arrayOf(binding.villager1, binding.villager2, binding.villager3, binding.villager4, binding.villager5,
+            binding.villager6, binding.villager7, binding.villager8, binding.villager9, binding.villager10))
+
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
+
+
         refreshTime()
         refreshList()
         initChecklist()
+        initVillagerCheckList()
 
+        //어댑터 초기화
         initBugAdapter()
         initFishAdapter()
         initSeaAdapter()
@@ -200,6 +220,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         mainActivityViewModel.getNowBugList()
         mainActivityViewModel.getNowFishList()
         mainActivityViewModel.getNowSeaList()
+
         mainActivityViewModel.getMyVilagerList()
     }
 
@@ -239,4 +260,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             adapter = homeSeaAdapter
         }
     }
+
 }

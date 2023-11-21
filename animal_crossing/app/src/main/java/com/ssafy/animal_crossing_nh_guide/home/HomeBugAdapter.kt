@@ -26,16 +26,12 @@ import java.util.LinkedList
 private const val TAG = "HomeBugAdapter_싸피"
 class HomeBugAdapter(val context: Context) : RecyclerView.Adapter<HomeBugAdapter.ViewHolder>() {
 
-//    lateinit var childFragmentManager: FragmentManager
-
     var list = listOf<Bug>()
-    var starCnt = 0
     inner class ViewHolder(private val binding: ListItemHomeBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Bug, position: Int){
             binding.apply{
                 var path = "icons/bugs/${item.file_name}.png"
                 filepath = path
-                Log.d("싸피", "bind: 별 개수 : ${starCnt}")
 
                 if(item.name.star == "true") {
                     binding.starIv.visibility = View.VISIBLE
