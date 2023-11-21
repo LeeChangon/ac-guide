@@ -17,6 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/flipbutton"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="425dp"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal" />
+
         <FrameLayout
             android:id="@+id/flipframe"
             android:layout_width="match_parent"
