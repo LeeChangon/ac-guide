@@ -48,9 +48,11 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
         initAdapter()
 
         viewModel.villagerList.observe(viewLifecycleOwner){
-            galleryAdapter.list = it
-            Log.d(TAG, "onViewCreated: ${it}")
-            galleryAdapter.notifyDataSetChanged()
+//            if(it != galleryAdapter.list){
+                galleryAdapter.list = it
+                Log.d(TAG, "onViewCreated: ${it}")
+                galleryAdapter.notifyDataSetChanged()
+//            }
         }
 
         ArrayAdapter.createFromResource(mainActivity, R.array.species_array, android.R.layout.simple_spinner_item).also {
@@ -63,6 +65,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             adapter -> adapter.setDropDownViewResource(R.layout.dropdown_item)
             binding.genderSpinner.adapter = adapter
         }
+
         binding.genderSpinner.onItemSelectedListener = AdapterGender(viewModel)
 
         binding.search.addTextChangedListener(object: TextWatcher{
@@ -71,10 +74,8 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.getNameVillagerList(s.toString())
-                if(s.toString() == ""){
-                    viewModel.getVillagerList()
-                }
+                viewModel.name = s.toString()
+                viewModel.getSpinnerNameVillagerList(viewModel.species, viewModel.gender, viewModel.name)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -92,6 +93,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             layoutManager = manager
             adapter = galleryAdapter
         }
+        viewModel.getVillagerList()
     }
 
 
