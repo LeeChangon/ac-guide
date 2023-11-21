@@ -27,21 +27,21 @@ class MyRepository private constructor(context: Context){
 
     suspend fun deleteCaught(caught: Caught){
         Log.d(TAG, "deleteCaught: ${caught}")
-        myDao.deleteCaught(caught)
+        myDao.deleteCaught(myDao.getCaught(caught.type, caught.index))
     }
     suspend fun getStar(type : String, index: Int) : Star{
         Log.d(TAG, "getStar: ${myDao.getStar(type, index)}")
         return myDao.getStar(type, index)
     }
 
-    suspend fun insertStar(Star: Star){
-        Log.d(TAG, "insertStar: ${Star}")
-        myDao.insertStar(Star)
+    suspend fun insertStar(star: Star){
+        Log.d(TAG, "insertStar: ${star}")
+        myDao.insertStar(star)
     }
 
-    suspend fun deleteStar(Star: Star){
-        Log.d(TAG, "deleteStar: ${Star}")
-        myDao.deleteStar(Star)
+    suspend fun deleteStar(star: Star){
+        Log.d(TAG, "deleteStar: ${star}")
+        myDao.deleteStar(myDao.getStar(star.type, star.index))
     }
     
     suspend fun getAlert(type : String, index: Int) : Alert{
@@ -49,14 +49,14 @@ class MyRepository private constructor(context: Context){
         return myDao.getAlert(type, index)
     }
 
-    suspend fun insertAlert(Alert: Alert){
-        Log.d(TAG, "insertAlert: ${Alert}")
-        myDao.insertAlert(Alert)
+    suspend fun insertAlert(alert: Alert){
+        Log.d(TAG, "insertAlert: ${alert}")
+        myDao.insertAlert(alert)
     }
 
-    suspend fun deleteAlert(Alert: Alert){
-        Log.d(TAG, "deleteAlert: ${Alert}")
-        myDao.deleteAlert(Alert)
+    suspend fun deleteAlert(alert: Alert){
+        Log.d(TAG, "deleteAlert: ${alert}")
+        myDao.deleteAlert(myDao.getAlert(alert.type, alert.index))
     }
     
     

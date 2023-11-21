@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.launch
@@ -12,6 +13,7 @@ import java.lang.Exception
 class FishFragmentViewModel: ViewModel() {
     private val _fishList = MutableLiveData<List<Fish>>(listOf())
 
+    val myRepository = MyRepository.get()
     val fishList : LiveData<List<Fish>>
         get() = _fishList
 

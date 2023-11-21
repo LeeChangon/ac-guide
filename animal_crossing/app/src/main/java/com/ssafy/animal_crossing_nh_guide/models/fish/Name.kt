@@ -1,7 +1,9 @@
 package com.ssafy.animal_crossing_nh_guide.models.fish
 
+import com.google.gson.annotations.SerializedName
+
 data class Name(
-    val name_CNzh: String,
+    @SerializedName("name_CNzh")var star: String,
     val name_EUde: String,
     val name_EUen: String,
     val name_EUes: String,

@@ -6,6 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "caught")
 data class Caught(
-    @PrimaryKey var index : Int = -1,
+    @ColumnInfo var index : Int = -1,
     @ColumnInfo(name = "type") var type : String = ""
-)
+){
+    @PrimaryKey(autoGenerate = true)
+    var ID: Long = 0
+
+    constructor(id:Long, index: Int, type: String): this(index, type){
+        this.ID = id
+    }
+}

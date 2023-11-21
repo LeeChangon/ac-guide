@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
+import com.ssafy.animal_crossing_nh_guide.database.Alert
+import com.ssafy.animal_crossing_nh_guide.database.Caught
+import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
@@ -13,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private const val TAG = "SeaCreatureDetailViewPa_싸피"
 class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCreatureFragmentViewModel) : RecyclerView.Adapter<SeaCreatureDetailViewPagerAdapter.ViewHolder>() {
 
     interface MyCallBack {
@@ -23,6 +27,10 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
 
     var seaCreature: SeaCreature? = null
     var monthList: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false, false, false)
+
+    var catchFlg = false
+    var starFlg = false
+    var alertFlg = false
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -62,7 +70,19 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
                 }
 
             }
-            holder.bind()
+            //데이터베이스에서 플래그 받아오기
+            withContext(Dispatchers.Main) {
+                if(seaCreatureFragmentViewModel.myRepository.getCaught("해산물", position) != null) catchFlg = true
+                else catchFlg = false
+
+                if(seaCreatureFragmentViewModel.myRepository.getStar("해산물", position) != null) starFlg = true
+                else starFlg = false
+
+                if(seaCreatureFragmentViewModel.myRepository.getAlert("해산물", position) != null) alertFlg = true
+                else alertFlg = false
+            }
+            
+            holder.bind(position)
         }
     }
 
@@ -71,19 +91,56 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
     }
 
     inner class ViewHolder(private val binding: FragmentSeaCreatureDetailDialogBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(){
+        fun bind(position: Int){
+            binding.btnCheck.isSelected = catchFlg
+            binding.btnStar.isSelected = starFlg
+            binding.btnBell.isSelected = alertFlg
 
             binding.seaCreature = seaCreature
             binding.monthList = monthList
 
             binding.btnBell.setOnClickListener {
-                binding.btnBell.isSelected = !binding.btnBell.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (alertFlg) {
+                            seaCreatureFragmentViewModel.myRepository.deleteAlert(Alert(position, "해산물"))
+                        } else {
+                            seaCreatureFragmentViewModel.myRepository.insertAlert(Alert(position, "해산물"))
+                        }
+                    }
+                    alertFlg = !alertFlg
+                    binding.btnBell.isSelected = alertFlg
+                    Log.d(TAG, "bind 온클릭: $alertFlg")
+                }
             }
             binding.btnStar.setOnClickListener {
-                binding.btnStar.isSelected = !binding.btnStar.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (starFlg) {
+                            seaCreatureFragmentViewModel.myRepository.deleteStar(Star(position, "해산물"))
+                        } else {
+                            seaCreatureFragmentViewModel.myRepository.insertStar(Star(position, "해산물"))
+                        }
+                    }
+                    starFlg = !starFlg
+                    binding.btnStar.isSelected = starFlg
+                    Log.d(TAG, "bind 온클릭: $starFlg")
+                }
             }
             binding.btnCheck.setOnClickListener {
-                binding.btnCheck.isSelected = !binding.btnCheck.isSelected
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        if (catchFlg) {
+                            seaCreatureFragmentViewModel.myRepository.deleteCaught(Caught(position, "해산물"))
+                        } else {
+                            seaCreatureFragmentViewModel.myRepository.insertCaught(Caught(position, "해산물"))
+                        }
+                    }
+                    catchFlg = !catchFlg
+                    binding.btnCheck.isSelected = catchFlg
+                    Log.d(TAG, "bind 온클릭: $catchFlg")
+                }
+
             }
 
             binding.closeBtn.setOnClickListener {

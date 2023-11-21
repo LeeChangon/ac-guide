@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -25,10 +26,16 @@ class HomeSeaAdapter(val context : Context) : RecyclerView.Adapter<HomeSeaAdapte
             binding.apply{
                 var path = "icons/sea/${item.file_name}.png"
                 filepath = path
-                Log.d("싸피", "bind: ${position}")
+
+                if(item.name.star == "true") {
+                    binding.starIv.visibility = View.VISIBLE
+                } else {
+                    binding.starIv.visibility = View.GONE
+                }
+
                 binding.itemImage.setOnClickListener {
-                    Log.d("싸피", "bind: ${item.file_name}")
-                    Log.d(TAG, "bind: ${position}")
+//                    Log.d("싸피", "bind: ${item.file_name}")
+//                    Log.d(TAG, "bind: ${position}")
 
                     //달 구하기
                     val monthList = arrayListOf<Boolean>()

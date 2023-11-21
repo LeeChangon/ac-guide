@@ -28,8 +28,6 @@ class HomeBugAdapter(val context: Context) : RecyclerView.Adapter<HomeBugAdapter
 
 //    lateinit var childFragmentManager: FragmentManager
 
-    val myRepository = MyRepository.get()
-
     var list = listOf<Bug>()
     var starCnt = 0
     inner class ViewHolder(private val binding: ListItemHomeBinding): RecyclerView.ViewHolder(binding.root){
@@ -38,9 +36,12 @@ class HomeBugAdapter(val context: Context) : RecyclerView.Adapter<HomeBugAdapter
                 var path = "icons/bugs/${item.file_name}.png"
                 filepath = path
                 Log.d("싸피", "bind: 별 개수 : ${starCnt}")
-//                if(item.name.star == "true") {
-//                    binding.starIv.visibility = View.VISIBLE
-//                }
+
+                if(item.name.star == "true") {
+                    binding.starIv.visibility = View.VISIBLE
+                } else {
+                    binding.starIv.visibility = View.GONE
+                }
 
                 binding.itemImage.setOnClickListener {
 //                    Log.d("싸피", "bind: ${item.file_name}")

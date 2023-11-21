@@ -109,7 +109,7 @@ class MainActivityViewModel : ViewModel(){
 
                 list.forEachIndexed { i, bug ->
                     if(myRepository.getStar("곤충",bug.id-1) != null){
-//                        bug.name.star = "true"
+                        bug.name.star = "true"
                         linkedList.addFirst(bug)
                     } else {
                         linkedList.add(bug)
@@ -123,7 +123,7 @@ class MainActivityViewModel : ViewModel(){
 
 
             Log.d(TAG, "getNowBugList: ${list.size}")
-            _nowBugList.value = list
+            _nowBugList.value = linkedList
         }
     }
 
@@ -142,16 +142,26 @@ class MainActivityViewModel : ViewModel(){
 
         viewModelScope.launch {
             var list:List<Fish>
+            var linkedList = LinkedList<Fish>()
 
             try {
                 list = RetrofitUtil.fishService.getMonthTimeFish(month, hour)
+
+                list.forEachIndexed { i, it ->
+                    if(myRepository.getStar("물고기",it.id-1) != null){
+                        it.name.star = "true"
+                        linkedList.addFirst(it)
+                    } else {
+                        linkedList.add(it)
+                    }
+                }
 
             }catch (e: Exception){
                 list = listOf()
             }
 
             Log.d(TAG, "getNowFishList: ${list.size}")
-            _nowFishList.value = list
+            _nowFishList.value = linkedList
         }
     }
 
@@ -170,9 +180,19 @@ class MainActivityViewModel : ViewModel(){
 
         viewModelScope.launch {
             var list:List<SeaCreature>
+            var linkedList = LinkedList<SeaCreature>()
 
             try {
                 list = RetrofitUtil.seaCreatureService.getMonthTimeSeaCreature(month, hour)
+
+                list.forEachIndexed { i, it ->
+                    if(myRepository.getStar("해산물",it.id-1) != null){
+                        it.name.star = "true"
+                        linkedList.addFirst(it)
+                    } else {
+                        linkedList.add(it)
+                    }
+                }
 
             }catch (e: Exception){
                 Log.d(TAG, "getNowSeaList: 오류")
@@ -180,7 +200,7 @@ class MainActivityViewModel : ViewModel(){
             }
 
             Log.d(TAG, "getNowSeaList: ${list.size}")
-            _nowSeaList.value = list
+            _nowSeaList.value = linkedList
         }
     }
 }
