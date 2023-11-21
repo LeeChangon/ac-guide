@@ -67,7 +67,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
 
 
-        binding.flipframe.setOnClickListener {
+        binding.flipbutton.setOnClickListener {
             if (front){
                 front = !front
                 childFragmentManager.beginTransaction()
@@ -96,18 +96,63 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
             }
         }
 
-        if (villager.id == 1){
+        if (currentPage == 0){
             binding.btnPrev.visibility = View.GONE
         }
-        if(villager.id == 391){
+        if(currentPage == villagerFragmentViewModel.villagerList.value!!.size-1){
             binding.btnNext.visibility = View.GONE
         }
 
         binding.btnPrev.setOnClickListener {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                .addToBackStack(null)
-                .commit()
+            filepath = ""
+
+            Log.d(TAG, "onViewCreated: ${currentPage-1}")
+            if(currentPage-1 <= 0){
+                binding.btnPrev.visibility = View.GONE
+            }
+            else{
+                binding.btnPrev.visibility = View.VISIBLE
+            }
+
+            if (currentPage != 0){
+                binding.btnNext.visibility = View.VISIBLE
+
+                currentPage -= 1
+                villagerFragmentViewModel.getFilePath1(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
+                villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+                villagerFragmentViewModel.filePath1.observe(viewLifecycleOwner){
+                    filepath = it
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
+                        .addToBackStack(null)
+                        .commit()
+                }
+            }
+        }
+
+        binding.btnNext.setOnClickListener {
+            Log.d(TAG, "onViewCreated: ${currentPage+1}")
+            filepath = ""
+            if (currentPage+1 >= villagerFragmentViewModel.villagerList.value!!.size-1){
+                binding.btnNext.visibility = View.GONE
+            }
+            else{
+                binding.btnNext.visibility = View.VISIBLE
+            }
+            if (currentPage != villagerFragmentViewModel.villagerList.value!!.size-1){
+                binding.btnPrev.visibility = View.VISIBLE
+
+                currentPage += 1
+                villagerFragmentViewModel.getFilePath2(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
+                villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+                villagerFragmentViewModel.filePath2.observe(viewLifecycleOwner){
+                    filepath = it
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
+                        .addToBackStack(null)
+                        .commit()
+                }
+            }
         }
 
         binding.closeBtn.setOnClickListener {
