@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.graphics.Color"/>
         <import type="android.view.View"/>
         <variable
             name="villager"
@@ -9,29 +11,35 @@
         <variable
             name="filepath"
             type="String" />
+        <variable
+            name="bmonth"
+            type="String" />
+        <variable
+            name="bday"
+            type="String" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
 
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
             android:layout_width="300dp"
-            android:layout_height="425dp"
+            android:layout_height="420dp"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/ac_background_bright"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
             app:strokeColor="@color/ac_pedia_background"
             app:strokeWidth="5dp">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp"
+                android:padding="22dp"
                 android:background="@drawable/frame_75__1_">
 
             <com.google.android.material.textview.MaterialTextView
@@ -41,7 +49,87 @@
                 android:gravity="center"
                 android:text="@{villager.name.name_KRko}"
                 android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:gravity="center"
+                            android:backgroundTint="@{Color.parseColor(villager.bubble_color)}"
+                            android:background="@drawable/chatballoon100">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textColor="@{Color.parseColor(villager.text_color)}"
+                                android:text="@{villager.catch_translations.catch_KRko}"/>
+                        </LinearLayout>
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/transparent"
+                            app:cardCornerRadius="20dp">
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            app:imageUrl = "@{`images/villagers/`+ villager.file_name + `.png`}"/>
+                        </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:layout_height="50dp">
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginVertical="3dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_marginTop="4dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:text="@{villager.species}"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:text="@{bmonth+`월 `+bday+`일`}"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:text="@{villager.personality}"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
 <!--            <androidx.appcompat.widget.AppCompatImageView-->
 <!--                android:id="@+id/imageView"-->
 <!--                android:layout_width="200dp"-->

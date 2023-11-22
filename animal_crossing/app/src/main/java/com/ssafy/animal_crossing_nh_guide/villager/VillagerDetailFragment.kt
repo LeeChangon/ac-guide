@@ -104,13 +104,13 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
         villagerFragmentViewModel.filePath.observe(viewLifecycleOwner){
             filepath = it
-            childFragmentManager.beginTransaction()
-                .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                .addToBackStack(null)
-                .commit()
+            if(front){
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
-
-
 
         binding.flipbutton.setOnClickListener {
             if (front){
@@ -149,6 +149,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         }
 
         binding.btnPrev.setOnClickListener {
+            front = true
             filepath = ""
 
             Log.d(TAG, "onViewCreated: ${currentPage-1}")
@@ -176,6 +177,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         }
 
         binding.btnNext.setOnClickListener {
+            front = true
             Log.d(TAG, "onViewCreated: ${currentPage+1}")
             filepath = ""
             if (currentPage+1 >= villagerFragmentViewModel.villagerList.value!!.size-1){
