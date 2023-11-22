@@ -133,7 +133,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
         fun pushAlarmTo(){
             // 새로운 토큰 수신 시 서버로 전송
 //            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, "곤충", 1, 11, 22, 18, 3, "이창곤").enqueue(object : Callback<Void> {
+            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, "곤충", 1, arrayOf(11), arrayOf(6,7,8) ,"이창곤").enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if(response.isSuccessful){
                         val res = response.body()

@@ -12,13 +12,16 @@ interface FirebaseTokenService {
 
     @POST("pushAlarmTo")
     fun pushAlarmTo(@Query("token") token: String,
-                    @Query("type") title: String,
+                    @Query("type") type: String,
                     @Query("index") index: Int,
-                    @Query("month") month: Int,
-                    @Query("day") day: Int,
-                    @Query("hour") hour: Int,
-                    @Query("minute") minute: Int,
+                    @Query("month") month: Array<Int>,
+                    @Query("hour") hour: Array<Int>,
                     @Query("name") name: String,
     ): Call<Void>
 
+    @DELETE("deleteAlarmTo")
+    fun deleteAlarmTo(@Query("token") token: String,
+                    @Query("type") type: String,
+                    @Query("index") index: Int,
+    ): Call<Void>
 }
