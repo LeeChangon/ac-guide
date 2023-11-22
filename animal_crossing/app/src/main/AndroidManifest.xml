@@ -16,6 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Animal_crossing_NH_guide"
         >
+
+        <service android:name="com.ssafy.animal_crossing_nh_guide.config.MyFirebaseMessageService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Animal_crossing_NH_guide.Splash"

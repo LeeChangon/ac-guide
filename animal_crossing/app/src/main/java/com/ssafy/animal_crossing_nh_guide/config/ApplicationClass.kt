@@ -22,14 +22,12 @@ class ApplicationClass : Application() {
 
         const val IMGS_URL = "https://raw.githubusercontent.com/alexislours/ACNHAPI/master/"
 
+        var token = ""
     }
 
 
     override fun onCreate() {
         super.onCreate()
-
-        //shared preference 초기화
-        sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
 
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
