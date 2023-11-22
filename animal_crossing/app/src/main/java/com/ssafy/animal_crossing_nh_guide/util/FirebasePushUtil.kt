@@ -27,8 +27,13 @@ class FirebasePushUtil {
             val arr = arrayListOf<Int>()
 
             list.forEach{
-                if(i - it != -1) {
-                    arr.add(it + hourDiff)
+
+                if(!(i == 23 && it == 0) && i - it != -1) {
+                    var result = it + hourDiff
+                    Log.d(TAG, "getHourList: 시간$it, 차이$hourDiff")
+
+                    
+                    arr.add(result)
                 }
                 i = it
             }
@@ -38,10 +43,28 @@ class FirebasePushUtil {
             return arr.toList()
         }
 
-        fun pushAlarmTo(type:String, index:Int, month:Array<Int>, hour:Array<Int>, name: String){
+        fun deleteAlarm(type: String, index: Int){
+            RetrofitUtil.firebaseTokenService.deleteAlarmTo(ApplicationClass.token, type, index).enqueue(object :
+            Callback<Void>{
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if(response.isSuccessful){
+                        val res = response.body()
+                        Log.d(TAG, "onResponse: $res")
+                    } else {
+                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                    }
+                }
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d(TAG, "onFailure: t.message ?: \"토큰 정보 등록 중 통신오류\"")
+                }
+            })
+
+        }
+
+        fun pushAlarmTo(type:String, index:Int, month:Array<Int>, hour:Array<Int>, minute : Int, name: String){
             // 새로운 토큰 수신 시 서버로 전송
 //            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, type, index, month, hour, name).enqueue(object :
+            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, type, index, month, hour, minute, name).enqueue(object :
                 Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if(response.isSuccessful){

@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
 
-//        ApplicationClass.sharedPreferencesUtil.getTimeDiff()
+        ApplicationClass.sharedPreferencesUtil.getTimeDiff()
 //        FirebasePushUtil.getHourList(listOf(1,2,3,5,6,7))
 
 

@@ -41,22 +41,30 @@ class SharedPreferencesUtil (context: Context) {
 
         val myMonth = calendar.get(Calendar.MONTH)
         val myHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val myMinute = calendar.get(Calendar.MINUTE)
 //        Log.d(TAG, "지금 시간: ${nowDay}일 ${nowHour}시")
 
         calendar.time = Date(realTime)
 
         val realMonth = calendar.get(Calendar.MONTH)
         val realHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val realMinute = calendar.get(Calendar.MINUTE)
 //        Log.d(TAG, "새로운 시간: ${newDay}일 ${newHour}시")
 
         val monthDiff = realMonth - myMonth
-        val hourDiff =  realHour - myHour
+        var hourDiff =  realHour - myHour
+        val minuteDiff = realMinute - myMinute
 
-        Log.d(TAG, "getTimeDiff: 달 : ${monthDiff}, 시간 : ${hourDiff}")
+        var minuteResult = 0
+        if(minuteDiff < 0 ) {
+            minuteResult = 60 + minuteDiff
+            hourDiff -= 1
+        }
+        else minuteResult = 0 + minuteDiff
 
+        Log.d(TAG, "getTimeDiff: 달 : ${monthDiff}, 시간 : ${hourDiff}, 분 : $minuteResult")
 
-
-        return listOf(monthDiff, hourDiff)
+        return listOf(monthDiff, hourDiff, minuteResult)
     }
 
 

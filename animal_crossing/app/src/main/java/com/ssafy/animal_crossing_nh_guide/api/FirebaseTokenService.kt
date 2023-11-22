@@ -16,6 +16,7 @@ interface FirebaseTokenService {
                     @Query("index") index: Int,
                     @Query("month") month: Array<Int>,
                     @Query("hour") hour: Array<Int>,
+                    @Query("minute") minute : Int,
                     @Query("name") name: String,
     ): Call<Void>
 
