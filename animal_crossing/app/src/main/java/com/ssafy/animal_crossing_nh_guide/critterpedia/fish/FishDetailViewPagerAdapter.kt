@@ -105,7 +105,7 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
                         if (alertFlg) {
                             fishFragmentViewModel.myRepository.deleteAlert(Alert(position, "물고기"))
                         } else {
-                            fishFragmentViewModel.myRepository.insertAlert(Alert(position, "물고기"))
+                            fishFragmentViewModel.myRepository.insertAlert(Alert(position, "물고기", fish!!.file_name))
                         }
                     }
                     alertFlg = !alertFlg
@@ -119,7 +119,7 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
                         if (starFlg) {
                             fishFragmentViewModel.myRepository.deleteStar(Star(position, "물고기"))
                         } else {
-                            fishFragmentViewModel.myRepository.insertStar(Star(position, "물고기"))
+                            fishFragmentViewModel.myRepository.insertStar(Star(position, "물고기", fish!!.file_name))
                         }
                     }
                     starFlg = !starFlg
@@ -133,7 +133,7 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
                         if (catchFlg) {
                             fishFragmentViewModel.myRepository.deleteCaught(Caught(position, "물고기"))
                         } else {
-                            fishFragmentViewModel.myRepository.insertCaught(Caught(position, "물고기"))
+                            fishFragmentViewModel.myRepository.insertCaught(Caught(position, "물고기", fish!!.file_name))
                         }
                     }
                     catchFlg = !catchFlg

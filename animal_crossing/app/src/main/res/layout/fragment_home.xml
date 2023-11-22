@@ -70,6 +70,7 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:text="지금 잡히는 곤충"
+                                android:textSize="18sp"
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -118,6 +119,7 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:text="지금 잡히는 물고기"
+                                android:textSize="18sp"
                                 android:background="@color/ac_background_chosebox"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -167,6 +169,7 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:text="지금 잡히는 해산물"
+                                android:textSize="18sp"
                                 android:background="@color/ac_background_chosebox"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -215,6 +218,7 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:text="데일리 체크리스트"
+                                android:textSize="18sp"
                                 android:background="@color/ac_background_chosebox"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

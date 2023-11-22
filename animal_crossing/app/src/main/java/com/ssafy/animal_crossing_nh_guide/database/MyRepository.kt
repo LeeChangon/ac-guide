@@ -27,6 +27,7 @@ class MyRepository private constructor(context: Context){
         myDao.deleteCaught(myDao.getCaught(caught.type, caught.index))
     }
     suspend fun getStar(type : String, index: Int) : Star{
+        Log.d(TAG, "getStar 별 리스트: ${myDao.getStar(type, index)}")
         return myDao.getStar(type, index)
     }
 

@@ -123,7 +123,6 @@ class MainActivityViewModel : ViewModel(){
                 list = listOf()
             }
 
-
             Log.d(TAG, "getNowBugList: ${list.size}")
             _nowBugList.value = linkedList
         }

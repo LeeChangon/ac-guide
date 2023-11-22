@@ -107,7 +107,7 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
                         if (alertFlg) {
                             bugFragmentViewModel.myRepository.deleteAlert(Alert(position, "곤충"))
                         } else {
-                            bugFragmentViewModel.myRepository.insertAlert(Alert(position, "곤충"))
+                            bugFragmentViewModel.myRepository.insertAlert(Alert(position, "곤충", bug!!.file_name))
                         }
                     }
                     alertFlg = !alertFlg
@@ -121,7 +121,7 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
                         if (starFlg) {
                             bugFragmentViewModel.myRepository.deleteStar(Star(position, "곤충"))
                         } else {
-                            bugFragmentViewModel.myRepository.insertStar(Star(position, "곤충"))
+                            bugFragmentViewModel.myRepository.insertStar(Star(position, "곤충", bug!!.file_name))
                         }
                     }
                     starFlg = !starFlg
@@ -135,7 +135,7 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
                         if (catchFlg) {
                             bugFragmentViewModel.myRepository.deleteCaught(Caught(position, "곤충"))
                         } else {
-                            bugFragmentViewModel.myRepository.insertCaught(Caught(position, "곤충"))
+                            bugFragmentViewModel.myRepository.insertCaught(Caught(position, "곤충", bug!!.file_name))
                         }
                     }
                     catchFlg = !catchFlg

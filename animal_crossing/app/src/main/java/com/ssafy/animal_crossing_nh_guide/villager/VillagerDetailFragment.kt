@@ -66,19 +66,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
         super.onViewCreated(view, savedInstanceState)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Main){
-                val tmpVillager = myRepository.getMyVillager(villager.id-1)
-
-                if(tmpVillager!=null){
-                    myVillager = tmpVillager
-                    myVillagerFlg = true
-                } else {
-                    myVillagerFlg = false
-                }
-            }
-            binding.addMyVillagerBtn.isSelected = myVillagerFlg
-        }
+        rereshHomeBtn()
 
 
         binding.addMyVillagerBtn.setOnClickListener {
@@ -174,6 +162,8 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
                         .commit()
                 }
             }
+
+            rereshHomeBtn()
         }
 
         binding.btnNext.setOnClickListener {
@@ -200,6 +190,8 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
                         .commit()
                 }
             }
+
+            rereshHomeBtn()
         }
 
         binding.closeBtn.setOnClickListener {
@@ -222,6 +214,22 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
     }
 
+    private fun rereshHomeBtn(){
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Main){
+                val tmpVillager = myRepository.getMyVillager(villager.id-1)
+
+                if(tmpVillager!=null){
+                    myVillager = tmpVillager
+                    myVillagerFlg = true
+                } else {
+                    myVillagerFlg = false
+                }
+            }
+            binding.addMyVillagerBtn.isSelected = myVillagerFlg
+        }
+
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         return super.onCreateDialog(savedInstanceState)

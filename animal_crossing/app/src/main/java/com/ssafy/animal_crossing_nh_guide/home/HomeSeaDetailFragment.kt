@@ -79,7 +79,7 @@ class HomeSeaDetailFragment(val monthList: ArrayList<Boolean>, val item: SeaCrea
                     if (alertFlg) {
                         myRepository.deleteAlert(Alert(item.id-1, "해산물"))
                     } else {
-                        myRepository.insertAlert(Alert(item.id-1, "해산물"))
+                        myRepository.insertAlert(Alert(item.id-1, "해산물", item.file_name))
                     }
                 }
                 alertFlg = !alertFlg
@@ -93,7 +93,7 @@ class HomeSeaDetailFragment(val monthList: ArrayList<Boolean>, val item: SeaCrea
                     if (starFlg) {
                         myRepository.deleteStar(Star(item.id-1, "해산물"))
                     } else {
-                        myRepository.insertStar(Star(item.id-1, "해산물"))
+                        myRepository.insertStar(Star(item.id-1, "해산물", item.file_name))
                     }
                 }
                 starFlg = !starFlg
@@ -107,7 +107,7 @@ class HomeSeaDetailFragment(val monthList: ArrayList<Boolean>, val item: SeaCrea
                     if (catchFlg) {
                         myRepository.deleteCaught(Caught(item.id-1, "해산물"))
                     } else {
-                        myRepository.insertCaught(Caught(item.id-1, "해산물"))
+                        myRepository.insertCaught(Caught(item.id-1, "해산물", item.file_name))
                     }
                 }
                 catchFlg = !catchFlg

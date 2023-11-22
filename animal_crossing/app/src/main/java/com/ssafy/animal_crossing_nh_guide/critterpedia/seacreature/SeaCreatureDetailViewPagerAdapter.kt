@@ -105,7 +105,7 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
                         if (alertFlg) {
                             seaCreatureFragmentViewModel.myRepository.deleteAlert(Alert(position, "해산물"))
                         } else {
-                            seaCreatureFragmentViewModel.myRepository.insertAlert(Alert(position, "해산물"))
+                            seaCreatureFragmentViewModel.myRepository.insertAlert(Alert(position, "해산물", seaCreature!!.file_name))
                         }
                     }
                     alertFlg = !alertFlg
@@ -119,7 +119,7 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
                         if (starFlg) {
                             seaCreatureFragmentViewModel.myRepository.deleteStar(Star(position, "해산물"))
                         } else {
-                            seaCreatureFragmentViewModel.myRepository.insertStar(Star(position, "해산물"))
+                            seaCreatureFragmentViewModel.myRepository.insertStar(Star(position, "해산물", seaCreature!!.file_name))
                         }
                     }
                     starFlg = !starFlg
@@ -133,7 +133,7 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
                         if (catchFlg) {
                             seaCreatureFragmentViewModel.myRepository.deleteCaught(Caught(position, "해산물"))
                         } else {
-                            seaCreatureFragmentViewModel.myRepository.insertCaught(Caught(position, "해산물"))
+                            seaCreatureFragmentViewModel.myRepository.insertCaught(Caught(position, "해산물", seaCreature!!.file_name))
                         }
                     }
                     catchFlg = !catchFlg

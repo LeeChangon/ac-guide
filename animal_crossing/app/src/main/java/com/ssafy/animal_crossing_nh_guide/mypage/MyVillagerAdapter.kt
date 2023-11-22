@@ -44,9 +44,8 @@ class MyVillagerAdapter(val context: Context, val childFragmentManager: Fragment
                             myRepository.deleteMyVillager(item.index)
                             mainActivityViewModel.getMyVilagerList()
                         }
-                        notifyItemRemoved(position)
+                        notifyItemRemoved(layoutPosition)
                     }
-
                 }
             }
 

@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alert")
 data class Alert(
     @ColumnInfo var index : Int = -1,
-    @ColumnInfo(name = "type") var type : String = ""
+    @ColumnInfo(name = "type") var type : String = "",
+    @ColumnInfo var url : String = ""
 ){
     @PrimaryKey(autoGenerate = true)
     var ID: Long = 0
 
-    constructor(id:Long, index: Int, type: String): this(index, type){
+    constructor(id:Long, index: Int, type: String, url: String): this(index, type, url){
         this.ID = id
     }
 }
