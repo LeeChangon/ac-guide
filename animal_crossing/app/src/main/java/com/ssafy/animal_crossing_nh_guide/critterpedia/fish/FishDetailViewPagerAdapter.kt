@@ -10,6 +10,7 @@ import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentFishDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -105,7 +106,9 @@ class FishDetailViewPagerAdapter(val fishFragmentViewModel: FishFragmentViewMode
                         if (alertFlg) {
                             fishFragmentViewModel.myRepository.deleteAlert(Alert(position, "물고기"))
                         } else {
-                            fishFragmentViewModel.myRepository.insertAlert(Alert(position, "물고기", fish!!.file_name))
+                            val monthList = FirebasePushUtil.getMonthList(fish!!.availability.month_array_northern)
+                            val hourList = FirebasePushUtil.getHourList(fish!!.availability.time_array)
+                            fishFragmentViewModel.myRepository.insertAlert(Alert(position, "물고기", fish!!.file_name, monthList, hourList, fish!!.name.name_KRko))
                         }
                     }
                     alertFlg = !alertFlg

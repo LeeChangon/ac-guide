@@ -56,6 +56,7 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun insertAlert(alert: Alert){
+        Log.d(TAG, "insertAlert: 새데이터베이스: ${alert}")
         myDao.insertAlert(alert)
     }
 

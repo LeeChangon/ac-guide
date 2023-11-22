@@ -12,6 +12,7 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -39,6 +40,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         super.onViewCreated(view, savedInstanceState)
 
         binding.homeToolbar.inflateMenu(R.menu.home_appbar_item)
+
+//        ApplicationClass.sharedPreferencesUtil.getTimeDiff()
+//        FirebasePushUtil.getHourList(listOf(1,2,3,5,6,7))
+
 
         initSetting()
         initListener()

@@ -4,12 +4,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.ktx.Firebase
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.database.Alert
 import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -106,8 +108,10 @@ class BugDetailViewPagerAdapter(val bugFragmentViewModel: BugFragmentViewModel) 
                     withContext(Dispatchers.Main) {
                         if (alertFlg) {
                             bugFragmentViewModel.myRepository.deleteAlert(Alert(position, "곤충"))
-                        } else {
-                            bugFragmentViewModel.myRepository.insertAlert(Alert(position, "곤충", bug!!.file_name))
+                        } else { //index, type, url, month, time, name
+                            val monthList = FirebasePushUtil.getMonthList(bug!!.availability.month_array_northern)
+                            val hourList = FirebasePushUtil.getHourList(bug!!.availability.time_array)
+                            bugFragmentViewModel.myRepository.insertAlert(Alert(position, "곤충", bug!!.file_name, monthList, hourList, bug!!.name.name_KRko))
                         }
                     }
                     alertFlg = !alertFlg

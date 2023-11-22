@@ -15,6 +15,7 @@ import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentBugDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -77,7 +78,9 @@ class HomeBugDetailFragment(val monthList: ArrayList<Boolean>, val item: Bug) : 
                     if (alertFlg) {
                         myRepository.deleteAlert(Alert(item.id-1, "곤충"))
                     } else {
-                        myRepository.insertAlert(Alert(item.id-1, "곤충", item.file_name))
+                        val monthList = FirebasePushUtil.getMonthList(item.availability.month_array_northern)
+                        val hourList = FirebasePushUtil.getHourList(item.availability.time_array)
+                        myRepository.insertAlert(Alert(item.id-1, "곤충", item.file_name, monthList, hourList, item.name.name_KRko))
                     }
                 }
                 alertFlg = !alertFlg
