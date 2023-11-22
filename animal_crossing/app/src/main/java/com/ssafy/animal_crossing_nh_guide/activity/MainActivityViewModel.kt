@@ -282,4 +282,9 @@ class MainActivityViewModel : ViewModel(){
             _alertList.value = list
         }
     }
+
+//    fun resendAlert(){
+//        getAlertList()
+//        alertList
+//    }
 }

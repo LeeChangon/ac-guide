@@ -20,6 +20,7 @@ import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentMypageBinding
 import com.ssafy.animal_crossing_nh_guide.home.HomeBugAdapter
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,6 +56,15 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         initListener()
     }
 
+    fun initSetting(){
+        initObserve()
+        refreshTime()
+        initDate()
+        initAdapter()
+
+        initList()
+    }
+
     private fun initListener() {
         binding.dateConfigBtn.setOnClickListener {
             timeConfigExpanded = !timeConfigExpanded
@@ -70,6 +80,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             ApplicationClass.sharedPreferencesUtil.resetTimeDiff()
             refreshTime()
             showToast("현재 시간으로 초기화되었습니다.")
+            mainActivityViewModel.getAlertList()
             toggleCard(binding.timeCollapseLayout, binding.dateConfigBtn, !timeConfigExpanded)
         }
 
@@ -88,7 +99,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             Log.d(TAG, "initListener: 선택한 시간 : ${calendar.timeInMillis}")
 
             ApplicationClass.sharedPreferencesUtil.setTimeDiff(calendar.timeInMillis)
-            
+            mainActivityViewModel.getAlertList()
             refreshTime()
             toggleCard(binding.timeCollapseLayout, binding.dateConfigBtn, !timeConfigExpanded)
 
@@ -101,14 +112,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     }
 
 
-    fun initSetting(){
-        initObserve()
-        refreshTime()
-        initDate()
-        initAdapter()
 
-        initList()
-    }
 
     private fun initList() {
         mainActivityViewModel.getMyVilagerList()
@@ -119,6 +123,18 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     }
 
     private fun initObserve(){
+        mainActivityViewModel.alertList.observe(viewLifecycleOwner){
+            it.forEach{
+                val monthArr:Array<Int> = it.month!!.toTypedArray()
+                val hour : Array<Int> = it.time!!.toTypedArray()
+
+                val minute = ApplicationClass.sharedPreferencesUtil.getTimeDiff()[2]
+                Log.d(TAG, "insertAlert: 새데이터베이스: ${it}, 분 : $minute")
+
+                FirebasePushUtil.pushAlarmTo(it.type, it.index, monthArr, hour, minute, it.name)
+            }
+        }
+
         mainActivityViewModel.currentTime.observe(viewLifecycleOwner){
             binding.time = mainActivityViewModel.convertLongToTime()
         }
@@ -175,12 +191,12 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         binding.timePicker.minute = calendar.get(Calendar.MINUTE)
     }
 
-    fun refreshTime(){
+    private fun refreshTime(){
         mainActivityViewModel.setTime()
         mainActivityViewModel.convertLongToTime()
     }
 
-    fun initAdapter(){
+    private fun initAdapter(){
         initMyVillagerAdapter()
         initMycaughtAdapter()
     }
@@ -225,4 +241,5 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             adapter = myCaughtAdapter3
         }
     }
+
 }
