@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentHomeBinding
-import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
-import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
 
 
 private const val TAG = "HomeFragment_싸피"
@@ -279,7 +276,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     //지금 잡히는 리스트 어댑터 초기화
     private fun initBugAdapter(){
-        homeBugAdapter = HomeBugAdapter(mainActivity)
+        homeBugAdapter = HomeBugAdapter(mainActivity, childFragmentManager)
         homeBugAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
@@ -291,7 +288,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     private fun initFishAdapter(){
-        homeFishAdapter = HomeFishAdapter(mainActivity)
+        homeFishAdapter = HomeFishAdapter(mainActivity, childFragmentManager)
         homeFishAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
@@ -303,7 +300,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     private fun initSeaAdapter(){
-        homeSeaAdapter = HomeSeaAdapter(mainActivity)
+        homeSeaAdapter = HomeSeaAdapter(mainActivity, childFragmentManager)
         homeSeaAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
