@@ -17,8 +17,13 @@ import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
+import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentMypageBinding
 import com.ssafy.animal_crossing_nh_guide.home.HomeBugAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -30,6 +35,13 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     var timeConfigExpanded = false
 
     private lateinit var myVillagerAdapter: MyVillagerAdapter
+    private lateinit var myCaughtAdapter1: MyCaughtAdapter
+    private lateinit var myCaughtAdapter2: MyCaughtAdapter
+    private lateinit var myCaughtAdapter3: MyCaughtAdapter
+
+    private lateinit var myCaughtBugList : ArrayList<Caught>
+    private lateinit var myCaughtFishList : ArrayList<Caught>
+    private lateinit var myCaughtSeaList : ArrayList<Caught>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -95,10 +107,18 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         initDate()
         initAdapter()
 
-        mainActivityViewModel.getMyVilagerList()
+        initList()
     }
 
-    fun initObserve(){
+    private fun initList() {
+        mainActivityViewModel.getMyVilagerList()
+
+        mainActivityViewModel.getStarList()
+        mainActivityViewModel.getCaughtList()
+        mainActivityViewModel.getAlertList()
+    }
+
+    private fun initObserve(){
         mainActivityViewModel.currentTime.observe(viewLifecycleOwner){
             binding.time = mainActivityViewModel.convertLongToTime()
         }
@@ -115,6 +135,28 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                 binding.myVillagerRecyclerview.visibility = View.VISIBLE
                 binding.myAddVillagerBtn.visibility = View.GONE
             }
+
+            myVillagerAdapter.notifyDataSetChanged()
+        }
+
+        mainActivityViewModel.caughtList.observe(viewLifecycleOwner){
+            Log.d(TAG, "initObserve: $it")
+            myCaughtBugList = arrayListOf()
+            myCaughtFishList = arrayListOf()
+            myCaughtSeaList = arrayListOf()
+
+            it.forEach{
+                if(it.type == "곤충") myCaughtBugList.add(it)
+                else if(it.type == "물고기") myCaughtFishList.add(it)
+                else myCaughtSeaList.add(it)
+            }
+
+            myCaughtAdapter1.list = myCaughtBugList
+            myCaughtAdapter2.list = myCaughtFishList
+            myCaughtAdapter3.list = myCaughtSeaList
+            myCaughtAdapter1.notifyDataSetChanged()
+            myCaughtAdapter2.notifyDataSetChanged()
+            myCaughtAdapter3.notifyDataSetChanged()
         }
     }
 
@@ -140,13 +182,14 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
 
     fun initAdapter(){
         initMyVillagerAdapter()
+        initMycaughtAdapter()
     }
 
 
     //주민 어댑터
     private fun initMyVillagerAdapter(){
 
-        myVillagerAdapter = MyVillagerAdapter(mainActivity, childFragmentManager, mainActivityViewModel)
+        myVillagerAdapter = MyVillagerAdapter(mainActivity, mainActivityViewModel)
         myVillagerAdapter.list = listOf()
 
         val manager = GridLayoutManager(context, 5)
@@ -154,6 +197,32 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         binding.myVillagerRecyclerview.apply {
             layoutManager = manager
             adapter = myVillagerAdapter
+        }
+    }
+
+    private fun initMycaughtAdapter(){
+        myCaughtAdapter1 = MyCaughtAdapter(mainActivity, mainActivityViewModel)
+        myCaughtAdapter1.list = listOf()
+        myCaughtAdapter2 = MyCaughtAdapter(mainActivity, mainActivityViewModel)
+        myCaughtAdapter2.list = listOf()
+        myCaughtAdapter3 = MyCaughtAdapter(mainActivity, mainActivityViewModel)
+        myCaughtAdapter3.list = listOf()
+
+        val manager1 = GridLayoutManager(context, 5)
+        val manager2 = GridLayoutManager(context, 5)
+        val manager3 = GridLayoutManager(context, 5)
+
+        binding.myBugRecyclerview.apply {
+            layoutManager = manager1
+            adapter = myCaughtAdapter1
+        }
+        binding.myFishRecyclerview.apply {
+            layoutManager = manager2
+            adapter = myCaughtAdapter2
+        }
+        binding.mySeaRecyclerview.apply {
+            layoutManager = manager3
+            adapter = myCaughtAdapter3
         }
     }
 }

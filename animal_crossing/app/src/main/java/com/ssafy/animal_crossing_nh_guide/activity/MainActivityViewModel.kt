@@ -6,8 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
+import com.ssafy.animal_crossing_nh_guide.database.Alert
+import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.database.MyVillager
+import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
@@ -208,7 +211,7 @@ class MainActivityViewModel : ViewModel(){
     }
 
     //마을 주민 리스트
-    private var _myVillagerList= MutableLiveData<List<MyVillager>>()
+    private var _myVillagerList = MutableLiveData<List<MyVillager>>()
 
     val myVillagerList : LiveData<List<MyVillager>>
         get() = _myVillagerList
@@ -229,4 +232,54 @@ class MainActivityViewModel : ViewModel(){
         }
     }
 
+    private var _starList = MutableLiveData<List<Star>>()
+    val starList : LiveData<List<Star>>
+        get() = _starList
+
+    fun getStarList(){
+        var list : List<Star>
+        viewModelScope.launch {
+            try {
+                list = myRepository.getAllStar()
+            } catch (e : Exception){
+                list = listOf()
+            }
+
+            _starList.value = list
+        }
+    }
+
+    private var _caughtList = MutableLiveData<List<Caught>>()
+    val caughtList : LiveData<List<Caught>>
+        get() = _caughtList
+
+    fun getCaughtList(){
+        var list : List<Caught>
+        viewModelScope.launch {
+            try {
+                list = myRepository.getAllCaught()
+            } catch (e : Exception){
+                list = listOf()
+            }
+
+            _caughtList.value = list
+        }
+    }
+
+    private var _alertList = MutableLiveData<List<Alert>>()
+    val alertList : LiveData<List<Alert>>
+        get() = _alertList
+
+    fun getAlertList(){
+        var list : List<Alert>
+        viewModelScope.launch {
+            try {
+                list = myRepository.getAllAlert()
+            } catch (e : Exception){
+                list = listOf()
+            }
+
+            _alertList.value = list
+        }
+    }
 }

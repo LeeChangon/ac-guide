@@ -15,6 +15,10 @@ class MyRepository private constructor(context: Context){
 
     private val myDao = database.myDao()
 
+    suspend fun getAllCaught() : List<Caught> {
+        return myDao.getAllCaught()
+    }
+
     suspend fun getCaught(type : String, index: Int) : Caught{
         return myDao.getCaught(type, index)
     }
@@ -25,6 +29,10 @@ class MyRepository private constructor(context: Context){
 
     suspend fun deleteCaught(caught: Caught){
         myDao.deleteCaught(myDao.getCaught(caught.type, caught.index))
+    }
+
+    suspend fun getAllStar() : List<Star> {
+        return myDao.getAllStar()
     }
     suspend fun getStar(type : String, index: Int) : Star{
         Log.d(TAG, "getStar 별 리스트: ${myDao.getStar(type, index)}")
@@ -38,7 +46,11 @@ class MyRepository private constructor(context: Context){
     suspend fun deleteStar(star: Star){
         myDao.deleteStar(myDao.getStar(star.type, star.index))
     }
-    
+
+    suspend fun getAllAlert() : List<Alert> {
+        return myDao.getAllAlert()
+    }
+
     suspend fun getAlert(type : String, index: Int) : Alert{
         return myDao.getAlert(type, index)
     }

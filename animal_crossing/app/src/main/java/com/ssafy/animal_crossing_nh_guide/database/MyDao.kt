@@ -10,6 +10,9 @@ import androidx.room.Query
 interface MyDao {
 
     //잡았다
+    @Query("select * from caught")
+    suspend fun getAllCaught() : List<Caught>
+
     @Query("select * from caught where type =(:type) and `index`=(:index)")
     suspend fun getCaught(type : String, index: Int) : Caught
 
@@ -20,6 +23,9 @@ interface MyDao {
     suspend fun deleteCaught(caught: Caught)
 
     //즐찾
+    @Query("select * from star")
+    suspend fun getAllStar() : List<Star>
+
     @Query("select * from Star where type =(:type) and `index`=(:index)")
     suspend fun getStar(type : String, index: Int) : Star
 
@@ -30,6 +36,9 @@ interface MyDao {
     suspend fun deleteStar(Star: Star)
 
     //알람
+    @Query("select * from alert")
+    suspend fun getAllAlert() : List<Alert>
+
     @Query("select * from Alert where type =(:type) and `index`=(:index)")
     suspend fun getAlert(type : String, index: Int) : Alert
 

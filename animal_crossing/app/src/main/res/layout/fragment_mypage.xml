@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginHorizontal="5dp"
-                    android:padding="5dp">
+                    android:padding="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -182,28 +182,91 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="5dp"
-                    android:padding="5dp">
+                    android:padding="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/my_bug_list"
-                            android:layout_gravity="center"
-                            android:text="내 곤충"
+                            android:layout_gravity="start"
+                            android:text="잡은 생물"
                             android:textColor="@color/ac_textcolor_dark"
                             android:textSize="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/home_bug_recyclerview"
-                            tools:visibility="gone"
-                            android:overScrollMode="never"
-                            android:nestedScrollingEnabled="false"
-                            android:layout_margin="10dp"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/my_caught_bug_tv"
+                                    android:text="곤충"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/my_bug_recyclerview"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/my_caught_fish_tv"
+                                    android:text="물고기"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/my_fish_recyclerview"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/my_caught_sea_tv"
+                                    android:text="해산물"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/my_sea_recyclerview"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
