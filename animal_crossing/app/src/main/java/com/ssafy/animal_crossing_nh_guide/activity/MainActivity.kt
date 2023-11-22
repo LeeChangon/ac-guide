@@ -5,9 +5,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.animal_crossing_nh_guide.R
@@ -19,12 +19,10 @@ import com.ssafy.animal_crossing_nh_guide.home.HomeFragment
 import com.ssafy.animal_crossing_nh_guide.mypage.MypageFragment
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 private const val TAG = "MainActivity_싸피"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -108,6 +106,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.bottomNavigation.selectedItemId = item
     }
 
+    private var backpressedTime: Long = 0
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() > backpressedTime + 2000) {
+            backpressedTime = System.currentTimeMillis()
+            Toast.makeText(this, "취소 버튼을 두 번 눌러 종료하기", Toast.LENGTH_SHORT).show()
+        } else if (System.currentTimeMillis() <= backpressedTime + 2000) {
+            finish()
+        }
+    }
 
 
     // Notification 수신을 위한 체널 추가

@@ -1,5 +1,6 @@
 package com.ssafy.animal_crossing_nh_guide.mypage
 
+import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentMypageBinding
 import com.ssafy.animal_crossing_nh_guide.home.HomeBugAdapter
 import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
+import com.ssafy.animal_crossing_nh_guide.util.ToggleAnimation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,6 +45,8 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private lateinit var myCaughtBugList : ArrayList<Caught>
     private lateinit var myCaughtFishList : ArrayList<Caught>
     private lateinit var myCaughtSeaList : ArrayList<Caught>
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -109,6 +113,22 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             mainActivity.moveNavItem(R.id.navigation_page_3)
         }
 
+        binding.bugCaughtHeadLayout.setOnClickListener {
+            if(binding.bugCaughtDrawLayout.visibility == View.VISIBLE){
+                ObjectAnimator.ofInt(binding.bugProgressbar, "progress", myCaughtBugList.size)
+                    .setDuration(350)
+                    .start()
+                ToggleAnimation.collapse(binding.bugCaughtDrawLayout)
+            }
+            else{
+                ObjectAnimator.ofInt(binding.bugProgressbar, "progress", 0)
+                    .setDuration(350)
+                    .start()
+                ToggleAnimation.expand(binding.bugCaughtDrawLayout)
+            }
+
+        }
+
     }
 
 
@@ -142,17 +162,17 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         mainActivityViewModel.myVillagerList.observe(viewLifecycleOwner){
             myVillagerAdapter.list = it
             if(it.isEmpty()){
-                binding.myVillagerTitle.visibility = View.GONE
+//                binding.myVillagerTitle.visibility = View.GONE
                 binding.myVillagerRecyclerview.visibility = View.GONE
                 binding.myAddVillagerBtn.visibility = View.VISIBLE
             } else {
                 myVillagerAdapter.list = it
-                binding.myVillagerTitle.visibility = View.VISIBLE
+//                binding.myVillagerTitle.visibility = View.VISIBLE
                 binding.myVillagerRecyclerview.visibility = View.VISIBLE
                 binding.myAddVillagerBtn.visibility = View.GONE
             }
 
-            myVillagerAdapter.notifyDataSetChanged()
+//            myVillagerAdapter.notifyDataSetChanged()
         }
 
         mainActivityViewModel.caughtList.observe(viewLifecycleOwner){
@@ -166,6 +186,24 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                 else if(it.type == "물고기") myCaughtFishList.add(it)
                 else myCaughtSeaList.add(it)
             }
+
+            ObjectAnimator.ofInt(binding.bugProgressbar, "progress", myCaughtBugList.size)
+                .setDuration(350)
+                .start()
+//            binding.bugProgressbar.progress = myCaughtBugList.size
+            binding.myCaughtBugProgressTv.text = "${myCaughtBugList.size} / 80"
+
+            ObjectAnimator.ofInt(binding.fishProgressbar, "progress", myCaughtFishList.size)
+                .setDuration(350)
+                .start()
+//            binding.fishProgressbar.progress = myCaughtFishList.size
+            binding.myCaughtFishProgressTv.text = "${myCaughtFishList.size} / 80"
+
+            ObjectAnimator.ofInt(binding.seaProgressbar, "progress", myCaughtSeaList.size)
+                .setDuration(350)
+                .start()
+//            binding.seaProgressbar.progress = myCaughtSeaList.size
+            binding.myCaughtSeaProgressTv.text = "${myCaughtSeaList.size} / 40"
 
             myCaughtAdapter1.list = myCaughtBugList
             myCaughtAdapter2.list = myCaughtFishList
