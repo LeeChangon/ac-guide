@@ -202,12 +202,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         //주민 추가 버튼
         binding.homeAddVillagerBtn.setOnClickListener {
             mainActivity.moveNavItem(R.id.navigation_page_3)
-//            parentFragmentManager.beginTransaction()
-//                .add(R.id.frame_layout_main, VillagerFragment()).addToBackStack("")
-//                .commit()
-
-
-//            mainActivityViewModel.addVillager(190)
         }
     }
 
@@ -243,7 +237,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         villagerCheckList.addAll(arrayOf(binding.villager1, binding.villager2, binding.villager3, binding.villager4, binding.villager5,
             binding.villager6, binding.villager7, binding.villager8, binding.villager9, binding.villager10))
-        binding.myVillagers = arrayListOf("icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png", "icons/villagers/ham01.png")
+        binding.myVillagers = arrayListOf("", "", "", "", "", "", "", "", "", "",)
 
 
 

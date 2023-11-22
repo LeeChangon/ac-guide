@@ -11,12 +11,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentMypageBinding
+import com.ssafy.animal_crossing_nh_guide.home.HomeBugAdapter
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -27,6 +29,8 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     var timeConfigExpanded = false
 
+    private lateinit var myVillagerAdapter: MyVillagerAdapter
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
@@ -36,7 +40,6 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         super.onViewCreated(view, savedInstanceState)
 
         initSetting()
-        initObserve()
         initListener()
     }
 
@@ -77,23 +80,41 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             refreshTime()
             toggleCard(binding.timeCollapseLayout, binding.dateConfigBtn, !timeConfigExpanded)
 
-//            mainActivityViewModel.currentTime
-//            binding.datePicker.
-//            showToast(binding.datePicker. + " " + binding.timePicker.hour)
+        }
 
+        binding.myAddVillagerBtn.setOnClickListener {
+            mainActivity.moveNavItem(R.id.navigation_page_3)
         }
 
     }
 
 
     fun initSetting(){
+        initObserve()
         refreshTime()
         initDate()
+        initAdapter()
+
+        mainActivityViewModel.getMyVilagerList()
     }
 
     fun initObserve(){
         mainActivityViewModel.currentTime.observe(viewLifecycleOwner){
             binding.time = mainActivityViewModel.convertLongToTime()
+        }
+
+        mainActivityViewModel.myVillagerList.observe(viewLifecycleOwner){
+            myVillagerAdapter.list = it
+            if(it.isEmpty()){
+                binding.myVillagerTitle.visibility = View.GONE
+                binding.myVillagerRecyclerview.visibility = View.GONE
+                binding.myAddVillagerBtn.visibility = View.VISIBLE
+            } else {
+                myVillagerAdapter.list = it
+                binding.myVillagerTitle.visibility = View.VISIBLE
+                binding.myVillagerRecyclerview.visibility = View.VISIBLE
+                binding.myAddVillagerBtn.visibility = View.GONE
+            }
         }
     }
 
@@ -115,5 +136,24 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     fun refreshTime(){
         mainActivityViewModel.setTime()
         mainActivityViewModel.convertLongToTime()
+    }
+
+    fun initAdapter(){
+        initMyVillagerAdapter()
+    }
+
+
+    //주민 어댑터
+    private fun initMyVillagerAdapter(){
+
+        myVillagerAdapter = MyVillagerAdapter(mainActivity, childFragmentManager, mainActivityViewModel)
+        myVillagerAdapter.list = listOf()
+
+        val manager = GridLayoutManager(context, 5)
+
+        binding.myVillagerRecyclerview.apply {
+            layoutManager = manager
+            adapter = myVillagerAdapter
+        }
     }
 }

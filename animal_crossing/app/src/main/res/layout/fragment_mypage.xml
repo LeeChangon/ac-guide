@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".mypage.MypageFragment"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -27,6 +28,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="20dp"
                 app:strokeWidth="3dp"
+                android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/ac_background_bright">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,7 +61,6 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/time_collapse_layout"
-                        tools:visibility="visible"
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,6 +111,101 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+<!--            내 주민 리스트-->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="3dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/ac_background_bright"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:padding="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/my_villager_title"
+                            android:layout_gravity="start"
+                            android:text="마을 관리"
+                            android:textColor="@color/ac_textcolor_dark"
+                            android:textSize="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/my_villager_recyclerview"
+                            android:overScrollMode="never"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/my_add_villager_btn"
+                            android:visibility="gone"
+                            style="@style/Widget.Material3.Button.IconButton"
+                            app:icon="@drawable/add_icon"
+                            app:iconTint="@color/ac_textcolor_dark"
+                            app:iconGravity="textStart"
+                            android:text=" 내 마을 주민 추가하기"
+                            app:rippleColor="@color/white"
+                            android:fontFamily="@font/a_cindi_b"
+                            android:textColor="@color/ac_textcolor_dark"
+                            app:cornerRadius="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+<!--            잡은 곤충 리스트-->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="3dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/ac_background_bright"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/my_bug_list"
+                            android:layout_gravity="center"
+                            android:text="내 곤충"
+                            android:textColor="@color/ac_textcolor_dark"
+                            android:textSize="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/home_bug_recyclerview"
+                            tools:visibility="gone"
+                            android:overScrollMode="never"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

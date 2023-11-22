@@ -52,6 +52,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
                 galleryAdapter.list = it
                 Log.d(TAG, "onViewCreated: ${it}")
                 galleryAdapter.notifyDataSetChanged()
+            binding.villagerRecyclerView.scheduleLayoutAnimation()
 //            }
         }
 
