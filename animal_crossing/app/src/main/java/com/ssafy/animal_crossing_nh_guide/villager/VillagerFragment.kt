@@ -71,6 +71,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             adapter -> adapter.setDropDownViewResource(R.layout.dropdown_item)
             binding.speciesSpinner.adapter = adapter
         }
+        binding.speciesSpinner.setSelection(0,false)
         binding.speciesSpinner.onItemSelectedListener = AdapterSpecies(viewModel)
 
         ArrayAdapter.createFromResource(mainActivity, R.array.gender_array, android.R.layout.simple_spinner_item).also{
@@ -78,6 +79,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             binding.genderSpinner.adapter = adapter
         }
 
+        binding.genderSpinner.setSelection(0,false)
         binding.genderSpinner.onItemSelectedListener = AdapterGender(viewModel)
 
         binding.search.addTextChangedListener(object: TextWatcher{

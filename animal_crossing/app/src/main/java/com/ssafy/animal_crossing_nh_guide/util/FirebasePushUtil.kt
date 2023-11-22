@@ -38,10 +38,10 @@ class FirebasePushUtil {
             return arr.toList()
         }
 
-        fun pushAlarmTo(type:String, index:Int, month:Int, day:Int, hour:Int, minute:Int, name: String){
+        fun pushAlarmTo(type:String, index:Int, month:Array<Int>, hour:Array<Int>, name: String){
             // 새로운 토큰 수신 시 서버로 전송
 //            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, type, index, month, day, hour, minute, name).enqueue(object :
+            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, type, index, month, hour, name).enqueue(object :
                 Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if(response.isSuccessful){

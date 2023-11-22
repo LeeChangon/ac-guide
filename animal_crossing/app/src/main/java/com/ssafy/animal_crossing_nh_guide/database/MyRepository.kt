@@ -3,6 +3,7 @@ package com.ssafy.animal_crossing_nh_guide.database
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import kotlin.math.log
 
 private const val TAG = "MyRepository_싸피"
@@ -57,6 +58,12 @@ class MyRepository private constructor(context: Context){
 
     suspend fun insertAlert(alert: Alert){
         Log.d(TAG, "insertAlert: 새데이터베이스: ${alert}")
+
+        val monthArr:Array<Int> = alert.month!!.toTypedArray()
+        val hour : Array<Int> = alert.time!!.toTypedArray()
+
+        FirebasePushUtil.pushAlarmTo(alert.type, alert.index, monthArr, hour, alert.name)
+
         myDao.insertAlert(alert)
     }
 
