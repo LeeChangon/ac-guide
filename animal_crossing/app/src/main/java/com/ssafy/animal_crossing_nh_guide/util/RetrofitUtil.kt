@@ -3,6 +3,7 @@ package com.ssafy.animal_crossing_nh_guide.util
 import android.app.Application
 import com.ssafy.animal_crossing_nh_guide.api.AcnhService
 import com.ssafy.animal_crossing_nh_guide.api.BugService
+import com.ssafy.animal_crossing_nh_guide.api.FirebaseTokenService
 import com.ssafy.animal_crossing_nh_guide.api.FishService
 import com.ssafy.animal_crossing_nh_guide.api.SeaCreatureService
 import com.ssafy.animal_crossing_nh_guide.api.VillagerService
@@ -15,5 +16,6 @@ class RetrofitUtil {
         val seaCreatureService = ApplicationClass.retrofit.create(SeaCreatureService::class.java)
         val villagerService = ApplicationClass.retrofit.create(VillagerService::class.java)
         val acnhService = ApplicationClass.retrofitacnh.create(AcnhService::class.java)
+        val firebaseTokenService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
     }
 }

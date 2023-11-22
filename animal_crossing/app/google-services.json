@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "949300649336",
+    "project_id": "animal-crossing-nh-guide",
+    "storage_bucket": "animal-crossing-nh-guide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949300649336:android:bc7ac59dc98de9dee47c8d",
+        "android_client_info": {
+          "package_name": "com.ssafy.animal_crossing_nh_guide"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtQzMD_zO-2EOw-UzYomfcPyiDi0YarN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

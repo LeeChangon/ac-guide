@@ -19,9 +19,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
+import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.ViewPagerAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentVillagerBinding
+import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.time.LocalDateTime
 
 private const val TAG = "VillagerFragment_싸피"
 class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
@@ -36,9 +42,14 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        pushAlarmTo()
+
+
         mainActivity = context as MainActivity
         galleryAdapter = VillagerGalleryAdapter(requireContext(), viewModel)
         galleryAdapter.childFragmentManager = childFragmentManager
+
     }
 
 
@@ -97,6 +108,48 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
         viewModel.getVillagerList()
     }
 
+    companion object{
+        fun broadcast(title:String, body:String){
+            // 새로운 토큰 수신 시 서버로 전송
+//            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
+            RetrofitUtil.firebaseTokenService.broadcast(title, body).enqueue(object : Callback<Integer> {
+                override fun onResponse(call: Call<Integer>, response: Response<Integer>) {
+                    if(response.isSuccessful){
+                        val res = response.body()
+                        Log.d(TAG, "onResponse: $res")
+//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: $res")
+                    } else {
+                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
+//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: Error Code ${response.code()}")
+                    }
+                }
+                override fun onFailure(call: Call<Integer>, t: Throwable) {
+                    Log.d(TAG, "onFailure: t.message ?: \"토큰 정보 등록 중 통신오류\"")
+//                    Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, t.message ?: "토큰 정보 등록 중 통신오류")
+                }
+            })
+        }
 
+        fun pushAlarmTo(){
+            // 새로운 토큰 수신 시 서버로 전송
+//            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
+            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, "곤충", 1, 11, 22, 18, 3, "이창곤").enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if(response.isSuccessful){
+                        val res = response.body()
+                        Log.d(TAG, "onResponse: $res")
+//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: $res")
+                    } else {
+                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
+//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: Error Code ${response.code()}")
+                    }
+                }
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d(TAG, "onFailure: t.message ?: \"토큰 정보 등록 중 통신오류\"")
+//                    Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, t.message ?: "토큰 정보 등록 중 통신오류")
+                }
+            })
+        }
+    }
 
 }
