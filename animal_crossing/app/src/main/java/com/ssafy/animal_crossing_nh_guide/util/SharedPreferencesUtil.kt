@@ -37,10 +37,42 @@ class SharedPreferencesUtil (context: Context) {
     fun getTime(): Long{
         val timeDiff = preferences.getLong("timeDiff", 0)
 
-        Log.d(TAG, "getTime: ${timeDiff}")
-        Log.d(TAG, "sp getTime: ${System.currentTimeMillis() + timeDiff}")
+        val timeNow = System.currentTimeMillis() + timeDiff
 
-        return System.currentTimeMillis() + timeDiff
+        timeCheck(timeNow)
+
+        val editor = preferences.edit()
+        editor.putLong("timeNow", timeNow)
+        editor.apply()
+
+        return timeNow
+    }
+
+    fun timeCheck(new : Long){
+        val now = preferences.getLong("timeNow", System.currentTimeMillis())
+
+        if(new < now) resetCheckList()
+        else{
+            val calendar = Calendar.getInstance()
+            calendar.time = Date(now)
+
+            val nowDay = calendar.get(Calendar.DATE)
+            val nowHour = calendar.get(Calendar.HOUR_OF_DAY)
+            Log.d(TAG, "지금 시간: ${nowDay}일 ${nowHour}시")
+
+            calendar.time = Date(new)
+
+            val newDay = calendar.get(Calendar.DATE)
+            val newHour = calendar.get(Calendar.HOUR_OF_DAY)
+            Log.d(TAG, "새로운 시간: ${newDay}일 ${newHour}시")
+
+            if(newHour >= 5){
+                if(nowDay < newDay) resetCheckList()
+                else if(nowDay == newDay && nowHour < 5) resetCheckList()
+            }
+        }
+
+//        nowDate
     }
 
     fun resetCheckList(){

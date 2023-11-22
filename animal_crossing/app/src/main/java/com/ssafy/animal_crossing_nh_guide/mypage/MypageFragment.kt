@@ -45,7 +45,8 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             timeConfigExpanded = !timeConfigExpanded
             if(!timeConfigExpanded){
                 toggleCard(binding.timeCollapseLayout, binding.dateConfigBtn, timeConfigExpanded)
-            } else {
+            } else { //펼쳐질 때
+                initDate()
                 toggleCard(binding.timeCollapseLayout, binding.dateConfigBtn, timeConfigExpanded)
             }
         }
@@ -107,7 +108,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DATE), null)
 
-        binding.timePicker.hour = calendar.get(Calendar.HOUR)
+        binding.timePicker.hour = calendar.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = calendar.get(Calendar.MINUTE)
     }
 
