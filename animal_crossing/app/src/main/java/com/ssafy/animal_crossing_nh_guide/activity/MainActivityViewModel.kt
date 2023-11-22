@@ -230,5 +230,4 @@ class MainActivityViewModel : ViewModel(){
         }
     }
 
-
 }

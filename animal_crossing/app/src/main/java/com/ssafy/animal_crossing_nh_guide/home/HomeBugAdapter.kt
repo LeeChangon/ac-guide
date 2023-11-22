@@ -46,24 +46,6 @@ class HomeBugAdapter(val context: Context, val childFragmentManager: FragmentMan
                     HomeBugDetailFragment(monthList, item).show(
                         childFragmentManager, "VillagerDetail"
                     )
-
-//
-//                    val builder = AlertDialog.Builder(context)
-//
-//                    val view = FragmentBugDetailDialogBinding.inflate(LayoutInflater.from(context))
-//
-//                    view.bug = item
-//                    view.monthList = monthList
-//
-//                    builder.setView(view.root)
-//                    val dialog = builder.create()
-//                    dialog.show()
-//
-//                    view.closeBtn.setOnClickListener {
-//                        dialog.dismiss()
-//                    }
-//
-//                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
                 }
             }
 
