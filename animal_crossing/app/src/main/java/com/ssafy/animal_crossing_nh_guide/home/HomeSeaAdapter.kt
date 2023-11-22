@@ -1,22 +1,20 @@
 package com.ssafy.animal_crossing_nh_guide.home
 
-import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
-import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureDetailDialogBinding
+import com.ssafy.animal_crossing_nh_guide.critterpedia.sea_creature.HomeSeaDetailFragment
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemHomeBinding
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 
 private const val TAG = "HomeSeaAdapter_싸피"
-class HomeSeaAdapter(val context : Context) : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
+class HomeSeaAdapter(val context: Context, val childFragmentManager: FragmentManager) : RecyclerView.Adapter<HomeSeaAdapter.ViewHolder>() {
 
 //    lateinit var childFragmentManager: FragmentManager
 
@@ -47,22 +45,26 @@ class HomeSeaAdapter(val context : Context) : RecyclerView.Adapter<HomeSeaAdapte
                         }
                     }
 
-                    val builder = AlertDialog.Builder(context)
+                    HomeSeaDetailFragment(monthList, item).show(
+                        childFragmentManager, "VillagerDetail"
+                    )
 
-                    val view = FragmentSeaCreatureDetailDialogBinding.inflate(LayoutInflater.from(context))
-
-                    view.seaCreature = item
-                    view.monthList = monthList
-
-                    builder.setView(view.root)
-                    val dialog = builder.create()
-                    dialog.show()
-
-                    view.closeBtn.setOnClickListener {
-                        dialog.dismiss()
-                    }
-
-                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+//                    val builder = AlertDialog.Builder(context)
+//
+//                    val view = FragmentSeaCreatureDetailDialogBinding.inflate(LayoutInflater.from(context))
+//
+//                    view.seaCreature = item
+//                    view.monthList = monthList
+//
+//                    builder.setView(view.root)
+//                    val dialog = builder.create()
+//                    dialog.show()
+//
+//                    view.closeBtn.setOnClickListener {
+//                        dialog.dismiss()
+//                    }
+//
+//                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
                 }
             }
 
