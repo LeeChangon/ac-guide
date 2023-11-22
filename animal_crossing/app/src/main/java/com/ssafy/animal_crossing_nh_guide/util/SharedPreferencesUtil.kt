@@ -24,8 +24,6 @@ class SharedPreferencesUtil (context: Context) {
         editor.putLong("timeDiff", diff)
         editor.apply()
         Log.d(TAG, "setTimeDiff: ${diff}")
-
-        Log.d(TAG, "setTimeDiff: ${preferences.getLong("timeDiff", 0)}")
     }
 
     fun resetTimeDiff(){
@@ -33,6 +31,34 @@ class SharedPreferencesUtil (context: Context) {
         editor.putLong("timeDiff", 0)
         editor.apply()
     }
+
+    fun getTimeDiff() : List<Int>{
+        val myTime = preferences.getLong("timeNow", System.currentTimeMillis())
+        val realTime = System.currentTimeMillis()
+        
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(myTime)
+
+        val myMonth = calendar.get(Calendar.MONTH)
+        val myHour = calendar.get(Calendar.HOUR_OF_DAY)
+//        Log.d(TAG, "지금 시간: ${nowDay}일 ${nowHour}시")
+
+        calendar.time = Date(realTime)
+
+        val realMonth = calendar.get(Calendar.MONTH)
+        val realHour = calendar.get(Calendar.HOUR_OF_DAY)
+//        Log.d(TAG, "새로운 시간: ${newDay}일 ${newHour}시")
+
+        val monthDiff = realMonth - myMonth
+        val hourDiff =  realHour - myHour
+
+        Log.d(TAG, "getTimeDiff: 달 : ${monthDiff}, 시간 : ${hourDiff}")
+
+
+
+        return listOf(monthDiff, hourDiff)
+    }
+
 
     fun getTime(): Long{
         val timeDiff = preferences.getLong("timeDiff", 0)

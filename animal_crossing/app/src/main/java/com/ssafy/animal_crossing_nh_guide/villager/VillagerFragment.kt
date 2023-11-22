@@ -43,7 +43,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        pushAlarmTo()
+//        pushAlarmTo()
 
 
         mainActivity = context as MainActivity
@@ -71,6 +71,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             adapter -> adapter.setDropDownViewResource(R.layout.dropdown_item)
             binding.speciesSpinner.adapter = adapter
         }
+        binding.speciesSpinner.setSelection(0,false)
         binding.speciesSpinner.onItemSelectedListener = AdapterSpecies(viewModel)
 
         ArrayAdapter.createFromResource(mainActivity, R.array.gender_array, android.R.layout.simple_spinner_item).also{
@@ -78,6 +79,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             binding.genderSpinner.adapter = adapter
         }
 
+        binding.genderSpinner.setSelection(0,false)
         binding.genderSpinner.onItemSelectedListener = AdapterGender(viewModel)
 
         binding.search.addTextChangedListener(object: TextWatcher{
@@ -130,26 +132,7 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
             })
         }
 
-        fun pushAlarmTo(){
-            // 새로운 토큰 수신 시 서버로 전송
-//            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-            RetrofitUtil.firebaseTokenService.pushAlarmTo(ApplicationClass.token, "곤충", 1, 11, 22, 18, 3, "이창곤").enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if(response.isSuccessful){
-                        val res = response.body()
-                        Log.d(TAG, "onResponse: $res")
-//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: $res")
-                    } else {
-                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
-//                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: Error Code ${response.code()}")
-                    }
-                }
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Log.d(TAG, "onFailure: t.message ?: \"토큰 정보 등록 중 통신오류\"")
-//                    Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, t.message ?: "토큰 정보 등록 중 통신오류")
-                }
-            })
-        }
+
     }
 
 }

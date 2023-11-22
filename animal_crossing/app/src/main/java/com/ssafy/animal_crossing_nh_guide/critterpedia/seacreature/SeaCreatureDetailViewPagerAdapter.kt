@@ -10,6 +10,7 @@ import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentSeaCreatureDetailDialogBinding
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
+import com.ssafy.animal_crossing_nh_guide.util.FirebasePushUtil
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -105,7 +106,9 @@ class SeaCreatureDetailViewPagerAdapter(val seaCreatureFragmentViewModel: SeaCre
                         if (alertFlg) {
                             seaCreatureFragmentViewModel.myRepository.deleteAlert(Alert(position, "해산물"))
                         } else {
-                            seaCreatureFragmentViewModel.myRepository.insertAlert(Alert(position, "해산물", seaCreature!!.file_name))
+                            val monthList = FirebasePushUtil.getMonthList(seaCreature!!.availability.month_array_northern)
+                            val hourList = FirebasePushUtil.getHourList(seaCreature!!.availability.time_array)
+                            seaCreatureFragmentViewModel.myRepository.insertAlert(Alert(position, "해산물", seaCreature!!.file_name, monthList, hourList, seaCreature!!.name.name_KRko))
                         }
                     }
                     alertFlg = !alertFlg
