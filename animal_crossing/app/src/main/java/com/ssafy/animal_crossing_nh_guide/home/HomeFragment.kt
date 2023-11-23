@@ -156,6 +156,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             initVillagerCheckList()
             villagerCheckList
         }
+
+
+        mainActivityViewModel.event.observe(viewLifecycleOwner){
+            binding.event = it
+        }
     }
 
     private fun initListener() {
@@ -163,6 +168,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         binding.homeToolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.time_refresh_btn -> {
+                    mainActivityViewModel.getEvent()
                     refreshTime()
                     refreshList()
                     true
@@ -208,6 +214,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         binding.homeAddVillagerBtn.setOnClickListener {
             mainActivity.moveNavItem(R.id.navigation_page_3)
         }
+
+        binding.eventList.setOnClickListener {
+            HomeCalendar().show(childFragmentManager, "homeCalendar")
+        }
     }
 
     private fun initChecklist(){
@@ -238,11 +248,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private fun initSetting(){
         checkList.addAll(arrayOf(binding.fossil1, binding.fossil2, binding.fossil3, binding.fossil4, binding.bottle, binding.moneyTree,
-             binding.rock1, binding.rock2, binding.rock3, binding.rock4, binding.rock5, binding.rock6))
+            binding.rock1, binding.rock2, binding.rock3, binding.rock4, binding.rock5, binding.rock6))
 
         villagerCheckList.addAll(arrayOf(binding.villager1, binding.villager2, binding.villager3, binding.villager4, binding.villager5,
             binding.villager6, binding.villager7, binding.villager8, binding.villager9, binding.villager10))
         binding.myVillagers = arrayListOf("", "", "", "", "", "", "", "", "", "",)
+
 
 
         refreshTime()
@@ -254,9 +265,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         initBugAdapter()
         initFishAdapter()
         initSeaAdapter()
-
 //        mainActivityViewModel.getNowBugList()
 //        mainActivityViewModel.getNowFishList()
+
+        mainActivityViewModel.getEvent()
     }
 
     private fun refreshTime(){

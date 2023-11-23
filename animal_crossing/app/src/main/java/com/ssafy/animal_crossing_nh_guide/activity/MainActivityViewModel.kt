@@ -11,6 +11,7 @@ import com.ssafy.animal_crossing_nh_guide.database.Caught
 import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.database.MyVillager
 import com.ssafy.animal_crossing_nh_guide.database.Star
+import com.ssafy.animal_crossing_nh_guide.models.EventData
 import com.ssafy.animal_crossing_nh_guide.models.bug.Bug
 import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
@@ -298,6 +299,23 @@ class MainActivityViewModel : ViewModel(){
             }
 
             _alertList.value = list
+        }
+    }
+
+    private var _event = MutableLiveData<EventData>()
+    val event : LiveData<EventData>
+        get() = _event
+
+    fun getEvent(){
+        var event : EventData
+        viewModelScope.launch {
+            try {
+                event = RetrofitUtil.eventService.getEvent(currentTime.value!!)
+            } catch (e : Exception){
+                event = EventData(0, 0, listOf(0), listOf(0), "", "", "")
+            }
+
+            _event.value = event
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 
 private const val TAG = "MyFirebaseMessageServic_싸피"
@@ -47,7 +48,7 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
         val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder1 = NotificationCompat.Builder(this, MainActivity.channel_id)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(R.drawable.acnh_icon)
             .setContentTitle(messageTitle)
             .setContentText(messageContent)
             .setAutoCancel(true)
