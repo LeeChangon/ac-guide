@@ -6,7 +6,6 @@
 
     <application
         android:name=".config.ApplicationClass"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,24 +14,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Animal_crossing_NH_guide"
-        >
+        android:usesCleartextTraffic="true">
+<!--        <activity-->
+<!--            android:name=".activity.MySplashActivity"-->
+<!--            android:exported="false" />-->
 
-        <service android:name="com.ssafy.animal_crossing_nh_guide.config.MyFirebaseMessageService" android:exported="true">
+        <service
+            android:name=".config.MyFirebaseMessageService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Animal_crossing_NH_guide.Splash"
-            android:name=".activity.MainActivity"
+        <activity android:name=".activity.MySplashActivity" android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Animal_crossing_NH_guide.Splash">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

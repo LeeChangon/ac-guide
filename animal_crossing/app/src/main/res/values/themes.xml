@@ -12,6 +12,10 @@
         <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
 
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
     <!--    스플래쉬 화면-->
     <style name="Theme.Animal_crossing_NH_guide.Splash" parent="Theme.SplashScreen">
