@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="filepath"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="5dp">
+
+            <ImageView
+                android:id="@+id/item_image"
+                tools:src="@drawable/blowfish"
+                android:elevation="3dp"
+                app:imageUrl="@{filepath}"
+                android:background="@drawable/now_background_uncaught"
+                android:layout_margin="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <ImageView
+                android:id="@+id/minus_iv"
+                android:layout_gravity="end"
+                android:layout_margin="3dp"
+                android:elevation="6dp"
+                android:visibility="visible"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/minus_icon" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

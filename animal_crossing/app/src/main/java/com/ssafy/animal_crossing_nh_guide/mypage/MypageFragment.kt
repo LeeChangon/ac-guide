@@ -1,6 +1,7 @@
 package com.ssafy.animal_crossing_nh_guide.mypage
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
@@ -41,10 +43,13 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private lateinit var myCaughtAdapter1: MyCaughtAdapter
     private lateinit var myCaughtAdapter2: MyCaughtAdapter
     private lateinit var myCaughtAdapter3: MyCaughtAdapter
+    private lateinit var myAlertAdapter : MyAlertAdapter
+    private lateinit var myStarAdapter : MyStarAdapter
 
     private lateinit var myCaughtBugList : ArrayList<Caught>
     private lateinit var myCaughtFishList : ArrayList<Caught>
     private lateinit var myCaughtSeaList : ArrayList<Caught>
+//    private lateinit var myCaughtSeaList : ArrayList<Alert>
 
 
 
@@ -113,20 +118,17 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             mainActivity.moveNavItem(R.id.navigation_page_3)
         }
 
+        //잡은 생물 접었다 펴기
         binding.bugCaughtHeadLayout.setOnClickListener {
-            if(binding.bugCaughtDrawLayout.visibility == View.VISIBLE){
-                ObjectAnimator.ofInt(binding.bugProgressbar, "progress", myCaughtBugList.size)
-                    .setDuration(350)
-                    .start()
-                ToggleAnimation.collapse(binding.bugCaughtDrawLayout)
-            }
-            else{
-                ObjectAnimator.ofInt(binding.bugProgressbar, "progress", 0)
-                    .setDuration(350)
-                    .start()
-                ToggleAnimation.expand(binding.bugCaughtDrawLayout)
-            }
+            caughtListAnim(binding.bugCaughtDrawLayout, binding.bugProgressbar, myCaughtBugList)
+        }
 
+        binding.fishCaughtHeadLayout.setOnClickListener {
+            caughtListAnim(binding.fishCaughtDrawLayout, binding.fishProgressbar, myCaughtFishList)
+        }
+
+        binding.seaCaughtHeadLayout.setOnClickListener {
+            caughtListAnim(binding.seaCaughtDrawLayout, binding.seaProgressbar, myCaughtSeaList)
         }
 
     }
@@ -187,21 +189,27 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                 else myCaughtSeaList.add(it)
             }
 
-            ObjectAnimator.ofInt(binding.bugProgressbar, "progress", myCaughtBugList.size)
-                .setDuration(350)
-                .start()
+            if(binding.bugCaughtDrawLayout.visibility != View.VISIBLE) {
+                ObjectAnimator.ofInt(binding.bugProgressbar, "progress", myCaughtBugList.size)
+                    .setDuration(350)
+                    .start()
+            }
 //            binding.bugProgressbar.progress = myCaughtBugList.size
             binding.myCaughtBugProgressTv.text = "${myCaughtBugList.size} / 80"
 
-            ObjectAnimator.ofInt(binding.fishProgressbar, "progress", myCaughtFishList.size)
-                .setDuration(350)
-                .start()
+            if(binding.fishCaughtDrawLayout.visibility != View.VISIBLE) {
+                ObjectAnimator.ofInt(binding.fishProgressbar, "progress", myCaughtFishList.size)
+                    .setDuration(350)
+                    .start()
+            }
 //            binding.fishProgressbar.progress = myCaughtFishList.size
             binding.myCaughtFishProgressTv.text = "${myCaughtFishList.size} / 80"
 
-            ObjectAnimator.ofInt(binding.seaProgressbar, "progress", myCaughtSeaList.size)
-                .setDuration(350)
-                .start()
+            if(binding.seaCaughtDrawLayout.visibility != View.VISIBLE) {
+                ObjectAnimator.ofInt(binding.seaProgressbar, "progress", myCaughtSeaList.size)
+                    .setDuration(350)
+                    .start()
+            }
 //            binding.seaProgressbar.progress = myCaughtSeaList.size
             binding.myCaughtSeaProgressTv.text = "${myCaughtSeaList.size} / 40"
 
@@ -211,6 +219,23 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             myCaughtAdapter1.notifyDataSetChanged()
             myCaughtAdapter2.notifyDataSetChanged()
             myCaughtAdapter3.notifyDataSetChanged()
+            binding.myBugRecyclerview.scheduleLayoutAnimation()
+        }
+
+        // 알림 리스트 옵저버
+        mainActivityViewModel.alertList.observe(viewLifecycleOwner){
+            myAlertAdapter.list = it
+            myAlertAdapter.notifyDataSetChanged()
+            binding.myAlertRecyclerview.scrollToPosition(it.size - 1);
+            binding.myAlertRecyclerview.scheduleLayoutAnimation()
+        }
+
+        //즐겨찾기 옵저버
+        mainActivityViewModel.starList.observe(viewLifecycleOwner){
+            myStarAdapter.list = it
+            myStarAdapter.notifyDataSetChanged()
+            binding.myStarRecyclerview.scrollToPosition(it.size - 1);
+            binding.myStarRecyclerview.scheduleLayoutAnimation()
         }
     }
 
@@ -237,6 +262,8 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private fun initAdapter(){
         initMyVillagerAdapter()
         initMycaughtAdapter()
+        initMyAlertAdapter()
+        initMyStarAdapter()
     }
 
 
@@ -266,6 +293,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         val manager2 = GridLayoutManager(context, 5)
         val manager3 = GridLayoutManager(context, 5)
 
+
         binding.myBugRecyclerview.apply {
             layoutManager = manager1
             adapter = myCaughtAdapter1
@@ -277,6 +305,49 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         binding.mySeaRecyclerview.apply {
             layoutManager = manager3
             adapter = myCaughtAdapter3
+        }
+//        binding.myBugRecyclerview.scheduleLayoutAnimation()
+    }
+
+    private fun initMyAlertAdapter(){
+        myAlertAdapter = MyAlertAdapter(mainActivity, mainActivityViewModel)
+        myAlertAdapter.list = listOf()
+
+        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+
+        binding.myAlertRecyclerview.apply {
+            layoutManager = manager
+            adapter = myAlertAdapter
+        }
+    }
+
+    private fun initMyStarAdapter(){
+        myStarAdapter = MyStarAdapter(mainActivity, mainActivityViewModel)
+        myStarAdapter.list = listOf()
+
+        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+
+        binding.myStarRecyclerview.apply {
+            layoutManager = manager
+            adapter = myStarAdapter
+        }
+    }
+
+    @SuppressLint("ObjectAnimatorBinding")
+    private fun caughtListAnim(layout: View, progressbar:View, list:List<Caught>){
+        Log.d(TAG, "caughtListAnim 접었다펴기: $list")
+        if(list.isNotEmpty()) {
+            if (layout.visibility == View.VISIBLE) {
+                ObjectAnimator.ofInt(progressbar, "progress", list.size)
+                    .setDuration(350)
+                    .start()
+                ToggleAnimation.collapse(layout)
+            } else {
+                ObjectAnimator.ofInt(progressbar, "progress", 0)
+                    .setDuration(350)
+                    .start()
+                ToggleAnimation.expand(layout)
+            }
         }
     }
 

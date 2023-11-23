@@ -245,7 +245,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         binding.myVillagers = arrayListOf("", "", "", "", "", "", "", "", "", "",)
 
 
-
         refreshTime()
         refreshList()
         initChecklist()

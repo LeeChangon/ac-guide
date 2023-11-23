@@ -11,9 +11,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
-import com.ssafy.animal_crossing_nh_guide.database.Caught
+import com.ssafy.animal_crossing_nh_guide.database.Alert
 import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.database.MyVillager
+import com.ssafy.animal_crossing_nh_guide.database.Star
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemMyCrittersBinding
 import com.ssafy.animal_crossing_nh_guide.databinding.ListItemMyVillagerBinding
 import kotlinx.coroutines.CoroutineScope
@@ -21,13 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MyCaughtAdapter(val context: Context, val mainActivityViewModel: MainActivityViewModel) : RecyclerView.Adapter<MyCaughtAdapter.ViewHolder>() {
+class MyStarAdapter(val context: Context, val mainActivityViewModel: MainActivityViewModel) : RecyclerView.Adapter<MyStarAdapter.ViewHolder>() {
 
 //    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     val myRepository = MyRepository.get()
-    var list = listOf<Caught>()
+    var list = listOf<Star>()
     inner class ViewHolder(private val binding: ListItemMyCrittersBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Caught){
+        fun bind(item: Star){
             binding.apply{
                 var nowType = ""
                 if(item.type == "곤충") nowType = "bugs"
@@ -45,8 +46,8 @@ class MyCaughtAdapter(val context: Context, val mainActivityViewModel: MainActiv
                 binding.minusIv.setOnClickListener {
                     CoroutineScope(Dispatchers.Main).launch{
                         withContext(Dispatchers.Main) {
-                            myRepository.deleteCaught(item)
-                            mainActivityViewModel.getCaughtList()
+                            myRepository.deleteStar(item)
+                            mainActivityViewModel.getStarList()
                         }
                         notifyItemRemoved(layoutPosition)
                     }
@@ -68,7 +69,7 @@ class MyCaughtAdapter(val context: Context, val mainActivityViewModel: MainActiv
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.anim_pop_in_slow_list)
+//        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.anim_pop_in_slow_list)
 
         Log.d("싸피", "bind: ${list[position]}")
         val dto = list[position]

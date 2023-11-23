@@ -3,6 +3,7 @@ package com.ssafy.animal_crossing_nh_guide.critterpedia.fish
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,7 @@ class FishGalleryAdapter() : RecyclerView.Adapter<FishGalleryAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.anim_pop_in_list)
         Log.d("싸피", "bind: ${list[position]}")
         val dto = list[position]
         holder.apply {

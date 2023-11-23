@@ -39,6 +39,7 @@ class MyVillagerAdapter(val context: Context, val mainActivityViewModel: MainAct
                 }
 
                 binding.minusIv.setOnClickListener {
+                    binding.minusIv.isEnabled = false
                     CoroutineScope(Dispatchers.Main).launch{
                         withContext(Dispatchers.Main){
                             myRepository.deleteMyVillager(item.index)

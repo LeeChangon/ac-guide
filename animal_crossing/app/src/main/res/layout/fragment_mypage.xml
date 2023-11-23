@@ -9,7 +9,7 @@
             type="String" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:fillViewport="true"
         android:scrollbars="none"
         android:layout_weight="1"
@@ -252,7 +252,7 @@
                                         android:orientation="vertical">
                                         <androidx.recyclerview.widget.RecyclerView
                                             android:id="@+id/my_bug_recyclerview"
-                                            android:layoutAnimation="@anim/anim_pop_in"
+                                            android:layout_marginBottom="40dp"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:nestedScrollingEnabled="false"
@@ -279,10 +279,6 @@
                                             android:layout_height="wrap_content"/>
                                     </LinearLayout>
                                 </FrameLayout>
-
-<!--                                <com.google.android.material.divider.MaterialDivider-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="1dp"/>-->
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -290,7 +286,7 @@
                                 android:orientation="vertical">
                                 <FrameLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginVertical="20dp"
                                     >
                                     <ProgressBar
@@ -304,9 +300,27 @@
                                         android:progress="0"
                                         />
                                     <LinearLayout
-                                        android:layout_gravity="center"
+                                        android:id="@+id/fish_caught_draw_layout"
+                                        android:visibility="gone"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="40dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/my_fish_recyclerview"
+                                            android:layout_marginBottom="40dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:nestedScrollingEnabled="false"
+                                            android:overScrollMode="never"
+                                            />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/fish_caught_head_layout"
+                                        android:gravity="center"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="30dp"
                                         android:paddingHorizontal="10dp"
                                         android:orientation="horizontal">
                                         <TextView
@@ -322,14 +336,6 @@
                                             android:layout_height="wrap_content"/>
                                     </LinearLayout>
                                 </FrameLayout>
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/my_fish_recyclerview"
-                                    android:visibility="gone"
-                                    android:overScrollMode="never"
-                                    android:nestedScrollingEnabled="false"
-                                    android:layout_margin="10dp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -337,7 +343,7 @@
                                 android:orientation="vertical">
                                 <FrameLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="wrap_content"
                                     >
                                     <ProgressBar
                                         android:id="@+id/sea_progressbar"
@@ -350,9 +356,27 @@
                                         android:progress="0"
                                         />
                                     <LinearLayout
-                                        android:layout_gravity="center"
+                                        android:id="@+id/sea_caught_draw_layout"
+                                        android:visibility="gone"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="40dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/my_sea_recyclerview"
+                                            android:layout_marginBottom="40dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:nestedScrollingEnabled="false"
+                                            android:overScrollMode="never"
+                                            />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/sea_caught_head_layout"
+                                        android:gravity="center"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="30dp"
                                         android:paddingHorizontal="10dp"
                                         android:orientation="horizontal">
                                         <TextView
@@ -368,14 +392,6 @@
                                             android:layout_height="wrap_content"/>
                                     </LinearLayout>
                                 </FrameLayout>
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/my_sea_recyclerview"
-                                    android:visibility="gone"
-                                    android:overScrollMode="never"
-                                    android:nestedScrollingEnabled="false"
-                                    android:layout_margin="10dp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -405,10 +421,152 @@
 
                 </com.google.android.material.card.MaterialCardView>
             </FrameLayout>
+            <FrameLayout
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    app:strokeWidth="0dp"
+                    android:layout_marginVertical="15dp"
+                    android:backgroundTint="@color/ac_background_bright"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="5dp"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingVertical="13dp">
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="match_parent"
+                                app:strokeWidth="0dp"
+                                android:layout_height="70dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/ac_button_color_enabled">
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/my_alert_recyclerview"
+
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"/>
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginStart="13dp"
+                    app:cardCornerRadius="10dp"
+                    app:strokeWidth="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/my_alert_title"
+                            android:layout_gravity="start"
+                            android:text="알림 설정한 생물"
+                            android:textColor="@color/ac_textcolor_dark"
+                            android:textSize="20dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </FrameLayout>
+            <FrameLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    app:strokeWidth="0dp"
+                    android:layout_marginVertical="15dp"
+                    android:backgroundTint="@color/ac_background_bright"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="5dp"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingVertical="13dp">
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="match_parent"
+                                app:strokeWidth="0dp"
+                                android:layout_height="70dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/ac_button_color_enabled">
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/my_star_recyclerview"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"/>
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginStart="13dp"
+                    app:cardCornerRadius="10dp"
+                    app:strokeWidth="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/my_star_title"
+                            android:layout_gravity="start"
+                            android:text="즐겨찾기"
+                            android:textColor="@color/ac_textcolor_dark"
+                            android:textSize="20dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </FrameLayout>
 
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

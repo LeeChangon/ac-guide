@@ -16,7 +16,9 @@ import com.ssafy.animal_crossing_nh_guide.models.fish.Fish
 import com.ssafy.animal_crossing_nh_guide.models.sea_creature.SeaCreature
 import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -257,6 +259,22 @@ class MainActivityViewModel : ViewModel(){
         var list : List<Caught>
         viewModelScope.launch {
             try {
+                list = myRepository.getAllCaught()
+            } catch (e : Exception){
+                list = listOf()
+            }
+
+            _caughtList.value = list
+        }
+    }
+
+    fun deleteCaught(caught: Caught){
+        var list : List<Caught>
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.Main){
+                    myRepository.deleteCaught(caught)
+                }
                 list = myRepository.getAllCaught()
             } catch (e : Exception){
                 list = listOf()

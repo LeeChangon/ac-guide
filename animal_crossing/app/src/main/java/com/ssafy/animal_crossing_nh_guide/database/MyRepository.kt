@@ -26,11 +26,14 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun insertCaught(caught: Caught){
+        Log.d(TAG, "insertCaught: ${caught}")
         myDao.insertCaught(caught)
     }
 
     suspend fun deleteCaught(caught: Caught){
-        myDao.deleteCaught(myDao.getCaught(caught.type, caught.index))
+        var newO = myDao.getCaught(caught.type, caught.index)
+        if(newO!=null)
+        myDao.deleteCaught(newO)
     }
 
     suspend fun getAllStar() : List<Star> {
@@ -42,11 +45,14 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun insertStar(star: Star){
+        Log.d(TAG, "insertStar: $star")
         myDao.insertStar(star)
     }
 
     suspend fun deleteStar(star: Star){
-        myDao.deleteStar(myDao.getStar(star.type, star.index))
+        var newStar = myDao.getStar(star.type, star.index)
+        if(newStar!=null)
+        myDao.deleteStar(newStar)
     }
 
     suspend fun getAllAlert() : List<Alert> {
@@ -73,9 +79,12 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun deleteAlert(alert: Alert){
-        FirebasePushUtil.deleteAlarm(alert.type, alert.index)
+        var newO = myDao.getCaught(alert.type, alert.index)
+        if(newO!=null) {
+            FirebasePushUtil.deleteAlarm(newO.type, newO.index)
 
-        myDao.deleteAlert(myDao.getAlert(alert.type, alert.index))
+            myDao.deleteAlert(myDao.getAlert(newO.type, newO.index))
+        }
     }
     
     suspend fun getAllMyVillager(): List<MyVillager>{
