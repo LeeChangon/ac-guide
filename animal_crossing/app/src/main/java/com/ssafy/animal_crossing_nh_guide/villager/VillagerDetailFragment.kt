@@ -4,25 +4,19 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.animal_crossing_nh_guide.R
-import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
 import com.ssafy.animal_crossing_nh_guide.config.BaseDialogFragment
 import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.VillagerDetailFragment1
 import com.ssafy.animal_crossing_nh_guide.critterpedia.seacreature.VillagerDetailFragment2
 import com.ssafy.animal_crossing_nh_guide.database.MyRepository
 import com.ssafy.animal_crossing_nh_guide.database.MyVillager
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentVillagerDetailBinding
-import com.ssafy.animal_crossing_nh_guide.models.villager.AcnhVillager
 import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
-import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
-import com.ssafy.animal_crossing_nh_guide.villager.SwipeGesture
+import com.ssafy.animal_crossing_nh_guide.villager.OnSwipeTouchListener
 import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,18 +42,13 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
     lateinit var myVillager: MyVillager
     var myVillagerFlg = false
 
-    lateinit var gestureListener: SwipeGesture
-
     private val villagerFragmentViewModel: VillagerFragmentViewModel by viewModels({ requireParentFragment() })
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach: try getfilepath")
-        villagerFragmentViewModel.getFilePath(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
+//        villagerFragmentViewModel.getFilePath(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
         villager = villagerFragmentViewModel.villagerList.value!![currentPage]
-
-        gestureListener = SwipeGesture(context)
-
 
     }
 
@@ -73,8 +62,6 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         super.onViewCreated(view, savedInstanceState)
 
         rereshHomeBtn()
-
-//        val gestureDetector = GestureDetector(binding.flipframe.context, gestureListener)
 
         binding.addMyVillagerBtn.setOnClickListener {
             Log.d(TAG, "onViewCreated: 플래그 $myVillagerFlg")
@@ -98,49 +85,30 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         }
 
 
-        villagerFragmentViewModel.filePath.observe(viewLifecycleOwner){
-            filepath = it
-            if(front){
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                    .addToBackStack(null)
-                    .commit()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
+            .addToBackStack(null)
+            .commit()
+
+
+        binding.flipbutton.setOnTouchListener(object: OnSwipeTouchListener(requireContext()) {
+
+            override fun onSwipeLeft() {
+                flipLeft()
             }
-            else{
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.flipframe, VillagerDetailFragment2(filepath, villager))
-                    .addToBackStack(null)
-                    .commit()
+            override fun onSwipeRight() {
+                flipRight()
             }
-        }
+            override fun onSwipeTop() {
+//                Toast.makeText(requireContext(),"위로",Toast.LENGTH_SHORT).show()
+            }
+            override fun onSwipeBottom() {
+//                Toast.makeText(requireContext(),"아래로",Toast.LENGTH_SHORT).show()
+            }
+        })
 
         binding.flipbutton.setOnClickListener {
-            if (front){
-                front = !front
-                childFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.animator.card_flip_right_in,
-                        R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in,
-                        R.animator.card_flip_left_out,
-                    )
-                    .replace(R.id.flipframe, VillagerDetailFragment2(filepath, villager))
-                    .addToBackStack(null)
-                    .commit()
-            }
-            else{
-                front = !front
-                childFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.animator.card_flip_right_in,
-                        R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in,
-                        R.animator.card_flip_left_out,
-                    )
-                    .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                    .addToBackStack(null)
-                    .commit()
-            }
+            flipLeft()
         }
 
         if (currentPage == 0){
@@ -151,60 +119,13 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         }
 
         binding.btnPrev.setOnClickListener {
-            front = true
-            filepath = listOf()
-
-            Log.d(TAG, "onViewCreated: ${currentPage-1}")
-            if(currentPage-1 <= 0){
-                binding.btnPrev.visibility = View.GONE
-            }
-            else{
-                binding.btnPrev.visibility = View.VISIBLE
-            }
-
-            if (currentPage != 0){
-                binding.btnNext.visibility = View.VISIBLE
-
-                currentPage -= 1
-                villagerFragmentViewModel.getFilePath1(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
-                villager = villagerFragmentViewModel.villagerList.value!![currentPage]
-                villagerFragmentViewModel.filePath1.observe(viewLifecycleOwner){
-                    filepath = it
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
+            goPrev()
 
             rereshHomeBtn()
         }
 
         binding.btnNext.setOnClickListener {
-            front = true
-            Log.d(TAG, "onViewCreated: ${currentPage+1}")
-            filepath = listOf()
-            if (currentPage+1 >= villagerFragmentViewModel.villagerList.value!!.size-1){
-                binding.btnNext.visibility = View.GONE
-            }
-            else{
-                binding.btnNext.visibility = View.VISIBLE
-            }
-            if (currentPage != villagerFragmentViewModel.villagerList.value!!.size-1){
-                binding.btnPrev.visibility = View.VISIBLE
-
-                currentPage += 1
-                villagerFragmentViewModel.getFilePath2(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
-                villager = villagerFragmentViewModel.villagerList.value!![currentPage]
-                villagerFragmentViewModel.filePath2.observe(viewLifecycleOwner){
-                    filepath = it
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
-
+            goNext()
             rereshHomeBtn()
         }
 
@@ -226,6 +147,109 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 //            }
 //        }
 
+    }
+
+    private fun goPrev(){
+        front = true
+        filepath = listOf()
+
+        Log.d(TAG, "onViewCreated: ${currentPage-1}")
+        if(currentPage-1 <= 0){
+            binding.btnPrev.visibility = View.GONE
+        }
+        else{
+            binding.btnPrev.visibility = View.VISIBLE
+        }
+
+        if (currentPage != 0){
+            binding.btnNext.visibility = View.VISIBLE
+
+            currentPage -= 1
+            villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+            childFragmentManager.beginTransaction()
+                .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+    private fun goNext(){
+        front = true
+        Log.d(TAG, "onViewCreated: ${currentPage+1}")
+        filepath = listOf()
+        if (currentPage+1 >= villagerFragmentViewModel.villagerList.value!!.size-1){
+            binding.btnNext.visibility = View.GONE
+        }
+        else{
+            binding.btnNext.visibility = View.VISIBLE
+        }
+        if (currentPage != villagerFragmentViewModel.villagerList.value!!.size-1){
+            binding.btnPrev.visibility = View.VISIBLE
+
+            currentPage += 1
+            villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.to_left, R.anim.from_right)
+                .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun flipLeft(){
+        if (front){
+            front = !front
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.animator.card_flip_right_in,
+                    R.animator.card_flip_right_out,
+                    R.animator.card_flip_left_in,
+                    R.animator.card_flip_left_out,
+                )
+                .replace(R.id.flipframe, VillagerDetailFragment2(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
+        else{
+            front = !front
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.animator.card_flip_right_in,
+                    R.animator.card_flip_right_out,
+                    R.animator.card_flip_left_in,
+                    R.animator.card_flip_left_out,
+                )
+                .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+    private fun flipRight(){
+        if (front){
+            front = !front
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.animator.card_flip_left_in,
+                    R.animator.card_flip_left_out,
+                    R.animator.card_flip_right_in,
+                    R.animator.card_flip_right_out,
+                )
+                .replace(R.id.flipframe, VillagerDetailFragment2(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
+        else{
+            front = !front
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.animator.card_flip_left_in,
+                    R.animator.card_flip_left_out,
+                    R.animator.card_flip_right_in,
+                    R.animator.card_flip_right_out,
+                )
+                .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun rereshHomeBtn(){
