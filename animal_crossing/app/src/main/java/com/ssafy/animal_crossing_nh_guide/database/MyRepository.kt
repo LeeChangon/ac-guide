@@ -26,7 +26,7 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun insertCaught(caught: Caught){
-        Log.d(TAG, "insertCaught: ${caught}")
+//        Log.d(TAG, "insertCaught: ${caught}")
         myDao.insertCaught(caught)
     }
 
@@ -40,12 +40,12 @@ class MyRepository private constructor(context: Context){
         return myDao.getAllStar()
     }
     suspend fun getStar(type : String, index: Int) : Star{
-        Log.d(TAG, "getStar 별 리스트: ${myDao.getStar(type, index)}")
+//        Log.d(TAG, "getStar 별 리스트: ${myDao.getStar(type, index)}")
         return myDao.getStar(type, index)
     }
 
     suspend fun insertStar(star: Star){
-        Log.d(TAG, "insertStar: $star")
+//        Log.d(TAG, "insertStar: $star")
         myDao.insertStar(star)
     }
 
@@ -70,7 +70,7 @@ class MyRepository private constructor(context: Context){
         val hour : Array<Int> = alert.time!!.toTypedArray()
 
         val minute = ApplicationClass.sharedPreferencesUtil.getTimeDiff()[2]
-        Log.d(TAG, "insertAlert: 새데이터베이스: ${alert}, 분 : $minute")
+//        Log.d(TAG, "insertAlert: 새데이터베이스: ${alert}, 분 : $minute")
 
 
         FirebasePushUtil.pushAlarmTo(alert.type, alert.index, monthArr, hour, minute, alert.name)

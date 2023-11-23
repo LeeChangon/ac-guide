@@ -4,6 +4,7 @@
     <color name="white">#FFFFF7</color>
 
     <color name="ac_black_transparent">#4F000000</color>
+    <color name="ac_nav_color">#FFF2F9F7</color>
 
     <color name="ac_primary_light">#DFF3DB</color>
     <color name="ac_launch_background">#FF82D5BB</color>
