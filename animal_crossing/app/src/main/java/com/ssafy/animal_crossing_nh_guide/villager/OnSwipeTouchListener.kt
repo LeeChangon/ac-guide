@@ -5,7 +5,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-class SwipeGesture(context: Context) : View.OnTouchListener {
+open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
 
     private val gestureDetector: GestureDetector
 
@@ -27,11 +27,12 @@ class SwipeGesture(context: Context) : View.OnTouchListener {
         return false
     }
 
+
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
 
         override fun onDown(e: MotionEvent): Boolean {
-            return true
+            return false
         }
 
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
