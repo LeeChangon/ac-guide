@@ -105,8 +105,8 @@ class MySplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBindi
 
                         Glide.with(this@MySplashActivity)
                             .load("${it.image_url}")
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .preload(50, 50)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .preload()
 
 
                 }

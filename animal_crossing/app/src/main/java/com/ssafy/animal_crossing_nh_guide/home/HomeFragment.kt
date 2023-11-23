@@ -215,9 +215,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             mainActivity.moveNavItem(R.id.navigation_page_3)
         }
 
-        binding.eventList.setOnClickListener {
-            HomeCalendar().show(childFragmentManager, "homeCalendar")
-        }
     }
 
     private fun initChecklist(){
