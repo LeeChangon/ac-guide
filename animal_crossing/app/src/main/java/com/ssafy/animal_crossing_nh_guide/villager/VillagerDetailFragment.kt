@@ -188,7 +188,6 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
             currentPage += 1
             villager = villagerFragmentViewModel.villagerList.value!![currentPage]
             childFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.to_left, R.anim.from_right)
                 .replace(R.id.flipframe, VillagerDetailFragment1(villagerFragmentViewModel, currentPage))
                 .addToBackStack(null)
                 .commit()
