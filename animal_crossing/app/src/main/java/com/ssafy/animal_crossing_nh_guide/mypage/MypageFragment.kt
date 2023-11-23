@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.get
+import androidx.databinding.Bindable
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,11 +30,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.internal.notify
 import java.util.Calendar
 import java.util.TimeZone
 
 private const val TAG = "MypageFragment_싸피"
 class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage) {
+
+//    @get:Bindable
+//    var villagerClicked : Boolean = false
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.clicked)
+//        }
 
     private lateinit var mainActivity: MainActivity
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
@@ -226,16 +235,18 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         mainActivityViewModel.alertList.observe(viewLifecycleOwner){
             myAlertAdapter.list = it
             myAlertAdapter.notifyDataSetChanged()
-            binding.myAlertRecyclerview.scrollToPosition(it.size - 1);
             binding.myAlertRecyclerview.scheduleLayoutAnimation()
+            binding.myAlertRecyclerview.scrollToPosition(0);
+
         }
 
         //즐겨찾기 옵저버
         mainActivityViewModel.starList.observe(viewLifecycleOwner){
             myStarAdapter.list = it
             myStarAdapter.notifyDataSetChanged()
-            binding.myStarRecyclerview.scrollToPosition(it.size - 1);
             binding.myStarRecyclerview.scheduleLayoutAnimation()
+            binding.myStarRecyclerview.scrollToPosition(0);
+
         }
     }
 
@@ -314,6 +325,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         myAlertAdapter.list = listOf()
 
         val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        manager.reverseLayout = false
 
         binding.myAlertRecyclerview.apply {
             layoutManager = manager
@@ -326,6 +338,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         myStarAdapter.list = listOf()
 
         val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        manager.reverseLayout = false
 
         binding.myStarRecyclerview.apply {
             layoutManager = manager

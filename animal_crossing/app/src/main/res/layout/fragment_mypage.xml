@@ -147,7 +147,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/my_villager_recyclerview"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="150dp"
                                 android:layout_margin="10dp"
                                 android:nestedScrollingEnabled="false"
                                 android:overScrollMode="never" />
@@ -162,6 +162,7 @@
                                 android:textColor="@color/ac_textcolor_dark"
                                 android:visibility="gone"
                                 app:cornerRadius="5dp"
+                                android:layout_margin="10dp"
                                 app:icon="@drawable/add_icon"
                                 app:iconGravity="textStart"
                                 app:iconTint="@color/ac_textcolor_dark"
@@ -456,8 +457,7 @@
                                     android:background="@color/ac_button_color_enabled">
                                     <androidx.recyclerview.widget.RecyclerView
                                         android:id="@+id/my_alert_recyclerview"
-
-
+                                        android:layoutAnimation="@anim/anim_pop_in_slow"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"/>
 
@@ -528,7 +528,7 @@
                                     android:background="@color/ac_button_color_enabled">
                                     <androidx.recyclerview.widget.RecyclerView
                                         android:id="@+id/my_star_recyclerview"
-
+                                        android:layoutAnimation="@anim/anim_pop_in_slow"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"/>
 

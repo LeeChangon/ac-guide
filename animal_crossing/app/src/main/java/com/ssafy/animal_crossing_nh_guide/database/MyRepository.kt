@@ -79,7 +79,7 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun deleteAlert(alert: Alert){
-        var newO = myDao.getCaught(alert.type, alert.index)
+        var newO = myDao.getAlert(alert.type, alert.index)
         if(newO!=null) {
             FirebasePushUtil.deleteAlarm(newO.type, newO.index)
 
