@@ -12,6 +12,7 @@ class AcnhVillager (
     val image_url: String,
     val islander: Boolean,
     val name: String,
+    val nh_details: NhDetails,
     val personality: String,
     val phrase: String,
     val prev_phrases: List<Any>,

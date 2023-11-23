@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -21,6 +22,7 @@ import com.ssafy.animal_crossing_nh_guide.databinding.FragmentVillagerDetailBind
 import com.ssafy.animal_crossing_nh_guide.models.villager.AcnhVillager
 import com.ssafy.animal_crossing_nh_guide.models.villager.Villager
 import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
+import com.ssafy.animal_crossing_nh_guide.villager.SwipeGesture
 import com.ssafy.animal_crossing_nh_guide.villager.VillagerFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,20 +41,24 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
     private var maxPage = 80
 
     private lateinit var villager : Villager
-    private var filepath = ""
+    private var filepath = listOf<String>()
 
     private var front = true
 
     lateinit var myVillager: MyVillager
     var myVillagerFlg = false
 
+    lateinit var gestureListener: SwipeGesture
 
     private val villagerFragmentViewModel: VillagerFragmentViewModel by viewModels({ requireParentFragment() })
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d(TAG, "onAttach: try getfilepath")
         villagerFragmentViewModel.getFilePath(villagerFragmentViewModel.villagerList.value!![currentPage].name.name_USen)
         villager = villagerFragmentViewModel.villagerList.value!![currentPage]
+
+        gestureListener = SwipeGesture(context)
 
 
     }
@@ -68,6 +74,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
         rereshHomeBtn()
 
+//        val gestureDetector = GestureDetector(binding.flipframe.context, gestureListener)
 
         binding.addMyVillagerBtn.setOnClickListener {
             Log.d(TAG, "onViewCreated: 플래그 $myVillagerFlg")
@@ -90,11 +97,18 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
             }
         }
 
+
         villagerFragmentViewModel.filePath.observe(viewLifecycleOwner){
             filepath = it
             if(front){
                 childFragmentManager.beginTransaction()
                     .replace(R.id.flipframe, VillagerDetailFragment1(filepath, villager))
+                    .addToBackStack(null)
+                    .commit()
+            }
+            else{
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.flipframe, VillagerDetailFragment2(filepath, villager))
                     .addToBackStack(null)
                     .commit()
             }
@@ -138,7 +152,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
 
         binding.btnPrev.setOnClickListener {
             front = true
-            filepath = ""
+            filepath = listOf()
 
             Log.d(TAG, "onViewCreated: ${currentPage-1}")
             if(currentPage-1 <= 0){
@@ -169,7 +183,7 @@ class VillagerDetailFragment(startPosition: Int) : BaseDialogFragment<FragmentVi
         binding.btnNext.setOnClickListener {
             front = true
             Log.d(TAG, "onViewCreated: ${currentPage+1}")
-            filepath = ""
+            filepath = listOf()
             if (currentPage+1 >= villagerFragmentViewModel.villagerList.value!!.size-1){
                 binding.btnNext.visibility = View.GONE
             }

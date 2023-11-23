@@ -10,6 +10,9 @@
         <variable
             name="myVillagers"
             type="java.util.ArrayList&lt;String>" />
+        <variable
+            name="event"
+            type="com.ssafy.animal_crossing_nh_guide.models.EventData" />
     </data>
 
     <LinearLayout
@@ -669,6 +672,49 @@
                             </LinearLayout>
 
                         </LinearLayout>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <LinearLayout
+                        android:id="@+id/eventList"
+                        android:padding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/ac_background_bright"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:text="@{event.name}"/>
+                            <TextView
+                                android:layout_marginTop="3dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11sp"
+                                android:text="@{event.text}"/>
+                        </LinearLayout>
+                        <TextView
+                            android:layout_gravity="center"
+                            android:gravity="right|center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
+                            android:textSize="16sp"
+                            android:text="@{event.period}"/>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>

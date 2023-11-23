@@ -5,29 +5,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.tabs.TabLayoutMediator
 import com.ssafy.animal_crossing_nh_guide.R
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.activity.MainActivityViewModel
-import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import com.ssafy.animal_crossing_nh_guide.config.BaseFragment
-import com.ssafy.animal_crossing_nh_guide.critterpedia.ViewPagerAdapter
 import com.ssafy.animal_crossing_nh_guide.databinding.FragmentVillagerBinding
-import com.ssafy.animal_crossing_nh_guide.util.RetrofitUtil
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.time.LocalDateTime
+
 
 private const val TAG = "VillagerFragment_싸피"
 class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
@@ -42,9 +30,6 @@ class VillagerFragment : BaseFragment<FragmentVillagerBinding>(
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-
-
 
         mainActivity = context as MainActivity
         galleryAdapter = VillagerGalleryAdapter(requireContext(), viewModel)
