@@ -64,10 +64,10 @@ class MySplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBindi
             binding.splashIv.startAnimation(nookpop)
             Glide.with(this@MySplashActivity).load(R.drawable.nook_tail).into(binding.splashIv)
 
-            delay(1000)
+            delay(500)
             val animation = AnimationUtils.loadAnimation(baseContext, R.anim.rotate)
             binding.splashEarth.startAnimation(animation)
-
+            delay(500)
             val nookAnim = AnimationUtils.loadAnimation(this@MySplashActivity, R.anim.up_down)
             binding.splashIv.startAnimation(nookAnim)
 

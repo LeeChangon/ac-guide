@@ -64,10 +64,20 @@ class MyRepository private constructor(context: Context){
     }
 
     suspend fun insertAlert(alert: Alert){
+        var month = arrayListOf<Int>()
+        alert.month!!.forEach{
+            if(it > 12)
+                month.add(it - 12)
+            else
+                month.add(it)
+        }
+        Log.d(TAG, "insertAlert: 계산전${alert.month}")
+        Log.d(TAG, "insertAlert 달계산: $month")
 
-
-        val monthArr:Array<Int> = alert.month!!.toTypedArray()
+        val monthArr:Array<Int> = month.toTypedArray()
         val hour : Array<Int> = alert.time!!.toTypedArray()
+
+
 
         val minute = ApplicationClass.sharedPreferencesUtil.getTimeDiff()[2]
 //        Log.d(TAG, "insertAlert: 새데이터베이스: ${alert}, 분 : $minute")

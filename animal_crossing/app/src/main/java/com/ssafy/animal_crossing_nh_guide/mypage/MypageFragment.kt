@@ -156,7 +156,14 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private fun initObserve(){
         mainActivityViewModel.alertList.observe(viewLifecycleOwner){
             it.forEach{
-                val monthArr:Array<Int> = it.month!!.toTypedArray()
+                var month = arrayListOf<Int>()
+                it.month!!.forEach{
+                    if(it > 12)
+                        month.add(it - 12)
+                    else
+                        month.add(it)
+                }
+                val monthArr:Array<Int> = month.toTypedArray()
                 val hour : Array<Int> = it.time!!.toTypedArray()
 
                 val minute = ApplicationClass.sharedPreferencesUtil.getTimeDiff()[2]
