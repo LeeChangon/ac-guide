@@ -1,6 +1,8 @@
 package com.ssafy.animal_crossing_nh_guide.util
 
 import android.util.Log
+import android.widget.Toast
+import com.ssafy.animal_crossing_nh_guide.activity.MainActivity
 import com.ssafy.animal_crossing_nh_guide.config.ApplicationClass
 import retrofit2.Call
 import retrofit2.Callback
@@ -8,7 +10,7 @@ import retrofit2.Response
 
 private const val TAG = "FirebasePushUtil_싸피"
 class FirebasePushUtil {
-
+//    private var mainActivity = context as
     companion object{
         fun getMonthList(list : List<Int>) : List<Int>{
             val monthDiff = ApplicationClass.sharedPreferencesUtil.getTimeDiff()[0]
@@ -69,6 +71,7 @@ class FirebasePushUtil {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if(response.isSuccessful){
                         val res = response.body()
+//                        Toast.makeText(a, "알림을 등록했습니다.", Toast.LENGTH_SHORT)
                         Log.d(TAG, "onResponse: $res")
 //                        Log.d(com.ssafy.animal_crossing_nh_guide.activity.TAG, "onResponse: $res")
                     } else {
