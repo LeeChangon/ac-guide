@@ -6,26 +6,30 @@
     android:layout_height="match_parent"
     android:background="@color/ac_nav_color"
     tools:context=".activity.MySplashActivity">
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/splash_earth"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:src="@drawable/earth"
-            />
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/earth" />
+
         <ImageView
             android:id="@+id/splash_iv"
-            android:layout_marginBottom="20dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginRight="3dp"
-            android:src="@drawable/nook_tail"
             android:layout_gravity="center"
-            />
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="35dp"
+             />
 
 
     </FrameLayout>

@@ -33,6 +33,13 @@ class MySplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBindi
 
         setAnim()
         loadImage()
+//        moveMain()
+//        loadImage()
+//        CoroutineScope(Dispatchers.Main).launch {
+//            delay(10000)
+//        moveMain()
+//        }
+
 
 
     }
@@ -45,19 +52,39 @@ class MySplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBindi
     }
 
     private fun setAnim(){
-        Glide.with(this).load(R.drawable.nook_tail).into(binding.splashIv)
 
 
-        val animation = AnimationUtils.loadAnimation(baseContext, R.anim.rotate)
-        animation.interpolator = LinearInterpolator()
-        animation.repeatCount = Animation.INFINITE
-        animation.duration = 4000
+
+        CoroutineScope(Dispatchers.Main).launch{
+            val earth1 = AnimationUtils.loadAnimation(this@MySplashActivity, R.anim.bounce)
+            binding.splashEarth.startAnimation(earth1)
+            delay(1500)
+
+            val nookpop = AnimationUtils.loadAnimation(this@MySplashActivity, R.anim.pop)
+            binding.splashIv.startAnimation(nookpop)
+            Glide.with(this@MySplashActivity).load(R.drawable.nook_tail).into(binding.splashIv)
+
+            delay(1000)
+            val animation = AnimationUtils.loadAnimation(baseContext, R.anim.rotate)
+            binding.splashEarth.startAnimation(animation)
+
+            val nookAnim = AnimationUtils.loadAnimation(this@MySplashActivity, R.anim.up_down)
+            binding.splashIv.startAnimation(nookAnim)
+
+            delay(1000)
+//            moveMain()
 
 
-        val nookAnim = AnimationUtils.loadAnimation(this, R.anim.up_down)
-        binding.splashIv.startAnimation(nookAnim)
+        }
+//        val earth1 = AnimationUtils.loadAnimation(this, R.anim.pop)
+//        binding.splashEarth.startAnimation(earth1)
 
-        binding.splashEarth.startAnimation(animation)
+
+
+
+
+
+
     }
 
     private fun loadImage(){
@@ -67,59 +94,69 @@ class MySplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBindi
         var list4 = listOf<Fish>()
         var list5 = listOf<SeaCreature>()
 
-//            val list1 = RetrofitUtil.acnhService.getAcnhAllVillager()
-//
-//            list1.forEach {
-//                CoroutineScope(Dispatchers.Main).launch {
-//                    Glide.with(this@MySplashActivity)
-//                        .load("${it.image_url}")
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .preload(50, 50)
-//                }
-//
-//            }
+
         CoroutineScope(Dispatchers.Main).launch {
             delay(2000)
             withContext(Dispatchers.Main) {
+                list1 = RetrofitUtil.acnhService.getAcnhAllVillager()
+                Log.d(TAG, "loadImage: $list1")
+                list1.forEach {
+                    Log.d(TAG, "loadImage: ${it.image_url}")
+
+                        Glide.with(this@MySplashActivity)
+                            .load("${it.image_url}")
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .preload(50, 50)
+
+
+                }
                 list2 = RetrofitUtil.villagerService.getVillagerList()
-                
+                list2.forEach {
+//                    Log.d(TAG, "loadImage: ${it.file_name}")
+
+
+                    Glide.with(this@MySplashActivity)
+                        .load("${ApplicationClass.IMGS_URL}icons/villagers/${it.file_name}.png")
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .preload()
+
+                }
+
                 list3 = RetrofitUtil.bugService.getBugList()
+                list3.forEach {
+                    Glide.with(this@MySplashActivity)
+                        .load("${ApplicationClass.IMGS_URL}icons/bugs/${it.file_name}.png")
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .preload()
+
+                }
 
                 list4 = RetrofitUtil.fishService.getFishList()
+                list4.forEach {
+                    Glide.with(this@MySplashActivity)
+                        .load("${ApplicationClass.IMGS_URL}icons/fish/${it.file_name}.png")
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .preload()
+
+                }
 
                 list5 = RetrofitUtil.seaCreatureService.getSeaCreatureList()
-                
-            }
-            list2.forEach {
-                Log.d(TAG, "loadImage: ${it.file_name}")
-                Glide.with(this@MySplashActivity)
-                    .load("${ApplicationClass.IMGS_URL}icons/villagers/${it.file_name}.png")
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .preload()
 
-            }
-            list3.forEach {
-                Glide.with(this@MySplashActivity)
-                    .load("${ApplicationClass.IMGS_URL}icons/bugs/${it.file_name}.png")
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .preload()
+                list5.forEach {
+//                    Log.d(TAG, "loadImage: $it")
+                    Glide.with(this@MySplashActivity)
+                        .load("${ApplicationClass.IMGS_URL}icons/sea/${it.file_name}.png")
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .preload()
 
+                }
             }
-            list4.forEach {
-                Glide.with(this@MySplashActivity)
-                    .load("${ApplicationClass.IMGS_URL}icons/fish/${it.file_name}.png")
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .preload()
 
-            }
-            list5.forEach {
-                Log.d(TAG, "loadImage: $it")
-                Glide.with(this@MySplashActivity)
-                    .load("${ApplicationClass.IMGS_URL}icons/sea/${it.file_name}.png")
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .preload()
 
-            }
+
+
+
+
             moveMain()
         }
 

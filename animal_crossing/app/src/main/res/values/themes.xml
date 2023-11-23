@@ -12,7 +12,8 @@
         <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
 
     </style>
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="SplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#72E3C0</item>0
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
